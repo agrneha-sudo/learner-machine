@@ -3,7 +3,7 @@ const testimonials = [
     name: 'Rahul Sharma',
     role: 'Freelance Content Creator',
     avatar: 'RS',
-    avatarColor: 'from-purple-500 to-indigo-600',
+    avatarColor: 'from-orange-500 to-red-600',
     rating: 5,
     text: "The AI Prompts Mastery ebook completely changed how I work. I now deliver client projects in half the time and charge double. Best ₹800 I've ever spent.",
   },
@@ -19,7 +19,7 @@ const testimonials = [
     name: 'Arjun Kapoor',
     role: 'Software Engineer',
     avatar: 'AK',
-    avatarColor: 'from-orange-500 to-amber-600',
+    avatarColor: 'from-purple-500 to-indigo-600',
     rating: 5,
     text: "I was skeptical about another AI course, but this one is different. Super practical, no fluff, and the automation workflows I learned are saving me 3+ hours a day.",
   },
@@ -27,31 +27,34 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-20 px-4 sm:px-6 border-t" style={{ borderColor: 'var(--border)' }}>
+    <section id="testimonials" className="py-24 px-4 sm:px-6 border-t" style={{ borderColor: 'var(--border)' }}>
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-14">
           <p className="text-sm font-semibold text-brand uppercase tracking-widest mb-3">Student Reviews</p>
           <h2 className="section-heading mb-4">What Our Students Say</h2>
+          <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
+            Real results from real learners — no fake testimonials.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {testimonials.map((t) => (
-            <div key={t.name} className="card p-6 flex flex-col gap-4">
+            <div key={t.name} className="card p-6 flex flex-col gap-5">
               {/* Stars */}
-              <div className="flex gap-1">
+              <div className="flex gap-0.5">
                 {Array.from({ length: t.rating }).map((_, i) => (
-                  <span key={i} className="text-brand text-sm">★</span>
+                  <span key={i} className="text-brand text-base">★</span>
                 ))}
               </div>
 
               {/* Quote */}
               <p className="text-sm leading-relaxed flex-1" style={{ color: 'var(--text-secondary)' }}>
-                "{t.text}"
+                &ldquo;{t.text}&rdquo;
               </p>
 
               {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${t.avatarColor} flex items-center justify-center text-white text-xs font-bold shrink-0`}>
+              <div className="flex items-center gap-3 pt-2 border-t" style={{ borderColor: 'var(--border)' }}>
+                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.avatarColor} flex items-center justify-center text-white text-xs font-bold shrink-0`}>
                   {t.avatar}
                 </div>
                 <div>

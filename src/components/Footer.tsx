@@ -59,7 +59,7 @@ export default function Footer() {
           </p>
           <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
             Payments secured by{' '}
-            <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>Stripe</span>
+            <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>Razorpay</span>
           </p>
         </div>
       </div>

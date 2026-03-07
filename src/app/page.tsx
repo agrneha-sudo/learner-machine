@@ -5,6 +5,7 @@ import About from '@/components/About'
 import Testimonials from '@/components/Testimonials'
 import CTABanner from '@/components/CTABanner'
 import ContentBlocks from '@/components/ContentBlocks'
+import WhyUs from '@/components/WhyUs'
 import { Product } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -67,6 +68,7 @@ export default async function HomePage() {
     <>
       <Hero videoUrl={heroVideoUrl} />
       <ProductsSection products={products} />
+      <WhyUs />
       <ContentBlocks blocks={contentBlocks} />
       <About />
       <Testimonials />
