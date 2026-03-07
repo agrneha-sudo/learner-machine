@@ -96,7 +96,7 @@ export default function About() {
             })}
 
             {/* Stats strip */}
-            <div className="card p-6 grid grid-cols-3 divide-x" style={{ divideColor: 'var(--border)' }}>
+            <div className="card p-6 grid grid-cols-3 divide-x divide-[var(--border)]">
               {[
                 { value: '5,000+', label: 'Students' },
                 { value: '100%', label: 'Practical' },
