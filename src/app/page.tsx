@@ -18,12 +18,31 @@ async function getProducts(): Promise<Product[]> {
   return (data as Product[]) ?? []
 }
 
+async function getHeroVideoUrl(): Promise<string | null> {
+  const { data } = await db
+    .from('site_settings')
+    .select('value')
+    .eq('key', 'hero_video_path')
+    .single()
+
+  if (!data?.value) return null
+
+  const { data: signed } = await db.storage
+    .from('product-files')
+    .createSignedUrl(data.value, 3600)
+
+  return signed?.signedUrl ?? null
+}
+
 export default async function HomePage() {
-  const products = await getProducts()
+  const [products, heroVideoUrl] = await Promise.all([
+    getProducts(),
+    getHeroVideoUrl(),
+  ])
 
   return (
     <>
-      <Hero />
+      <Hero videoUrl={heroVideoUrl} />
       <ProductsSection products={products} />
       <About />
       <Testimonials />

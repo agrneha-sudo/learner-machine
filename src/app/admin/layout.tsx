@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import AdminLogoutButton from '@/components/admin/LogoutButton'
-import { LayoutDashboard, Package, ShoppingBag, ExternalLink } from 'lucide-react'
+import { LayoutDashboard, Package, ShoppingBag, ExternalLink, Settings } from 'lucide-react'
 
 const navItems = [
-  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { href: '/admin/products', label: 'Products', icon: Package, exact: false },
-  { href: '/admin/orders', label: 'Orders', icon: ShoppingBag, exact: false },
+  { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/admin/products', label: 'Products', icon: Package },
+  { href: '/admin/orders', label: 'Orders', icon: ShoppingBag },
+  { href: '/admin/settings', label: 'Settings', icon: Settings },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
