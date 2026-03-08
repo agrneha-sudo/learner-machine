@@ -1,11 +1,12 @@
 import { db } from '@/lib/supabase'
 import Hero from '@/components/Hero'
 import ProductsSection from '@/components/ProductsSection'
+import Topics from '@/components/Topics'
+import WhyUs from '@/components/WhyUs'
 import About from '@/components/About'
+import ContentBlocks from '@/components/ContentBlocks'
 import Testimonials from '@/components/Testimonials'
 import CTABanner from '@/components/CTABanner'
-import ContentBlocks from '@/components/ContentBlocks'
-import WhyUs from '@/components/WhyUs'
 import { Product } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -29,7 +30,6 @@ async function getContentBlocks() {
 
   if (!data || data.length === 0) return []
 
-  // Generate signed URLs for images
   return await Promise.all(
     data.map(async (block) => {
       if (!block.image_path) return block
@@ -68,9 +68,10 @@ export default async function HomePage() {
     <>
       <Hero videoUrl={heroVideoUrl} />
       <ProductsSection products={products} />
+      <Topics />
       <WhyUs />
-      <ContentBlocks blocks={contentBlocks} />
       <About />
+      <ContentBlocks blocks={contentBlocks} />
       <Testimonials />
       <CTABanner />
     </>
