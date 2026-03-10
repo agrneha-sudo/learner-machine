@@ -75,7 +75,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
                     {product.title}
                   </h3>
                   <p className="text-sm font-medium mb-3" style={{ color: 'var(--brand)' }}>{product.tagline}</p>
-                  <p className="text-sm leading-relaxed mb-4" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-sm leading-relaxed mb-4 line-clamp-2" style={{ color: 'var(--text-secondary)' }}>
                     {product.description}
                   </p>
 
