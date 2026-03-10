@@ -132,7 +132,7 @@ export default async function ProductPage({ params }: Props) {
               currency={product.currency}
             />
             <p className="text-xs mt-3 text-center" style={{ color: 'var(--text-muted)' }}>
-              Secure payment via Razorpay · UPI, Cards, Net Banking · 30-day guarantee
+              Secure payment · UPI, Cards, Net Banking · Download link sent to your email
             </p>
           </div>
         </div>

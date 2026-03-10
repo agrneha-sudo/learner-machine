@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyPaymentSignature } from '@/lib/razorpay'
+import { finalizeOrder } from '@/lib/orders'
 import { db } from '@/lib/supabase'
 
 export async function POST(req: NextRequest) {
@@ -23,7 +24,6 @@ export async function POST(req: NextRequest) {
     })
 
     if (!isValid) {
-      // Mark order as failed
       await db
         .from('orders')
         .update({ status: 'failed' })
@@ -31,41 +31,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Payment verification failed' }, { status: 400 })
     }
 
-    // Mark order as paid and update customer details
-    const { data: order } = await db
-      .from('orders')
-      .update({
-        status: 'paid',
-        razorpay_payment_id,
-        customer_email: customer_email || '',
-        customer_name: customer_name || '',
-      })
-      .eq('razorpay_order_id', razorpay_order_id)
-      .select('id, product_id')
-      .single()
+    const result = await finalizeOrder(razorpay_order_id, razorpay_payment_id, {
+      customerEmail: customer_email || '',
+      customerName: customer_name || '',
+    })
 
-    if (!order) {
+    if (!result) {
       return NextResponse.json({ error: 'Order not found' }, { status: 404 })
     }
 
-    // Generate a time-limited signed download URL (1 hour)
-    let downloadUrl: string | null = null
-    if (order.product_id) {
-      const { data: product } = await db
-        .from('products')
-        .select('file_path')
-        .eq('id', order.product_id)
-        .single()
-
-      if (product?.file_path) {
-        const { data: signed } = await db.storage
-          .from('product-files')
-          .createSignedUrl(product.file_path, 3600) // 1 hour
-        downloadUrl = signed?.signedUrl ?? null
-      }
-    }
-
-    return NextResponse.json({ success: true, orderId: order.id, downloadUrl })
+    return NextResponse.json({ success: true, orderId: result.orderId, downloadUrl: result.downloadUrl })
   } catch (err) {
     console.error('Verify payment error:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
