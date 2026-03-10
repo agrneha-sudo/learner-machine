@@ -31,10 +31,10 @@ export default function AdminProductRow({ product }: { product: Product }) {
         </span>
       </td>
       <td className="px-4 py-3 text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
-        ₹{product.price.toLocaleString('en-IN')}
-        {product.original_price && (
+        {product.price != null ? `₹${Number(product.price).toLocaleString('en-IN')}` : '—'}
+        {product.original_price != null && (
           <span className="text-xs line-through ml-1" style={{ color: 'var(--text-muted)' }}>
-            ₹{product.original_price.toLocaleString('en-IN')}
+            ₹{Number(product.original_price).toLocaleString('en-IN')}
           </span>
         )}
       </td>

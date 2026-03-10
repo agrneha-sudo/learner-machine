@@ -18,7 +18,9 @@ export interface Product {
   language: string
   pages?: number
   duration?: string
-  file_path?: string  // path inside Supabase storage bucket
+  file_path?: string | null  // path inside Supabase storage bucket (PDF)
+  cover_image_path?: string | null  // path inside Supabase storage (cover image)
+  cover_image_url?: string | null   // signed URL for preview (not stored in DB)
   published: boolean
   created_at: string
   updated_at: string
