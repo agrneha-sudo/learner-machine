@@ -24,7 +24,7 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-bold uppercase tracking-widest mb-5 text-white">PRODUCTS</h4>
             <ul className="space-y-3">
-              {['eBooks', 'Courses', 'Live Trainings', 'Bundles'].map((item) => (
+              {['eBooks'].map((item) => (
                 <li key={item}>
                   <Link href="/#products" className="text-sm transition-colors hover:text-white" style={{ color: '#a8a29e' }}>
                     {item}

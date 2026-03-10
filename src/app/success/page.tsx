@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CheckCircle, Download, ArrowRight, Mail } from 'lucide-react'
+import { CheckCircle, BookOpen, ArrowRight, Mail, ShieldCheck } from 'lucide-react'
 
 interface Props {
   searchParams: { orderId?: string; dl?: string }
@@ -22,7 +22,7 @@ export default function SuccessPage({ searchParams }: Props) {
           Payment Successful!
         </h1>
         <p className="text-base mb-2" style={{ color: 'var(--text-secondary)' }}>
-          Thank you for your purchase!
+          Thank you for your purchase.
         </p>
         {orderId && (
           <p className="text-xs mb-8" style={{ color: 'var(--text-muted)' }}>
@@ -30,27 +30,38 @@ export default function SuccessPage({ searchParams }: Props) {
           </p>
         )}
 
-        {/* Download link if available */}
         {downloadUrl ? (
-          <div className="card p-6 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center mx-auto mb-3">
-              <Download size={20} className="text-brand" />
+          <div className="card p-6 mb-6 text-left">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center flex-shrink-0">
+                <BookOpen size={20} className="text-brand" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-sm" style={{ color: 'var(--text-primary)' }}>
+                  Your download is ready
+                </h3>
+                <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  Opens in your browser — up to 5 times
+                </p>
+              </div>
             </div>
-            <h3 className="font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
-              Your Download is Ready
-            </h3>
-            <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-              This link expires in 1 hour. Download your product now.
-            </p>
+
             <a
               href={downloadUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary w-full"
+              className="btn-primary w-full mb-4"
             >
-              <Download size={16} />
-              Download Now
+              <BookOpen size={16} />
+              Open My PDF
             </a>
+
+            <div className="flex items-start gap-2 p-3 rounded-lg" style={{ background: 'var(--bg-secondary)' }}>
+              <ShieldCheck size={14} className="text-brand mt-0.5 flex-shrink-0" />
+              <p className="text-xs leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+                Your copy is watermarked with your name and email. The link is unique to your order and works up to 5 times. Please do not share it.
+              </p>
+            </div>
           </div>
         ) : (
           <div className="card p-6 mb-6">

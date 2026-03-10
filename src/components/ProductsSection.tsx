@@ -17,7 +17,7 @@ export default function ProductsSection({ products }: { products: Product[] }) {
             <span style={{ color: 'var(--brand)' }}>Transform</span> Your Skills
           </h2>
           <p className="text-base sm:text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-            Instantly downloadable guides, prompts, and courses — crafted in Hindi and English for maximum impact.
+            Instantly downloadable PDF guides and ebooks — crafted in Hindi and English for maximum impact.
           </p>
         </div>
 

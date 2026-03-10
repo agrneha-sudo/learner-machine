@@ -33,7 +33,7 @@ export default function Hero({ videoUrl }: HeroProps) {
 
             {/* Subtext */}
             <p className="text-base sm:text-lg leading-relaxed mb-8 max-w-lg" style={{ color: 'var(--text-secondary)' }}>
-              Premium ebooks, courses, and live trainings to help you understand AI, start a side hustle, and grow your business — all in Hindi and English.
+              Premium PDF guides and ebooks to help you understand AI, start a side hustle, and grow your business — all in Hindi and English.
             </p>
 
             {/* CTAs */}
