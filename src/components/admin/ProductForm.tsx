@@ -51,7 +51,7 @@ export default function ProductForm({ initial, mode }: Props) {
   const [form, setForm] = useState<FormData>(() => {
     if (initial) {
       const { id, created_at, updated_at, ...rest } = initial
-      return { ...defaultForm, ...rest }
+      return { ...defaultForm, ...rest, features: rest.features ?? [] }
     }
     return defaultForm
   })
@@ -80,12 +80,12 @@ export default function ProductForm({ initial, mode }: Props) {
 
   const addFeature = () => {
     if (!newFeature.trim()) return
-    set('features', [...(form.features || []), newFeature.trim()])
+    set('features', [...(form.features ?? []), newFeature.trim()])
     setNewFeature('')
   }
 
   const removeFeature = (i: number) => {
-    set('features', form.features.filter((_, idx) => idx !== i))
+    set('features', (form.features ?? []).filter((_, idx) => idx !== i))
   }
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -362,7 +362,7 @@ export default function ProductForm({ initial, mode }: Props) {
         <h2 className="font-semibold" style={{ color: 'var(--text-primary)' }}>Features / What's Included</h2>
 
         <ul className="space-y-2">
-          {form.features.map((f, i) => (
+          {(form.features ?? []).map((f, i) => (
             <li key={i} className="flex items-center gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
               <Check size={14} className="text-brand shrink-0" />
               <span className="flex-1">{f}</span>
