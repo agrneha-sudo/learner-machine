@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Phone, Mail } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -54,8 +54,19 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-bold uppercase tracking-widest mb-5 text-white">SUPPORT</h4>
             <ul className="space-y-3">
+              <li>
+                <a href="tel:+918920621043" className="flex items-center gap-2 text-sm transition-colors hover:text-white" style={{ color: '#a8a29e' }}>
+                  <Phone size={13} />
+                  +91 89206 21043
+                </a>
+              </li>
+              <li>
+                <a href="mailto:Support@learnermachine.com" className="flex items-center gap-2 text-sm transition-colors hover:text-white" style={{ color: '#a8a29e' }}>
+                  <Mail size={13} />
+                  Support@learnermachine.com
+                </a>
+              </li>
               {[
-                { label: 'FAQ', href: '/faq' },
                 { label: 'Contact Us', href: '/contact' },
                 { label: 'Refund Policy', href: '/refund' },
                 { label: 'Privacy Policy', href: '/privacy' },

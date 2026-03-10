@@ -7,6 +7,7 @@ import About from '@/components/About'
 import ContentBlocks from '@/components/ContentBlocks'
 import Testimonials from '@/components/Testimonials'
 import CTABanner from '@/components/CTABanner'
+import Contact from '@/components/Contact'
 import { Product } from '@/types'
 
 export const dynamic = 'force-dynamic'
@@ -74,6 +75,7 @@ export default async function HomePage() {
       <ContentBlocks blocks={contentBlocks} />
       <Testimonials />
       <CTABanner />
+      <Contact />
     </>
   )
 }
