@@ -24,7 +24,12 @@ export default function ProductsSection({ products }: { products: Product[] }) {
         {/* Product grid */}
         <div id="product-list" className={`grid gap-8 ${products.length === 1 ? 'grid-cols-1 max-w-md mx-auto' : products.length === 2 ? 'grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'}`}>
           {products.map((product) => {
-            const features: string[] = Array.isArray(product.features) ? product.features : []
+            const rawFeatures = product.features
+            const features: string[] = Array.isArray(rawFeatures)
+              ? rawFeatures
+              : typeof rawFeatures === 'string'
+                ? (() => { try { const p = JSON.parse(rawFeatures); return Array.isArray(p) ? p : [] } catch { return [] } })()
+                : []
             const discount = product.original_price
               ? Math.round(((product.original_price - product.price) / product.original_price) * 100)
               : null

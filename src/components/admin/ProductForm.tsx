@@ -77,7 +77,11 @@ export default function ProductForm({ initial, mode }: Props) {
       return {
         ...defaultForm,
         ...rest,
-        features: Array.isArray(rest.features) ? rest.features : [],
+        features: Array.isArray(rest.features)
+        ? rest.features
+        : typeof rest.features === 'string'
+          ? (() => { try { const p = JSON.parse(rest.features as unknown as string); return Array.isArray(p) ? p : [] } catch { return [] } })()
+          : [],
         cover_image_path: rest.cover_image_path ?? null,
         file_path: rest.file_path ?? null,
         badge: rest.badge ?? '',
