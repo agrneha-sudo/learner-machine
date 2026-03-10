@@ -12,7 +12,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-4">
-              <Image src="/logo.png" alt="Learner Machine" width={140} height={56} className="h-12 w-auto object-contain" />
+              <Image src="/logo.png" alt="Learner Machine" width={200} height={80} className="h-16 w-auto object-contain" />
             </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color: '#a8a29e' }}>
               Your machine for learning. Master AI, build businesses, and create income streams — in Hindi and English.
