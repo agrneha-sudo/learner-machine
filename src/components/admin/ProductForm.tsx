@@ -178,7 +178,7 @@ export default function ProductForm({ initial, mode }: Props) {
     setSaving(true)
     setError('')
 
-    const payload = {
+    const payload: Record<string, unknown> = {
       ...form,
       price: Number(form.price) || 0,
       original_price: form.original_price ? Number(form.original_price) : null,
@@ -186,7 +186,12 @@ export default function ProductForm({ initial, mode }: Props) {
       badge: form.badge || null,
       duration: form.duration || null,
       file_path: form.file_path || null,
-      cover_image_path: form.cover_image_path || null,
+    }
+    // Only include cover_image_path if it has a value (column may not exist yet)
+    if (form.cover_image_path) {
+      payload.cover_image_path = form.cover_image_path
+    } else {
+      delete payload.cover_image_path
     }
 
     const url = mode === 'create' ? '/api/admin/products' : `/api/admin/products/${initial!.id}`
