@@ -10,7 +10,13 @@ export function getSupabase(): SupabaseClient {
     if (!url || !key) {
       throw new Error('NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set')
     }
-    _client = createClient(url, key, { auth: { persistSession: false } })
+    _client = createClient(url, key, {
+      auth: { persistSession: false },
+      global: {
+        // Force Next.js 14 to never cache Supabase fetch calls
+        fetch: (input, init) => fetch(input, { ...init, cache: 'no-store' }),
+      },
+    })
   }
   return _client
 }
