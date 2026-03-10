@@ -1,5 +1,6 @@
 import Link from 'next/link'
-import { Sparkles, Phone, Mail } from 'lucide-react'
+import Image from 'next/image'
+import { Phone, Mail } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -10,11 +11,8 @@ export default function Footer() {
 
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2.5 mb-4">
-              <span className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: '#c2520c' }}>
-                <Sparkles size={18} className="text-white" />
-              </span>
-              <span className="font-display font-bold text-lg text-white">Learner Machine</span>
+            <div className="mb-4">
+              <Image src="/logo.png" alt="Learner Machine" width={140} height={56} className="h-12 w-auto object-contain" />
             </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color: '#a8a29e' }}>
               Your machine for learning. Master AI, build businesses, and create income streams — in Hindi and English.

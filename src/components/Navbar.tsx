@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { Sparkles, Menu, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import Image from 'next/image'
 import { useState } from 'react'
 
 const navLinks = [
@@ -20,13 +21,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          <span className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: 'var(--brand)' }}>
-            <Sparkles size={18} className="text-white" />
-          </span>
-          <span className="font-display font-bold text-lg" style={{ color: 'var(--text-primary)' }}>
-            Learner Machine
-          </span>
+        <Link href="/" className="flex items-center shrink-0">
+          <Image src="/logo.png" alt="Learner Machine" width={140} height={56} className="h-12 w-auto object-contain" priority />
         </Link>
 
         {/* Desktop nav */}
