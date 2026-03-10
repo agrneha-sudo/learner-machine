@@ -18,11 +18,11 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b" style={{ backgroundColor: 'var(--bg)', borderColor: 'var(--border)' }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-28 flex items-center justify-between">
 
         {/* Logo */}
         <Link href="/" className="flex items-center shrink-0">
-          <Image src="/logo.png" alt="Learner Machine" width={200} height={80} className="h-16 w-auto object-contain" priority />
+          <Image src="/logo.png" alt="Learner Machine" width={280} height={112} className="h-24 w-auto object-contain" priority />
         </Link>
 
         {/* Desktop nav */}
