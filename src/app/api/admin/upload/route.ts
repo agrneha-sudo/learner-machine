@@ -5,13 +5,14 @@ export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData()
     const file = formData.get('file') as File | null
-    const slug = formData.get('slug') as string | null
+    const slug = (formData.get('slug') as string | null) || 'blocks'
 
     if (!file) return NextResponse.json({ error: 'No file provided' }, { status: 400 })
-    if (!slug) return NextResponse.json({ error: 'No slug provided' }, { status: 400 })
 
     const ext = file.name.split('.').pop()
-    const filePath = `${slug}/${Date.now()}.${ext}`
+    const isPdf = file.type === 'application/pdf' || ext === 'pdf'
+    const folder = isPdf ? `pdfs/${slug}` : `images/${slug}`
+    const filePath = `${folder}/${Date.now()}.${ext}`
 
     const arrayBuffer = await file.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
@@ -25,7 +26,12 @@ export async function POST(req: NextRequest) {
 
     if (error) return NextResponse.json({ error: error.message }, { status: 400 })
 
-    return NextResponse.json({ filePath })
+    // Generate a signed URL for preview (valid 1 hour)
+    const { data: signed } = await db.storage
+      .from('product-files')
+      .createSignedUrl(filePath, 3600)
+
+    return NextResponse.json({ path: filePath, url: signed?.signedUrl ?? null })
   } catch (err) {
     console.error('Upload error:', err)
     return NextResponse.json({ error: 'Upload failed' }, { status: 500 })
