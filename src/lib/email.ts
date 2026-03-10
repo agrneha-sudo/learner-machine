@@ -1,7 +1,5 @@
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://learnermachine.com'
 
 export async function sendDownloadEmail({
@@ -17,6 +15,7 @@ export async function sendDownloadEmail({
   orderId: string
   downloadUrl: string
 }) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
   const shortOrderId = orderId.slice(0, 8).toUpperCase()
   const fullDownloadUrl = downloadUrl.startsWith('http') ? downloadUrl : `${BASE_URL}${downloadUrl}`
 
