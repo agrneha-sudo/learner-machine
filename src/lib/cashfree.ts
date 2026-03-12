@@ -1,5 +1,5 @@
 const CASHFREE_BASE =
-  process.env.NODE_ENV === 'production'
+  process.env.CASHFREE_ENV === 'production'
     ? 'https://api.cashfree.com/pg'
     : 'https://sandbox.cashfree.com/pg'
 
