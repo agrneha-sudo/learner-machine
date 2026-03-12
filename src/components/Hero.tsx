@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Brain, GraduationCap, BookOpen, TrendingUp, Rocket, Sparkles } from 'lucide-react'
 
 interface HeroProps {
@@ -22,6 +23,7 @@ function highlightWords(text: string, words: string[]) {
 }
 
 export default function Hero({ videoUrl, settings = {} }: HeroProps) {
+  const heroImageUrl = settings.hero_image_url || null
   const badge        = settings.hero_badge        || 'Available in Hindi & English'
   const headline1    = settings.hero_headline_1   || 'Master AI, Build'
   const headline2    = settings.hero_headline_2   || 'Your Business'
@@ -114,6 +116,8 @@ export default function Hero({ videoUrl, settings = {} }: HeroProps) {
             <div className="relative rounded-2xl overflow-hidden" style={{ background: 'linear-gradient(135deg, #1e1a2e 0%, #2d1f3d 50%, #1a1830 100%)', aspectRatio: '4/3' }}>
               {videoUrl ? (
                 <video src={videoUrl} autoPlay muted loop playsInline className="w-full h-full object-cover" />
+              ) : heroImageUrl ? (
+                <Image src={heroImageUrl} alt="Hero" fill className="object-cover" />
               ) : (
                 <>
                   <div className="absolute inset-0 opacity-30" style={{ background: 'radial-gradient(circle at 60% 40%, #c2520c 0%, transparent 60%)' }} />

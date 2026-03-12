@@ -2,7 +2,8 @@
 
 import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, Loader2, Upload, Trash2, Video } from 'lucide-react'
+import { Check, Loader2, Upload, Trash2, Video, ImageIcon } from 'lucide-react'
+import Image from 'next/image'
 
 export interface HeroSettings {
   hero_badge: string
@@ -49,7 +50,7 @@ const inputStyle = { background: 'var(--bg)', borderColor: 'var(--border)', colo
 const labelClass = 'block text-xs font-semibold mb-1.5 uppercase tracking-wide'
 const labelStyle = { color: 'var(--text-muted)' }
 
-export default function HeroSettingsForm({ initial, currentVideoUrl }: { initial: Partial<HeroSettings>; currentVideoUrl?: string | null }) {
+export default function HeroSettingsForm({ initial, currentVideoUrl, currentImageUrl }: { initial: Partial<HeroSettings>; currentVideoUrl?: string | null; currentImageUrl?: string | null }) {
   const router = useRouter()
   const [form, setForm] = useState<HeroSettings>({ ...DEFAULTS, ...initial })
   const [saving, setSaving] = useState(false)
@@ -59,6 +60,10 @@ export default function HeroSettingsForm({ initial, currentVideoUrl }: { initial
   const [uploadingVideo, setUploadingVideo] = useState(false)
   const [removingVideo, setRemovingVideo] = useState(false)
   const videoInputRef = useRef<HTMLInputElement>(null)
+  const [imageUrl, setImageUrl] = useState<string | null>(currentImageUrl ?? null)
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const [removingImage, setRemovingImage] = useState(false)
+  const imageInputRef = useRef<HTMLInputElement>(null)
 
   const set = (key: keyof HeroSettings, value: string) =>
     setForm(prev => ({ ...prev, [key]: value }))
@@ -117,6 +122,40 @@ export default function HeroSettingsForm({ initial, currentVideoUrl }: { initial
     })
     setVideoUrl(null)
     setRemovingVideo(false)
+    router.refresh()
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingImage(true)
+    setError('')
+    const fd = new FormData()
+    fd.append('file', file)
+    fd.append('slug', 'hero')
+    const uploadRes = await fetch('/api/admin/upload', { method: 'POST', body: fd })
+    const uploadData = await uploadRes.json()
+    if (!uploadRes.ok) { setError(uploadData.error || 'Upload failed'); setUploadingImage(false); return }
+    await fetch('/api/admin/settings', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'hero_image_path', value: uploadData.path }),
+    })
+    setImageUrl(URL.createObjectURL(file))
+    setUploadingImage(false)
+    router.refresh()
+  }
+
+  const handleImageRemove = async () => {
+    if (!confirm('Remove the hero image?')) return
+    setRemovingImage(true)
+    await fetch('/api/admin/settings', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'hero_image_path', value: null }),
+    })
+    setImageUrl(null)
+    setRemovingImage(false)
     router.refresh()
   }
 
@@ -248,6 +287,60 @@ export default function HeroSettingsForm({ initial, currentVideoUrl }: { initial
                 {videoUrl ? 'Click to replace video' : 'Click to upload hero video'}
               </p>
               <p className="text-xs" style={{ color: 'var(--text-muted)' }}>MP4, WebM or MOV · Max 50MB</p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Image / Right Panel */}
+      <div className="card p-6 space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center">
+            <ImageIcon size={20} />
+          </div>
+          <div>
+            <h2 className="font-semibold" style={{ color: 'var(--text-primary)' }}>Hero Image (Right Panel)</h2>
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
+              Shows as static image on the right. Video takes priority if both are set. Recommended: 800×600px.
+            </p>
+          </div>
+        </div>
+
+        {imageUrl && (
+          <div className="rounded-xl overflow-hidden border" style={{ borderColor: 'var(--border)' }}>
+            <div className="relative w-full h-48">
+              <Image src={imageUrl} alt="Hero image" fill className="object-cover" unoptimized />
+            </div>
+            <div className="px-4 py-3 flex items-center justify-between" style={{ backgroundColor: 'var(--bg)' }}>
+              <span className="text-xs text-emerald-500 font-medium flex items-center gap-1">
+                <Check size={12} /> Image active
+              </span>
+              <button onClick={handleImageRemove} disabled={removingImage} className="flex items-center gap-1 text-xs text-red-400 hover:text-red-500">
+                {removingImage ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />}
+                Remove
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div
+          onClick={() => imageInputRef.current?.click()}
+          className="border-2 border-dashed rounded-xl p-8 text-center cursor-pointer hover:border-brand transition-colors"
+          style={{ borderColor: 'var(--border)' }}
+        >
+          <input ref={imageInputRef} type="file" accept="image/png,image/jpg,image/jpeg,image/webp" className="hidden" onChange={handleImageUpload} />
+          {uploadingImage ? (
+            <div className="flex flex-col items-center gap-2">
+              <Loader2 size={28} className="animate-spin text-brand" />
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Uploading image...</p>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <ImageIcon size={28} style={{ color: 'var(--text-muted)' }} />
+              <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                {imageUrl ? 'Click to replace image' : 'Click to upload hero image'}
+              </p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>PNG, JPG or WebP · Recommended 800×600px</p>
             </div>
           )}
         </div>

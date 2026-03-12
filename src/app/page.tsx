@@ -14,7 +14,12 @@ export const dynamic = 'force-dynamic'
 
 async function getHeroSettings(): Promise<Record<string, string>> {
   const { data } = await db.from('site_settings').select('key, value')
-  return Object.fromEntries((data ?? []).map(r => [r.key, r.value ?? '']))
+  const settings = Object.fromEntries((data ?? []).map(r => [r.key, r.value ?? '']))
+  if (settings.hero_image_path) {
+    const { data: signed } = await db.storage.from('product-files').createSignedUrl(settings.hero_image_path, 3600)
+    if (signed?.signedUrl) settings.hero_image_url = signed.signedUrl
+  }
+  return settings
 }
 
 async function getProducts(): Promise<Product[]> {
