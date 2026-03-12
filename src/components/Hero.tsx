@@ -133,41 +133,60 @@ export default function Hero({ videoUrl, settings = {} }: HeroProps) {
           </div>
         </div>
 
-        {/* No-media right panel (only shown when no image/video) */}
-        {!hasMedia && (
-          <div className="hidden lg:flex flex-1 items-center justify-center">
-            <div className="relative w-64 h-64">
-              {[
-                { Icon: GraduationCap, x: '50%', y: '10%', bg: '#1e3a5f', color: '#60a5fa' },
-                { Icon: Brain,         x: '10%', y: '40%', bg: '#1f2d1e', color: '#4ade80' },
-                { Icon: TrendingUp,    x: '75%', y: '55%', bg: '#2d1f1a', color: '#fb923c' },
-                { Icon: BookOpen,      x: '30%', y: '70%', bg: '#2a1f10', color: '#fbbf24' },
-                { Icon: Rocket,        x: '62%', y: '20%', bg: '#1f1a2d', color: '#a78bfa' },
-              ].map(({ Icon, x, y, bg, color }, i) => (
-                <div key={i} className="absolute w-12 h-12 rounded-xl flex items-center justify-center shadow-lg"
-                  style={{ left: x, top: y, transform: 'translate(-50%,-50%)', backgroundColor: bg }}>
-                  <Icon size={22} style={{ color }} />
-                </div>
-              ))}
-              <div className="absolute w-20 h-20 rounded-full opacity-40"
-                style={{ background: 'radial-gradient(circle, #c2520c, transparent)', top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
-            </div>
-          </div>
-        )}
+        {/* Right panel — always shown on desktop */}
+        <div className="hidden lg:flex flex-1 items-center justify-end">
+          <div className="relative w-full max-w-md rounded-3xl overflow-hidden p-8"
+            style={{
+              background: 'radial-gradient(ellipse at 60% 30%, rgba(212,160,23,0.25) 0%, rgba(194,82,12,0.15) 40%, rgba(0,0,0,0) 70%)',
+              border: '1px solid rgba(212,160,23,0.2)',
+              backdropFilter: 'blur(2px)',
+            }}>
 
-        {/* Bottom card — only when no media */}
-        {!hasMedia && (
-          <div className="absolute bottom-8 left-4 sm:left-8 rounded-xl p-4 flex items-center gap-3 hidden lg:flex"
-            style={{ backgroundColor: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(8px)' }}>
-            <div className="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center shrink-0">
-              <Sparkles size={18} style={{ color: 'var(--brand)' }} />
-            </div>
-            <div>
-              <div className="font-semibold text-sm text-white">{cardTitle}</div>
-              <div className="text-xs" style={{ color: '#a8a29e' }}>{cardSubtitle}</div>
+            {/* Golden glow blob */}
+            <div className="absolute top-0 right-0 w-64 h-64 rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle, rgba(212,160,23,0.3) 0%, transparent 70%)', transform: 'translate(30%, -30%)' }} />
+
+            <div className="relative z-10">
+              <p className="text-xs font-bold uppercase tracking-widest mb-5" style={{ color: '#d4a017' }}>
+                ✦ What You'll Unlock
+              </p>
+
+              <div className="space-y-4">
+                {[
+                  { icon: '🚀', title: 'Start Earning in 30 Days', sub: 'Step-by-step prompts to launch your side hustle fast' },
+                  { icon: '🤖', title: '200+ Ready-to-Use AI Prompts', sub: 'Copy-paste prompts for business, content & growth' },
+                  { icon: '🇮🇳', title: 'Made for India', sub: 'Hindi + English — built for the Indian market' },
+                  { icon: '⚡', title: 'Instant Download', sub: 'PDF delivered to your inbox the moment you pay' },
+                ].map((h, i) => (
+                  <div key={i} className="flex items-start gap-4 p-4 rounded-2xl"
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
+                    <span className="text-2xl shrink-0">{h.icon}</span>
+                    <div>
+                      <div className="font-bold text-sm text-white mb-0.5">{h.title}</div>
+                      <div className="text-xs leading-relaxed" style={{ color: '#78716c' }}>{h.sub}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Social proof */}
+              <div className="mt-6 flex items-center gap-3 pt-5"
+                style={{ borderTop: '1px solid rgba(212,160,23,0.15)' }}>
+                <div className="flex -space-x-2">
+                  {['🧑', '👩', '👨', '🧑'].map((e, i) => (
+                    <div key={i} className="w-8 h-8 rounded-full flex items-center justify-center text-sm border-2 border-black"
+                      style={{ background: '#1a1a1a' }}>{e}</div>
+                  ))}
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-white">{cardTitle}</div>
+                  <div className="text-xs" style={{ color: '#d4a017' }}>{cardSubtitle}</div>
+                </div>
+                <Sparkles size={16} className="ml-auto" style={{ color: '#d4a017' }} />
+              </div>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </section>
   )
