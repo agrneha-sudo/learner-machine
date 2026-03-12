@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { Check, Loader2 } from 'lucide-react'
+import { Check, Loader2, Upload, Trash2, Video } from 'lucide-react'
 
 export interface HeroSettings {
   hero_badge: string
@@ -49,12 +49,16 @@ const inputStyle = { background: 'var(--bg)', borderColor: 'var(--border)', colo
 const labelClass = 'block text-xs font-semibold mb-1.5 uppercase tracking-wide'
 const labelStyle = { color: 'var(--text-muted)' }
 
-export default function HeroSettingsForm({ initial }: { initial: Partial<HeroSettings> }) {
+export default function HeroSettingsForm({ initial, currentVideoUrl }: { initial: Partial<HeroSettings>; currentVideoUrl?: string | null }) {
   const router = useRouter()
   const [form, setForm] = useState<HeroSettings>({ ...DEFAULTS, ...initial })
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
   const [error, setError] = useState('')
+  const [videoUrl, setVideoUrl] = useState<string | null>(currentVideoUrl ?? null)
+  const [uploadingVideo, setUploadingVideo] = useState(false)
+  const [removingVideo, setRemovingVideo] = useState(false)
+  const videoInputRef = useRef<HTMLInputElement>(null)
 
   const set = (key: keyof HeroSettings, value: string) =>
     setForm(prev => ({ ...prev, [key]: value }))
@@ -80,6 +84,40 @@ export default function HeroSettingsForm({ initial }: { initial: Partial<HeroSet
       setError('Failed to save settings')
     }
     setSaving(false)
+  }
+
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploadingVideo(true)
+    setError('')
+    const fd = new FormData()
+    fd.append('file', file)
+    fd.append('slug', 'hero')
+    const uploadRes = await fetch('/api/admin/upload', { method: 'POST', body: fd })
+    const uploadData = await uploadRes.json()
+    if (!uploadRes.ok) { setError(uploadData.error || 'Upload failed'); setUploadingVideo(false); return }
+    await fetch('/api/admin/settings', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'hero_video_path', value: uploadData.path }),
+    })
+    setVideoUrl(URL.createObjectURL(file))
+    setUploadingVideo(false)
+    router.refresh()
+  }
+
+  const handleVideoRemove = async () => {
+    if (!confirm('Remove the hero video? The animated graphic will show instead.')) return
+    setRemovingVideo(true)
+    await fetch('/api/admin/settings', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ key: 'hero_video_path', value: null }),
+    })
+    setVideoUrl(null)
+    setRemovingVideo(false)
+    router.refresh()
   }
 
   return (
@@ -162,6 +200,56 @@ export default function HeroSettingsForm({ initial }: { initial: Partial<HeroSet
             <label className={labelClass} style={labelStyle}>Subtitle</label>
             <input className={inputClass} style={inputStyle} value={form.hero_card_subtitle} onChange={e => set('hero_card_subtitle', e.target.value)} />
           </div>
+        </div>
+      </div>
+
+      {/* Video / Right Panel */}
+      <div className="card p-6 space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center">
+            <Video size={20} />
+          </div>
+          <div>
+            <h2 className="font-semibold" style={{ color: 'var(--text-primary)' }}>Hero Video (Right Panel)</h2>
+            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Plays silently on the right side. If none, the animated graphic shows instead.</p>
+          </div>
+        </div>
+
+        {videoUrl && (
+          <div className="rounded-xl overflow-hidden border" style={{ borderColor: 'var(--border)' }}>
+            <video src={videoUrl} className="w-full h-48 object-cover" autoPlay muted loop playsInline />
+            <div className="px-4 py-3 flex items-center justify-between" style={{ backgroundColor: 'var(--bg)' }}>
+              <span className="text-xs text-emerald-500 font-medium flex items-center gap-1">
+                <Check size={12} /> Video active
+              </span>
+              <button onClick={handleVideoRemove} disabled={removingVideo} className="flex items-center gap-1 text-xs text-red-400 hover:text-red-500">
+                {removingVideo ? <Loader2 size={12} className="animate-spin" /> : <Trash2 size={12} />}
+                Remove
+              </button>
+            </div>
+          </div>
+        )}
+
+        <div
+          onClick={() => videoInputRef.current?.click()}
+          className="border-2 border-dashed rounded-xl p-8 text-center cursor-pointer hover:border-brand transition-colors"
+          style={{ borderColor: 'var(--border)' }}
+        >
+          <input ref={videoInputRef} type="file" accept="video/mp4,video/webm,video/mov" className="hidden" onChange={handleVideoUpload} />
+          {uploadingVideo ? (
+            <div className="flex flex-col items-center gap-2">
+              <Loader2 size={28} className="animate-spin text-brand" />
+              <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>Uploading video...</p>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center gap-2">
+              <Upload size={28} style={{ color: 'var(--text-muted)' }} />
+              <p className="text-sm font-medium" style={{ color: 'var(--text-primary)' }}>
+                {videoUrl ? 'Click to replace video' : 'Click to upload hero video'}
+              </p>
+              <p className="text-xs" style={{ color: 'var(--text-muted)' }}>MP4, WebM or MOV · Max 50MB</p>
+            </div>
+          )}
         </div>
       </div>
 

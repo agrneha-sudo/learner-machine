@@ -5,7 +5,15 @@ export const dynamic = 'force-dynamic'
 
 export default async function AdminHeroPage() {
   const { data } = await db.from('site_settings').select('key, value')
-  const settings = Object.fromEntries((data ?? []).map(r => [r.key, r.value])) as Partial<HeroSettings>
+  const settings = Object.fromEntries((data ?? []).map(r => [r.key, r.value])) as Partial<HeroSettings> & { hero_video_path?: string }
+
+  let currentVideoUrl: string | null = null
+  if (settings.hero_video_path) {
+    const { data: signed } = await db.storage
+      .from('product-files')
+      .createSignedUrl(settings.hero_video_path, 3600)
+    currentVideoUrl = signed?.signedUrl ?? null
+  }
 
   return (
     <div className="p-6 max-w-3xl">
@@ -14,10 +22,10 @@ export default async function AdminHeroPage() {
           Hero Section
         </h1>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Edit the homepage hero — headline, description, stats, and more
+          Edit the homepage hero — headline, description, stats, video and more
         </p>
       </div>
-      <HeroSettingsForm initial={settings} />
+      <HeroSettingsForm initial={settings} currentVideoUrl={currentVideoUrl} />
     </div>
   )
 }
