@@ -59,7 +59,7 @@ export default function Topics() {
             const Icon = t.icon
             return (
               <div key={t.title} className="card p-7"
-                style={t.highlight ? { backgroundColor: t.highlightBg } : {}}>
+                style={{}}>
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
                   style={{ backgroundColor: t.iconBg }}>
                   <Icon size={22} style={{ color: t.iconColor }} />
