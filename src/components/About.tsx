@@ -36,7 +36,7 @@ export default function About() {
         </div>
 
         {/* Goal box */}
-        <div className="mt-8 p-6 rounded-2xl" style={{ backgroundColor: '#fde8d8' }}>
+        <div className="mt-8 p-6 rounded-2xl" style={{ backgroundColor: '#1a0e05', border: '1px solid #2a1a0a' }}>
           <p className="section-label mb-3">OUR GOAL IS SIMPLE</p>
           <p className="text-base leading-relaxed font-medium" style={{ color: 'var(--text-primary)' }}>
             To help students, professionals, and aspiring entrepreneurs understand how modern tools like AI

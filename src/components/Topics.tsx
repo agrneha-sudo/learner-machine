@@ -6,8 +6,8 @@ const topics = [
     title: 'AI for Beginners',
     hindi: 'शुरुआती लोगों के लिए AI',
     description: 'Demystifying artificial intelligence with simple, practical lessons. Learn ChatGPT, AI tools, prompt engineering, and automation — no coding required.',
-    iconBg: '#dbeafe',
-    iconColor: '#2563eb',
+    iconBg: '#0f1e3a',
+    iconColor: '#60a5fa',
     highlight: false,
   },
   {
@@ -15,8 +15,8 @@ const topics = [
     title: 'Small Business',
     hindi: 'छोटा बिज़नेस',
     description: 'Everything you need to start and manage a small business in India. From GST and compliance to marketing and customer acquisition strategies.',
-    iconBg: '#d1fae5',
-    iconColor: '#059669',
+    iconBg: '#0a1f14',
+    iconColor: '#34d399',
     highlight: false,
   },
   {
@@ -24,8 +24,8 @@ const topics = [
     title: 'Entrepreneurship',
     hindi: 'उद्यमिता',
     description: 'Build a founder mindset. Learn idea validation, business planning, fundraising basics, and scaling strategies from real entrepreneurs.',
-    iconBg: '#fde8d8',
-    iconColor: '#c2520c',
+    iconBg: '#2a1005',
+    iconColor: '#fb923c',
     highlight: false,
   },
   {
@@ -33,10 +33,9 @@ const topics = [
     title: 'Side Hustle',
     hindi: 'साइड हसल',
     description: 'Turn your skills into income. Discover proven side hustle ideas, freelancing tips, and passive income strategies that work in India.',
-    iconBg: '#fce7f3',
-    iconColor: '#db2777',
-    highlight: true,
-    highlightBg: '#fdf2f8',
+    iconBg: '#2a0a1a',
+    iconColor: '#f472b6',
+    highlight: false,
   },
 ]
 
