@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnerMachine — 4-Week Audience-Sensitive Content Calendar</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --brand:#c2520c; --brand-light:#fff8f5;
+    --dark:#1c1917; --text:#292524; --muted:#78716c;
+    --border:#e8e0d8; --bg:#faf8f5; --card:#ffffff;
+    --face:#7c3aed; --face-light:#f5f3ff;
+    --carousel:#0369a1; --carousel-light:#f0f9ff;
+    --tl:#064e3b; --tl-light:#ecfdf5;
+    --student:#0e7490; --student-light:#ecfeff;
+    --pro:#7c3aed; --pro-light:#f5f3ff;
+    --biz:#c2520c; --biz-light:#fff8f5;
+    --all:#374151; --all-light:#f9fafb;
+  }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); font-size:10.5pt; line-height:1.7; }
+
+  /* COVER */
+  .cover { background:var(--dark); padding:70px 80px; position:relative; overflow:hidden; }
+  .cover::before { content:''; position:absolute; right:-100px; top:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(194,82,12,.25) 0%,transparent 70%); }
+  .cover::after { content:''; position:absolute; left:-60px; bottom:-60px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(194,82,12,.12) 0%,transparent 70%); }
+  .cover-eyebrow { font-size:9pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--brand); margin-bottom:20px; position:relative; z-index:1; }
+  .cover h1 { font-family:'Playfair Display',serif; font-size:40pt; color:#faf8f5; line-height:1.12; margin-bottom:18px; position:relative; z-index:1; }
+  .cover h1 span { color:#fb923c; }
+  .cover-sub { font-size:12pt; color:#a8a29e; max-width:580px; margin-bottom:44px; position:relative; z-index:1; line-height:1.7; }
+  .audience-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; position:relative; z-index:1; margin-bottom:40px; }
+  .aud-card { border-radius:14px; padding:22px 24px; }
+  .aud-student { background:rgba(14,116,144,.15); border:1px solid rgba(14,116,144,.35); }
+  .aud-pro { background:rgba(124,58,237,.15); border:1px solid rgba(124,58,237,.35); }
+  .aud-biz { background:rgba(194,82,12,.15); border:1px solid rgba(194,82,12,.35); }
+  .aud-card .aud-label { font-size:8.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+  .aud-student .aud-label { color:#22d3ee; }
+  .aud-pro .aud-label { color:#a78bfa; }
+  .aud-biz .aud-label { color:#fb923c; }
+  .aud-card h3 { font-size:13pt; font-weight:700; color:#faf8f5; margin-bottom:8px; }
+  .aud-card p { font-size:9.5pt; color:#a8a29e; line-height:1.6; }
+  .aud-card .fear { font-size:9pt; color:#6b7280; font-style:italic; margin-top:8px; }
+
+  /* MONTH GRID */
+  .month-grid { padding:52px 80px; border-bottom:2px solid var(--border); }
+  .mg-eyebrow { font-size:8.5pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--brand); margin-bottom:12px; }
+  .mg-title { font-family:'Playfair Display',serif; font-size:26pt; color:var(--dark); margin-bottom:28px; }
+  .cal-table { width:100%; border-collapse:collapse; margin-bottom:20px; }
+  .cal-table th { background:var(--dark); color:#faf8f5; padding:10px 14px; font-size:9pt; font-weight:600; text-align:center; }
+  .cal-table td { border:1px solid var(--border); padding:10px 12px; vertical-align:top; min-height:60px; width:14.28%; }
+  .cal-week-label { background:var(--dark); color:#fb923c; padding:8px 14px; font-size:8pt; font-weight:800; letter-spacing:2px; text-transform:uppercase; text-align:left; }
+  .cal-day-num { font-size:8pt; font-weight:800; color:var(--muted); margin-bottom:4px; }
+  .cal-topic { font-size:8.5pt; font-weight:600; color:var(--dark); line-height:1.4; margin-bottom:4px; }
+  .cal-tag { display:inline-block; font-size:7pt; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:.5px; }
+  .ct-student { background:var(--student-light); color:var(--student); }
+  .ct-pro { background:var(--pro-light); color:var(--pro); }
+  .ct-biz { background:var(--biz-light); color:var(--biz); }
+  .ct-all { background:var(--all-light); color:var(--all); }
+  .ct-face { background:#f5f3ff; color:#7c3aed; }
+  .ct-carousel { background:#f0f9ff; color:#0369a1; }
+
+  /* WEEK HEADER */
+  .week-header { background:var(--dark); padding:40px 80px 32px; }
+  .wh-eyebrow { font-size:8.5pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--brand); margin-bottom:10px; }
+  .wh-title { font-family:'Playfair Display',serif; font-size:28pt; color:#faf8f5; margin-bottom:10px; line-height:1.2; }
+  .wh-sub { font-size:11pt; color:#a8a29e; max-width:640px; line-height:1.7; margin-bottom:24px; }
+  .wh-table { width:100%; border-collapse:collapse; }
+  .wh-table th { background:rgba(255,255,255,.06); color:#78716c; padding:8px 14px; font-size:8.5pt; text-align:left; border-bottom:1px solid rgba(255,255,255,.08); }
+  .wh-table td { padding:9px 14px; font-size:9.5pt; color:#a8a29e; border-bottom:1px solid rgba(255,255,255,.05); vertical-align:middle; }
+  .wh-table td strong { color:#e7e5e4; }
+  .wh-table tr:last-child td { border-bottom:none; }
+
+  /* DAY */
+  .day-wrap { padding:48px 80px; border-bottom:3px solid var(--border); }
+  .day-top { display:flex; align-items:flex-start; gap:22px; margin-bottom:28px; }
+  .day-badge { width:68px; height:68px; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; }
+  .db-face { background:var(--face); }
+  .db-carousel { background:var(--carousel); }
+  .db-tl { background:var(--tl); }
+  .day-badge .dn { font-size:22pt; font-weight:900; color:white; line-height:1; }
+  .day-badge .dl { font-size:7.5pt; font-weight:700; color:rgba(255,255,255,.7); letter-spacing:1px; text-transform:uppercase; }
+  .day-meta { flex:1; }
+  .day-type-badge { display:inline-flex; align-items:center; gap:7px; font-size:8.5pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:5px 14px; border-radius:100px; margin-bottom:8px; }
+  .dtb-face { background:var(--face-light); color:var(--face); border:1px solid #ddd6fe; }
+  .dtb-carousel { background:var(--carousel-light); color:var(--carousel); border:1px solid #bae6fd; }
+  .dtb-tl { background:var(--tl-light); color:var(--tl); border:1px solid #a7f3d0; }
+  .day-meta h2 { font-family:'Playfair Display',serif; font-size:22pt; color:var(--dark); line-height:1.2; margin-bottom:6px; }
+  .day-meta .day-sub { font-size:10.5pt; color:var(--muted); }
+  .post-time-pill { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:9pt; font-weight:600; color:var(--muted); white-space:nowrap; align-self:flex-start; }
+
+  /* AUDIENCE TAG */
+  .aud-tag { display:inline-flex; align-items:center; gap:6px; font-size:8.5pt; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 12px; border-radius:100px; margin-bottom:14px; }
+  .at-student { background:var(--student-light); color:var(--student); border:1px solid #a5f3fc; }
+  .at-pro { background:var(--pro-light); color:var(--pro); border:1px solid #ddd6fe; }
+  .at-biz { background:var(--biz-light); color:var(--biz); border:1px solid #fed7aa; }
+  .at-all { background:var(--all-light); color:var(--all); border:1px solid #e5e7eb; }
+
+  /* PAIN POINT BOX */
+  .pain-box { border-radius:10px; padding:14px 18px; margin-bottom:16px; }
+  .pb-student { background:var(--student-light); border:1px solid #a5f3fc; }
+  .pb-pro { background:var(--pro-light); border:1px solid #ddd6fe; }
+  .pb-biz { background:var(--biz-light); border:1px solid #fed7aa; }
+  .pb-all { background:var(--all-light); border:1px solid #e5e7eb; }
+  .pain-lbl { font-size:8pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
+  .pb-student .pain-lbl { color:var(--student); }
+  .pb-pro .pain-lbl { color:var(--pro); }
+  .pb-biz .pain-lbl { color:var(--biz); }
+  .pb-all .pain-lbl { color:var(--all); }
+  .pain-box p { font-size:10pt; line-height:1.6; }
+  .pb-student p { color:#164e63; }
+  .pb-pro p { color:#4c1d95; }
+  .pb-biz p { color:#7c2d12; }
+  .pb-all p { color:#374151; }
+
+  /* SHOOT BOX */
+  .shoot-box { background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:16px 20px; margin-bottom:20px; }
+  .shoot-lbl { font-size:8pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#92400e; margin-bottom:10px; }
+  .shoot-box ul { list-style:none; padding:0; }
+  .shoot-box ul li { font-size:10pt; color:#78350f; padding:4px 0; display:flex; gap:8px; }
+  .shoot-box ul li::before { content:'→'; color:#d97706; font-weight:700; flex-shrink:0; }
+
+  /* SCRIPT */
+  .script-wrap { background:var(--dark); border-radius:14px; padding:28px 32px; margin-bottom:20px; }
+  .script-label { font-size:8pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--brand); margin-bottom:16px; }
+  .script-beat { margin-bottom:20px; }
+  .beat-tag { display:inline-block; font-size:8pt; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:4px; margin-bottom:8px; }
+  .bt-hook { background:rgba(251,146,60,.15); color:#fb923c; }
+  .bt-build { background:rgba(167,139,250,.15); color:#a78bfa; }
+  .bt-insight { background:rgba(52,211,153,.15); color:#34d399; }
+  .bt-cta { background:rgba(194,82,12,.2); color:#fb923c; }
+  .bt-conflict { background:rgba(248,113,113,.15); color:#f87171; }
+  .bt-pivot { background:rgba(96,165,250,.15); color:#60a5fa; }
+  .script-wrap p { font-size:10.5pt; color:#e7e5e4; line-height:1.85; margin-bottom:8px; }
+  .script-wrap p:last-child { margin-bottom:0; }
+  .script-wrap em { color:#a78bfa; font-style:normal; font-weight:600; }
+  .script-wrap mark { background:rgba(194,82,12,.25); color:#fb923c; border-radius:3px; padding:1px 5px; }
+
+  /* SLIDES */
+  .slides-row { display:grid; gap:12px; margin-bottom:20px; }
+  .slides-5 { grid-template-columns:repeat(5,1fr); }
+  .slides-4 { grid-template-columns:repeat(4,1fr); }
+  .slides-6 { grid-template-columns:repeat(6,1fr); }
+  .slide-card { background:var(--card); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .slide-num { padding:6px 12px; font-size:8pt; font-weight:800; text-align:center; color:white; }
+  .sn-blue { background:var(--carousel); }
+  .sn-dark { background:var(--dark); }
+  .sn-brand { background:var(--brand); }
+  .sn-student { background:var(--student); }
+  .sn-pro { background:var(--pro); }
+  .slide-body { padding:13px 15px; }
+  .slide-title { font-size:9.5pt; font-weight:700; color:var(--dark); margin-bottom:6px; line-height:1.3; }
+  .slide-body p { font-size:8.5pt; color:var(--muted); line-height:1.5; }
+  .slide-body strong { color:var(--brand); }
+
+  /* GRID */
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:20px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:22px 24px; }
+  .card h3 { font-size:12pt; font-weight:700; color:var(--dark); margin-bottom:10px; }
+  .card p { font-size:10pt; color:var(--text); line-height:1.6; margin-bottom:8px; }
+  .card p:last-child { margin-bottom:0; }
+
+  /* CAPTION */
+  .caption-box { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:14px; }
+  .caption-lbl { font-size:8pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .caption-box p { font-size:10pt; color:var(--text); line-height:1.75; }
+
+  /* HASHTAGS */
+  .hashtag-box { font-size:9pt; color:var(--carousel); font-weight:500; line-height:1.9; padding:12px 16px; background:var(--carousel-light); border-radius:8px; margin-bottom:16px; }
+
+  /* STORIES */
+  .story-row { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .story-item { display:flex; align-items:flex-start; gap:10px; background:#f5f3ff; border:1px solid #ddd6fe; border-radius:8px; padding:10px 14px; flex:1; min-width:180px; }
+  .story-time { font-size:8.5pt; font-weight:800; color:var(--face); white-space:nowrap; min-width:40px; }
+  .story-text { font-size:9.5pt; color:var(--text); line-height:1.5; }
+
+  /* CALLOUT */
+  .callout { border-left:4px solid var(--brand); background:var(--brand-light); padding:16px 22px; margin:16px 0; border-radius:0 10px 10px 0; }
+  .callout p { font-size:10.5pt; color:var(--text); margin:0; }
+  .tl-callout { border-left:4px solid var(--tl); background:var(--tl-light); padding:16px 22px; margin:16px 0; border-radius:0 10px 10px 0; }
+  .tl-callout p { font-size:10.5pt; color:#064e3b; margin:0; }
+
+  /* CONTENT BLOCK */
+  .content-block { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px; }
+  .block-hdr { padding:11px 18px; font-size:8.5pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+  .bh-neutral { background:var(--bg); color:var(--muted); }
+  .bh-tl { background:var(--tl-light); color:var(--tl); }
+  .bh-brand { background:var(--brand-light); color:var(--brand); }
+  .bh-face { background:var(--face-light); color:var(--face); }
+  .bh-blue { background:var(--carousel-light); color:var(--carousel); }
+  .block-body { padding:16px 18px; }
+  .block-body p { font-size:10pt; color:var(--text); margin-bottom:9px; }
+  .block-body p:last-child { margin-bottom:0; }
+  .block-body strong { color:var(--dark); }
+
+  table { width:100%; border-collapse:collapse; margin-bottom:20px; font-size:10pt; }
+  th { background:var(--dark); color:#faf8f5; padding:11px 16px; text-align:left; font-size:9pt; font-weight:600; }
+  td { padding:10px 16px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:top; }
+  tr:nth-child(even) td { background:#faf8f5; }
+  tr:last-child td { border-bottom:none; }
+
+  @media print { .day-wrap { page-break-after:always; } .week-header { page-break-before:always; } }
+</style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-eyebrow">LearnerMachine — Complete Month Content System</div>
+  <h1>4 Weeks.<br><span>3 Audiences.</span><br>One Brand.</h1>
+  <p class="cover-sub">Every post in this calendar is built around a specific audience's fears, ambitions, and language. Students, professionals, and small business owners each get content that speaks directly to them — while the founder's voice stays consistent throughout.</p>
+
+  <div class="audience-grid">
+    <div class="aud-card aud-student">
+      <div class="aud-label">🎓 Audience 1</div>
+      <h3>Students</h3>
+      <p>Graduating into an AI-first world. Afraid their degree won't matter. Want an edge before their peers get one.</p>
+      <p class="fear">Core fear: "Am I already behind?" Core desire: "Show me how to be 3 years ahead."</p>
+    </div>
+    <div class="aud-card aud-pro">
+      <div class="aud-label">💼 Audience 2</div>
+      <h3>Professionals</h3>
+      <p>Mid-career. Seeing AI enter their industry. Fear of irrelevance or replacement. Too busy to take a course.</p>
+      <p class="fear">Core fear: "Will I be replaced?" Core desire: "Tell me what I need to do to stay relevant."</p>
+    </div>
+    <div class="aud-card aud-biz">
+      <div class="aud-label">🏪 Audience 3</div>
+      <h3>Small Business Owners</h3>
+      <p>Time-poor, resource-constrained. Watching big companies use AI. Want real ROI, not theory.</p>
+      <p class="fear">Core fear: "Big companies will leave me behind." Core desire: "Give me something I can use TODAY."</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== REVENUE ARCHITECTURE ==================== -->
+<div style="padding:52px 80px; border-bottom:2px solid var(--border); background:#fff;">
+  <div style="font-size:8.5pt;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--brand);margin-bottom:12px;">Revenue Architecture</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:26pt;color:var(--dark);margin-bottom:8px;">The Content-to-Revenue Funnel</h2>
+  <p style="font-size:11pt;color:var(--muted);margin-bottom:32px;max-width:640px;">Every post has a job. Some build awareness. Some capture leads. Some convert. The mistake most creators make: treating all 28 posts the same. This calendar doesn't.</p>
+
+  <!-- FUNNEL LADDER -->
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:32px;border-radius:14px;overflow:hidden;border:1px solid var(--border);">
+    <div style="background:#1c1917;padding:22px 20px;text-align:center;">
+      <div style="font-size:20pt;margin-bottom:8px;">🎁</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#16a34a;margin-bottom:6px;">Step 1 — Free</div>
+      <div style="font-size:11pt;font-weight:700;color:#faf8f5;margin-bottom:4px;">7 Prompts PDF</div>
+      <div style="font-size:9pt;color:#78716c;line-height:1.5;">Free download. Captures leads. Warms cold audience into buyers.</div>
+      <div style="margin-top:10px;background:#16a34a;color:white;font-size:8pt;font-weight:700;padding:4px 10px;border-radius:4px;display:inline-block;">FREE</div>
+    </div>
+    <div style="background:#faf8f5;border-left:1px solid var(--border);padding:22px 20px;text-align:center;">
+      <div style="font-size:20pt;margin-bottom:8px;">📘</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--student);margin-bottom:6px;">Step 2 — Entry</div>
+      <div style="font-size:11pt;font-weight:700;color:var(--dark);margin-bottom:4px;">AI for Beginners Ebook</div>
+      <div style="font-size:9pt;color:var(--muted);line-height:1.5;">English &amp; Hindi. First paid product. Low friction for all three audiences.</div>
+      <div style="margin-top:10px;background:var(--student);color:white;font-size:8pt;font-weight:700;padding:4px 10px;border-radius:4px;display:inline-block;">PRIMARY PRODUCT NOW</div>
+    </div>
+    <div style="background:#faf8f5;border-left:1px solid var(--border);padding:22px 20px;text-align:center;">
+      <div style="font-size:20pt;margin-bottom:8px;">🎓</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--carousel);margin-bottom:6px;">Step 3 — Mid</div>
+      <div style="font-size:11pt;font-weight:700;color:var(--dark);margin-bottom:4px;">Online Course</div>
+      <div style="font-size:9pt;color:var(--muted);line-height:1.5;">Self-paced. Students + professionals. Practical AI implementation.</div>
+      <div style="margin-top:10px;background:var(--carousel-light);color:var(--carousel);font-size:8pt;font-weight:700;padding:4px 10px;border-radius:4px;border:1px solid #bae6fd;display:inline-block;">COURSE</div>
+    </div>
+    <div style="background:#faf8f5;border-left:1px solid var(--border);padding:22px 20px;text-align:center;">
+      <div style="font-size:20pt;margin-bottom:8px;">🏋️</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--pro);margin-bottom:6px;">Step 4 — Premium</div>
+      <div style="font-size:11pt;font-weight:700;color:var(--dark);margin-bottom:4px;">Live Training</div>
+      <div style="font-size:9pt;color:var(--muted);line-height:1.5;">Cohort or team training. Professionals + business owners who want guided implementation.</div>
+      <div style="margin-top:10px;background:var(--pro-light);color:var(--pro);font-size:8pt;font-weight:700;padding:4px 10px;border-radius:4px;border:1px solid #ddd6fe;display:inline-block;">TRAINING</div>
+    </div>
+    <div style="background:var(--dark);border-left:1px solid rgba(255,255,255,.1);padding:22px 20px;text-align:center;">
+      <div style="font-size:20pt;margin-bottom:8px;">🤝</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--brand);margin-bottom:6px;">Step 5 — High Ticket</div>
+      <div style="font-size:11pt;font-weight:700;color:#faf8f5;margin-bottom:4px;">1:1 Consulting</div>
+      <div style="font-size:9pt;color:#78716c;line-height:1.5;">Business owners + senior professionals. Custom AI roadmap for their business.</div>
+      <div style="margin-top:10px;background:rgba(194,82,12,.2);color:#fb923c;font-size:8pt;font-weight:700;padding:4px 10px;border-radius:4px;border:1px solid rgba(194,82,12,.4);display:inline-block;">CONSULTING</div>
+    </div>
+  </div>
+
+  <!-- CTA TYPE LEGEND -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-bottom:28px;">
+    <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px 16px;">
+      <div style="font-size:8pt;font-weight:700;color:#16a34a;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">🌱 Awareness CTA</div>
+      <p style="font-size:9.5pt;color:#14532d;line-height:1.6;">No product mention. Pure value. Ends with a question or follow prompt. <em>Goal: reach + follow.</em></p>
+    </div>
+    <div style="background:#f0f9ff;border:1px solid #7dd3fc;border-radius:10px;padding:14px 16px;">
+      <div style="font-size:8pt;font-weight:700;color:#0369a1;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">🎁 Lead Gen CTA</div>
+      <p style="font-size:9.5pt;color:#0c4a6e;line-height:1.6;">Soft mention of free PDF. "Link in bio." No pressure. <em>Goal: email/lead capture.</em></p>
+    </div>
+    <div style="background:#fff7ed;border:1px solid #fcd34d;border-radius:10px;padding:14px 16px;">
+      <div style="font-size:8pt;font-weight:700;color:#92400e;letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">📘 Soft Sell CTA</div>
+      <p style="font-size:9.5pt;color:#78350f;line-height:1.6;">Mention ebook naturally. "I wrote a full guide on this." <em>Goal: ebook purchases.</em></p>
+    </div>
+    <div style="background:var(--brand-light);border:1px solid #fed7aa;border-radius:10px;padding:14px 16px;">
+      <div style="font-size:8pt;font-weight:700;color:var(--brand);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;">🔥 Hard Sell CTA</div>
+      <p style="font-size:9.5pt;color:#7c2d12;line-height:1.6;">Direct product mention with DM trigger word or link. <em>Goal: course/training/consulting.</em></p>
+    </div>
+  </div>
+
+  <!-- 28-DAY CTA MAP TABLE -->
+  <h3 style="font-family:'Playfair Display',serif;font-size:16pt;color:var(--dark);margin-bottom:16px;">28-Day CTA Map</h3>
+  <table>
+    <tr><th>Day</th><th>Title</th><th>Aud.</th><th>CTA Type</th><th>Product</th><th>Caption CTA — Website + DM</th></tr>
+    <tr><td><strong>1 Mon</strong></td><td>The Founder Who Stopped</td><td>All</td><td><span style="background:#f0fdf4;color:#16a34a;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Awareness</span></td><td>—</td><td>"What's your biggest AI question? 👇 learnermachine.com"</td></tr>
+    <tr><td><strong>2 Tue</strong></td><td>AI's 70-Year History</td><td>All</td><td><span style="background:#f0f9ff;color:#0369a1;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Lead Gen</span></td><td>7 Prompts PDF</td><td>"Free PDF at learnermachine.com — or DM PROMPTS for direct link"</td></tr>
+    <tr style="background:#ecfeff;"><td><strong>3 Wed</strong></td><td>Your Degree Isn't Obsolete</td><td>Students</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>AI for Beginners Ebook</td><td>"Ebook at learnermachine.com — DM EBOOK for direct link"</td></tr>
+    <tr style="background:#f5f3ff;"><td><strong>4 Thu</strong></td><td>5 Stages of Pro AI Anxiety</td><td>Pros</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>AI for Beginners Ebook</td><td>"learnermachine.com — DM EBOOK for direct link"</td></tr>
+    <tr style="background:#fff8f5;"><td><strong>5 Fri</strong></td><td>Big Companies Spend Crores</td><td>Biz</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Course / Consulting</td><td>"learnermachine.com — DM CONSULT for personalised help"</td></tr>
+    <tr><td><strong>6 Sat</strong></td><td>Gen AI vs Old AI</td><td>All</td><td><span style="background:#f0f9ff;color:#0369a1;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Lead Gen</span></td><td>7 Prompts PDF</td><td>"Free PDF at learnermachine.com — DM PROMPTS for direct link"</td></tr>
+    <tr><td><strong>7 Sun</strong></td><td>Why LearnerMachine</td><td>All</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>Full Store</td><td>"learnermachine.com — DM EBOOK or COURSE to jump straight in"</td></tr>
+    <tr><td><strong>8 Mon</strong></td><td>You Won't Lose Your Job</td><td>All</td><td><span style="background:#f0f9ff;color:#0369a1;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Lead Gen</span></td><td>7 Prompts PDF</td><td>"Free PDF at learnermachine.com — DM PROMPTS for direct link"</td></tr>
+    <tr style="background:#ecfeff;"><td><strong>9 Tue</strong></td><td>6 AI Skills — Unhireable</td><td>Students</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>AI for Beginners Ebook</td><td>"Ebook at learnermachine.com — DM EBOOK for direct link"</td></tr>
+    <tr style="background:#f5f3ff;"><td><strong>10 Wed</strong></td><td>What I Tell Scared Pros</td><td>Pros</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Course / Training</td><td>"The course and training are at learnermachine.com — built for professionals ready to act."</td></tr>
+    <tr style="background:#fff8f5;"><td><strong>11 Thu</strong></td><td>5 Things Small Biz Can Do</td><td>Biz</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Course / Consulting</td><td>"The course + consulting options are at learnermachine.com."</td></tr>
+    <tr><td><strong>12 Fri</strong></td><td>My 5 AI Morning Tasks</td><td>All</td><td><span style="background:#f0f9ff;color:#0369a1;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Lead Gen</span></td><td>7 Prompts PDF</td><td>"Free PDF at learnermachine.com — DM PROMPTS for direct link"</td></tr>
+    <tr style="background:#fff8f5;"><td><strong>13 Sat</strong></td><td>AI Idea Generation — 4 Prompts</td><td>Biz+Pro</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Course</td><td>"learnermachine.com — DM COURSE for direct link"</td></tr>
+    <tr><td><strong>14 Sun</strong></td><td>The Mission</td><td>All</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>Full Store</td><td>"learnermachine.com — DM EBOOK, COURSE, or TRAINING"</td></tr>
+    <tr><td><strong>15 Mon</strong></td><td>3 Ways AI Changes Industries</td><td>All</td><td><span style="background:#f0f9ff;color:#0369a1;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Lead Gen</span></td><td>7 Prompts PDF</td><td>"Free PDF at learnermachine.com — DM PROMPTS for direct link"</td></tr>
+    <tr style="background:#ecfeff;"><td><strong>16 Tue</strong></td><td>5 AI Workflows for College</td><td>Students</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>AI for Beginners Ebook</td><td>"Ebook at learnermachine.com — DM EBOOK for direct link"</td></tr>
+    <tr style="background:#f5f3ff;"><td><strong>17 Wed</strong></td><td>Your Boss Doesn't Know Yet</td><td>Pros</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Training / Consulting</td><td>"learnermachine.com — DM TRAINING or CONSULT"</td></tr>
+    <tr style="background:#fff8f5;"><td><strong>18 Thu</strong></td><td>Your First 5 Automations</td><td>Biz</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Consulting / Training</td><td>"learnermachine.com — DM CONSULT for personalised automation plan"</td></tr>
+    <tr><td><strong>19 Fri</strong></td><td>Task I Was Most Wrong About</td><td>All</td><td><span style="background:#f0fdf4;color:#16a34a;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Awareness</span></td><td>—</td><td>"What surprised you most? 👇 learnermachine.com"</td></tr>
+    <tr><td><strong>20 Sat</strong></td><td>Prompting Isn't the Skill</td><td>All</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>Course</td><td>"learnermachine.com — DM COURSE to see what is inside"</td></tr>
+    <tr><td><strong>21 Sun</strong></td><td>What I'm Building Now</td><td>All</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>Full Store</td><td>"learnermachine.com — DM EBOOK, COURSE, or CONSULT"</td></tr>
+    <tr><td><strong>22 Mon</strong></td><td>Question That Separates Leaders</td><td>All</td><td><span style="background:#f0f9ff;color:#0369a1;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Lead Gen</span></td><td>7 Prompts PDF</td><td>"Free PDF at learnermachine.com — DM PROMPTS for direct link"</td></tr>
+    <tr style="background:#ecfeff;"><td><strong>23 Tue</strong></td><td>CV That Gets Shortlisted</td><td>Students</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>AI for Beginners Ebook + Course</td><td>"Ebook at learnermachine.com — DM EBOOK for direct link"</td></tr>
+    <tr style="background:#f5f3ff;"><td><strong>24 Wed</strong></td><td>Talk to Your Manager</td><td>Pros</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Training / Consulting</td><td>"learnermachine.com — DM CONSULT to see how 1:1 works"</td></tr>
+    <tr style="background:#fff8f5;"><td><strong>25 Thu</strong></td><td>30-Day AI Business Roadmap</td><td>Biz</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Consulting / Training</td><td>"learnermachine.com — DM CONSULT for custom roadmap offer"</td></tr>
+    <tr><td><strong>26 Fri</strong></td><td>What I Wish I Knew Day 1</td><td>All</td><td><span style="background:#fff7ed;color:#92400e;font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Soft Sell</span></td><td>Full Store</td><td>"learnermachine.com — DM EBOOK, COURSE, or CONSULT to start"</td></tr>
+    <tr><td><strong>27 Sat</strong></td><td>4 Types of AI Users</td><td>All</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Full Store</td><td>"learnermachine.com — DM your goal: EBOOK / COURSE / CONSULT"</td></tr>
+    <tr style="background:rgba(6,78,59,.05);"><td><strong>28 Sun</strong></td><td>Month 1 Complete</td><td>All</td><td><span style="background:var(--brand-light);color:var(--brand);font-size:8pt;font-weight:700;padding:2px 8px;border-radius:4px;">Hard Sell</span></td><td>Full Store + Teaser</td><td>"learnermachine.com — everything is there. Month 2 coming."</td></tr>
+  </table>
+
+  <!-- DUAL CHANNEL CTA SYSTEM -->
+  <div style="background:var(--dark);border-radius:14px;padding:28px 32px;margin-top:8px;">
+    <div style="font-size:8.5pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--brand);margin-bottom:6px;">Two Channels. One Destination: learnermachine.com</div>
+    <p style="font-size:10pt;color:#78716c;margin-bottom:20px;line-height:1.6;">Both paths end at learnermachine.com. <strong style="color:#e7e5e4;">Right now your primary product is the ebook PDFs</strong> — AI for Beginners (English &amp; Hindi) + the free 7 Prompts PDF as a lead magnet. Every piece of content should funnel toward these first. Courses and consulting come later as trust builds.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:20px;">
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px 22px;">
+        <div style="font-size:9pt;font-weight:700;color:#34d399;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Channel 1 — Website Link (Always-On)</div>
+        <p style="font-size:9.5pt;color:#a8a29e;line-height:1.7;margin-bottom:10px;">Bio link points to learnermachine.com. User browses, picks product, pays via Razorpay, gets instant file delivery.</p>
+        <p style="font-size:9pt;color:#64748b;line-height:1.8;"><strong style="color:#78716c;">Caption line:</strong> "Link in bio → learnermachine.com"</p>
+        <div style="margin-top:10px;padding:8px 12px;background:rgba(52,211,153,.1);border-radius:6px;border:1px solid rgba(52,211,153,.2);">
+          <p style="font-size:9pt;color:#34d399;">Best for: passive viewers, anyone who browses before buying</p>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px 22px;">
+        <div style="font-size:9pt;font-weight:700;color:#a78bfa;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Channel 2 — DM Automation (High-Intent)</div>
+        <p style="font-size:9.5pt;color:#a8a29e;line-height:1.7;margin-bottom:10px;">Caption trigger word → user DMs keyword → auto-reply sends direct learnermachine.com product page link → Razorpay checkout → delivery.</p>
+        <p style="font-size:9pt;color:#64748b;line-height:1.8;"><strong style="color:#78716c;">Caption line:</strong> "DM me 'COURSE' for the direct link"</p>
+        <div style="margin-top:10px;padding:8px 12px;background:rgba(167,139,250,.1);border-radius:6px;border:1px solid rgba(167,139,250,.2);">
+          <p style="font-size:9pt;color:#a78bfa;">Best for: high-intent buyers + boosts Instagram algorithm (DMs = strong engagement signal)</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size:8.5pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#78716c;margin-bottom:12px;">DM Trigger Words — Each Sends a Direct learnermachine.com Product Link</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px;">
+      <div style="background:rgba(22,163,74,.12);border:1px solid rgba(22,163,74,.3);border-radius:10px;padding:12px 14px;text-align:center;">
+        <div style="font-size:15pt;font-weight:900;color:#16a34a;margin-bottom:6px;">PROMPTS</div>
+        <div style="font-size:8.5pt;color:#a8a29e;line-height:1.5;">Sends link to free 7 Prompts PDF page on learnermachine.com</div>
+      </div>
+      <div style="background:rgba(14,116,144,.12);border:1px solid rgba(14,116,144,.3);border-radius:10px;padding:12px 14px;text-align:center;">
+        <div style="font-size:15pt;font-weight:900;color:#22d3ee;margin-bottom:6px;">EBOOK</div>
+        <div style="font-size:8.5pt;color:#a8a29e;line-height:1.5;">Sends ebook product page on learnermachine.com</div>
+      </div>
+      <div style="background:rgba(3,105,161,.12);border:1px solid rgba(3,105,161,.3);border-radius:10px;padding:12px 14px;text-align:center;">
+        <div style="font-size:15pt;font-weight:900;color:#38bdf8;margin-bottom:6px;">COURSE</div>
+        <div style="font-size:8.5pt;color:#a8a29e;line-height:1.5;">Sends course page on learnermachine.com</div>
+      </div>
+      <div style="background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);border-radius:10px;padding:12px 14px;text-align:center;">
+        <div style="font-size:15pt;font-weight:900;color:#a78bfa;margin-bottom:6px;">TRAINING</div>
+        <div style="font-size:8.5pt;color:#a8a29e;line-height:1.5;">Sends training registration page on learnermachine.com</div>
+      </div>
+      <div style="background:rgba(194,82,12,.12);border:1px solid rgba(194,82,12,.3);border-radius:10px;padding:12px 14px;text-align:center;">
+        <div style="font-size:15pt;font-weight:900;color:#fb923c;margin-bottom:6px;">CONSULT</div>
+        <div style="font-size:8.5pt;color:#a8a29e;line-height:1.5;">Sends consulting booking page on learnermachine.com</div>
+      </div>
+    </div>
+    <p style="font-size:9pt;color:#44403c;line-height:1.7;"><strong style="color:#a8a29e;">Setup:</strong> Instagram Settings → Creator Tools → Automated Responses → Add Keyword. Enter the trigger word, paste the learnermachine.com product URL in the reply. For comment-triggered DMs (someone comments the word on a post), use <strong style="color:#a8a29e;">ManyChat free plan</strong>.</p>
+  </div>
+
+  <!-- BIO SETUP -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;">
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;">
+      <div style="font-size:8.5pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand);margin-bottom:12px;">Instagram Bio Setup</div>
+      <p style="font-size:10pt;color:var(--dark);font-weight:600;margin-bottom:4px;">Line 1:</p>
+      <p style="font-size:10pt;color:var(--text);margin-bottom:10px;">Founder | AI for businesses, professionals &amp; students</p>
+      <p style="font-size:10pt;color:var(--dark);font-weight:600;margin-bottom:4px;">Line 2:</p>
+      <p style="font-size:10pt;color:var(--text);margin-bottom:10px;">Not tutorials. Honest conversations from inside a company.</p>
+      <p style="font-size:10pt;color:var(--dark);font-weight:600;margin-bottom:4px;">Line 3:</p>
+      <p style="font-size:10pt;color:var(--text);margin-bottom:10px;">Free PDF + Ebooks + Courses + Consulting below</p>
+      <p style="font-size:10pt;color:var(--dark);font-weight:600;margin-bottom:4px;">Link:</p>
+      <p style="font-size:10pt;color:var(--carousel);font-weight:700;">learnermachine.com</p>
+    </div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px 24px;">
+      <div style="font-size:8.5pt;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--brand);margin-bottom:12px;">How Both Channels Work Together</div>
+      <p style="font-size:9.5pt;color:var(--text);line-height:2;margin:0;">
+        Passive viewer &rarr; bio link &rarr; learnermachine.com &rarr; browses &rarr; pays &rarr; downloads<br>
+        High-intent viewer &rarr; DMs keyword &rarr; auto-reply sends direct product URL &rarr; pays &rarr; downloads<br>
+        Comment engager &rarr; comments keyword &rarr; ManyChat DMs them &rarr; product link &rarr; pays &rarr; downloads<br>
+        All payments: Razorpay on learnermachine.com. All downloads: instant after payment.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<!-- MONTH OVERVIEW GRID -->
+<div class="month-grid">
+  <div class="mg-eyebrow">Month At a Glance</div>
+  <div class="mg-title">28-Day Content Map</div>
+
+  <table class="cal-table">
+    <tr>
+      <th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th><th>Sunday</th>
+    </tr>
+    <!-- WEEK 1 -->
+    <tr>
+      <td class="cal-week-label" colspan="7">WEEK 1 — "Why AI Is Not What You Think"</td>
+    </tr>
+    <tr>
+      <td><div class="cal-day-num">Day 1</div><div class="cal-topic">The Founder Who Stopped</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 2</div><div class="cal-topic">AI's 70-Year History</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 3</div><div class="cal-topic">Your Degree Isn't Obsolete</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-student">Students</span></td>
+      <td><div class="cal-day-num">Day 4</div><div class="cal-topic">The Professional's AI Anxiety</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-pro">Pros</span></td>
+      <td><div class="cal-day-num">Day 5</div><div class="cal-topic">AI Is the Great Equalizer</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-biz">Biz</span></td>
+      <td><div class="cal-day-num">Day 6</div><div class="cal-topic">Gen AI vs Old AI</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 7</div><div class="cal-topic">Why LearnerMachine</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+    </tr>
+    <!-- WEEK 2 -->
+    <tr>
+      <td class="cal-week-label" colspan="7">WEEK 2 — "The Unfair Advantage"</td>
+    </tr>
+    <tr>
+      <td><div class="cal-day-num">Day 8</div><div class="cal-topic">You Won't Lose Your Job — Honest</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 9</div><div class="cal-topic">The Student AI Advantage</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-student">Students</span></td>
+      <td><div class="cal-day-num">Day 10</div><div class="cal-topic">What I Tell Professionals Scared of AI</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-pro">Pros</span></td>
+      <td><div class="cal-day-num">Day 11</div><div class="cal-topic">Small Business Levels the Field</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-biz">Biz</span></td>
+      <td><div class="cal-day-num">Day 12</div><div class="cal-topic">My 5 AI Morning Tasks</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 13</div><div class="cal-topic">AI Idea Generation — 4 Prompts</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-biz">Biz</span></td>
+      <td><div class="cal-day-num">Day 14</div><div class="cal-topic">The Mission — Why I'm Here</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+    </tr>
+    <!-- WEEK 3 -->
+    <tr>
+      <td class="cal-week-label" colspan="7">WEEK 3 — "AI In YOUR World"</td>
+    </tr>
+    <tr>
+      <td><div class="cal-day-num">Day 15</div><div class="cal-topic">3 Ways AI Changes Every Industry</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 16</div><div class="cal-topic">5 AI Workflows for College</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-student">Students</span></td>
+      <td><div class="cal-day-num">Day 17</div><div class="cal-topic">Your Boss Doesn't Know This Yet</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-pro">Pros</span></td>
+      <td><div class="cal-day-num">Day 18</div><div class="cal-topic">Your First 5 AI Automations</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-biz">Biz</span></td>
+      <td><div class="cal-day-num">Day 19</div><div class="cal-topic">The Task I Was Most Wrong About</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 20</div><div class="cal-topic">Prompting Isn't the Skill — THIS Is</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 21</div><div class="cal-topic">What I'm Building Right Now</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+    </tr>
+    <!-- WEEK 4 -->
+    <tr>
+      <td class="cal-week-label" colspan="7">WEEK 4 — "The Future Is Already Here"</td>
+    </tr>
+    <tr>
+      <td><div class="cal-day-num">Day 22</div><div class="cal-topic">The Question That Separates Leaders</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 23</div><div class="cal-topic">The CV That Gets Shortlisted in 2025</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-student">Students</span></td>
+      <td><div class="cal-day-num">Day 24</div><div class="cal-topic">How to Talk to Your Manager About AI</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-pro">Pros</span></td>
+      <td><div class="cal-day-num">Day 25</div><div class="cal-topic">Build Your First AI System in 30 Days</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-biz">Biz</span></td>
+      <td><div class="cal-day-num">Day 26</div><div class="cal-topic">What I Wish I Knew on Day 1</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 27</div><div class="cal-topic">4 Types of AI Users — Which Are You?</div><span class="cal-tag ct-carousel">Carousel</span> <span class="cal-tag ct-all">All</span></td>
+      <td><div class="cal-day-num">Day 28</div><div class="cal-topic">Month 1 Complete — What's Next</div><span class="cal-tag ct-face">Face Reel</span> <span class="cal-tag ct-all">All</span></td>
+    </tr>
+  </table>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>🎓 Student Content (6 pieces)</h3>
+      <p>Days 3, 9, 16, 23 — specific scripts, language, and captions written for the "just starting out" mindset. Fear reframes. Career-forward framing. Shareable to friends.</p>
+    </div>
+    <div class="card">
+      <h3>💼 Professional Content (6 pieces)</h3>
+      <p>Days 4, 10, 17, 24 — written for someone with 5–15 years experience who is watching AI enter their industry. Empowerment without minimising the real concern.</p>
+    </div>
+    <div class="card">
+      <h3>🏪 Business Owner Content (6 pieces)</h3>
+      <p>Days 5, 11, 13, 18, 25 — practical, ROI-focused, no-fluff. Written for someone who has a business to run and 20 minutes of patience for AI theory.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== WEEK 1 ==================== -->
+<div class="week-header">
+  <div class="wh-eyebrow">Week 1 — Days 1–7</div>
+  <div class="wh-title">"Why AI Is Not<br>What You Think"</div>
+  <p class="wh-sub">Plant seeds of curiosity without triggering FOMO. Each audience gets one piece that speaks directly to their world. The week ends with the brand's mission — converting curious followers into believers.</p>
+  <table class="wh-table">
+    <tr><th>Day</th><th>Format</th><th>Title</th><th>Primary Audience</th><th>Effect</th></tr>
+    <tr><td><strong style="color:#faf8f5;">Mon</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">The Founder Who Stopped</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">First impression — authority + curiosity</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Tue</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">AI's 70-Year History</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Depth — "I didn't know this"</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Wed</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Your Degree Isn't Obsolete</td><td style="color:#22d3ee;">Students</td><td style="color:#a8a29e;">Relief → shared in student groups</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Thu</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">The Professional's AI Anxiety</td><td style="color:#a78bfa;">Professionals</td><td style="color:#a8a29e;">Saves — "This is exactly me"</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Fri</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">AI Is the Great Equalizer</td><td style="color:#fb923c;">Biz Owners</td><td style="color:#a8a29e;">WhatsApp shares in business groups</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Sat</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Gen AI vs Old AI</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Bookmarks — foundational knowledge</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Sun</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Why LearnerMachine</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Community + product interest</td></tr>
+  </table>
+</div>
+
+<!-- DAY 3 — WEDNESDAY — STUDENTS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">03</div>
+      <div class="dl">WED</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue</div>
+      <div class="aud-tag at-student">🎓 Primary: Students</div>
+      <h2>"Your Degree Isn't Obsolete.<br>But This Mindset Might Be."</h2>
+      <p class="day-sub">Speak directly to the anxiety students feel about graduating into an AI world. Reframe the fear into an unfair advantage — and position LearnerMachine as their guide.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="pain-box pb-student">
+    <div class="pain-lbl">🎓 Student Audience — What They're Feeling Right Now</div>
+    <p>"My professors aren't teaching this. My friends are all confused. I see engineers and writers being replaced. I just paid three years of fees for a degree — is any of it still relevant? Who do I even listen to?"</p>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot Notes</div>
+    <ul>
+      <li>Warmer, slightly more accessible tone than your Day 1 reel. Still authoritative — but the way an experienced mentor talks to a smart younger person.</li>
+      <li>The word "you" should appear at least 8 times. This reel is <em>about them</em>, not about you.</li>
+      <li>50–58 seconds. Students have the shortest attention span on the platform — earn every second.</li>
+      <li>No jargon. No acronyms. Speak like you're talking to a 21-year-old who is genuinely scared and genuinely brilliant.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 5 sec</div>
+      <p>"If you're a student right now — I need to say something nobody else is saying to you."</p>
+      <p><em>(pause)</em></p>
+      <p>"Your degree is not the problem. Your mindset about your degree might be."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-conflict">THE REAL SITUATION — 5 to 22 sec</div>
+      <p>"I've spoken to students across India. The conversation is always the same. 'AI is going to take all the jobs. What's the point of studying?' And I understand that fear. I really do."</p>
+      <p>"But here's what I've actually seen inside companies: the graduates who are getting hired and promoted right now are not the ones with the best marks. They're the ones who show up already knowing how to <em>work with AI.</em>"</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">THE REFRAME — 22 to 42 sec</div>
+      <p>"Your degree gave you domain knowledge. AI gives you leverage over that knowledge. Together? You are more capable than any professional who graduated ten years before you — if you start learning now."</p>
+      <p>"Most of your classmates are waiting. Waiting for their professor to cover it. Waiting for a course. Waiting until they 'finish' their degree."</p>
+      <p>"The ones who start <em>today</em> will be three years ahead by the time they graduate."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 42 to 55 sec</div>
+      <p>"You don't need a certification. You need someone who is inside a company, using AI every day, willing to show you what's actually useful."</p>
+      <p>"That's what I'm here for. The AI for Beginners guide is at learnermachine.com — start there. Follow along for the rest." <mark>Hold. Nod. End.</mark></p>
+    </div>
+  </div>
+
+  
+  <div style="background:#ecfeff;border:2px solid #22d3ee;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#22d3ee;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0e7490;">CTA Strategy — Soft Sell — AI for Beginners Ebook</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#0e7490;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">AI for Beginners Ebook (English)</p>
+        <p style="font-size:9.5pt;color:#164e63;line-height:1.5;">Your entry-level product. Perfect first purchase for students. Low price point, high perceived value. Available in Hindi too — mention both.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#0e7490;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"AI for Beginners ebook at learnermachine.com — download directly on the site, or DM me EBOOK and I will send you the direct link. 📘"</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#164e63;padding:3px 0;display:flex;gap:8px;"><span style="color:#0e7490;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"STUDENT"</strong> → auto-reply sends AI for Beginners ebook download link. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption — Written for Students</div>
+    <p>To every student watching this: the fear you're feeling is real. And it's also a signal.<br><br>
+    The graduates getting hired right now aren't the ones with the best marks. They're the ones who already know how to work alongside AI — not against it.<br><br>
+    Your degree gave you domain knowledge. AI gives you leverage over it.<br><br>
+    Most of your classmates are waiting for someone to teach them this officially. They'll be waiting a long time.<br><br>
+    <strong>Start now. Be three years ahead.</strong><br><br>
+    Drop your subject/field below 👇 and I'll tell you exactly where AI fits into your career path.</p>
+  </div>
+  <div class="hashtag-box">
+    #StudentsOfInstagram #StudentLife #CareerAdvice #AIforStudents #FutureOfWork #GraduateLife #IndiaStudents #CollegeLife #AIEducation #LearnerMachine #CareerGrowth #StudentMotivation
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost reel + "For every student who's been told AI will take their job. 🧵"</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Poll: "Are you a student using AI in your studies?" Yes/Not yet — share results in evening story</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Share 3 student fields from comments. "Here's where AI fits in [field] 👇" — teases Thursday content</div></div>
+  </div>
+</div>
+
+<!-- DAY 4 — THURSDAY — PROFESSIONALS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">04</div>
+      <div class="dl">THU</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel — 6 Slides</div>
+      <div class="aud-tag at-pro">💼 Primary: Professionals</div>
+      <h2>"The 5 Stages of Professional AI Anxiety<br>(And How to Move Through Them)"</h2>
+      <p class="day-sub">Name exactly what professionals are feeling. Make them feel seen. Then give them a clear path forward. This will be widely saved and shared within professional WhatsApp groups.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="pain-box pb-pro">
+    <div class="pain-lbl">💼 Professional Audience — What They're Feeling Right Now</div>
+    <p>"I've worked in this field for 8 years. I'm good at my job. Now I see AI doing parts of it and I don't know if I should panic, learn to code, quit, or pretend it's not happening. My manager hasn't said anything. My company hasn't trained us. I feel like I'm the only one who doesn't know what to do."</p>
+  </div>
+
+  <div class="slides-row slides-6">
+    <div class="slide-card">
+      <div class="slide-num sn-pro">Slide 1</div>
+      <div class="slide-body">
+        <div class="slide-title">"If you're a professional feeling anxious about AI — this is the most normal thing in the world. Here's the map."</div>
+        <p>Dark background. White headline. Subtext: "You are not behind. You are exactly where most smart people are right now."</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-pro">Stage 1</div>
+      <div class="slide-body">
+        <div class="slide-title">😐 Denial — "It won't affect my field"</div>
+        <p>Every professional starts here. 6–12 months of watching AI news from a distance and thinking "interesting, but not my problem." <strong>This is where most people still are.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-pro">Stage 2</div>
+      <div class="slide-body">
+        <div class="slide-title">😨 Anxiety — "What if I get replaced?"</div>
+        <p>The moment you see AI do something you do — and do it fast. The panic sets in. You start doom-scrolling "AI replacing [your job]" headlines. <strong>This is the danger zone — paralysis.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-pro">Stage 3</div>
+      <div class="slide-body">
+        <div class="slide-title">🔍 Curiosity — "What exactly can it do?"</div>
+        <p>You start experimenting. ChatGPT for emails. Summaries. Research. You realise it is powerful — but also flawed. Needs direction. Needs your expertise to be useful. <strong>This is where the shift starts.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-pro">Stage 4</div>
+      <div class="slide-body">
+        <div class="slide-title">⚡ Integration — "I'm using it to do MY job better"</div>
+        <p>You're not being replaced. You're <strong>deploying AI as a tool</strong> — the way a surgeon uses a scalpel. You still make the decisions. You still bring the judgment. You're just 3x faster.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-pro">Stage 5</div>
+      <div class="slide-body">
+        <div class="slide-title">🏆 Advantage — "I see what my peers don't"</div>
+        <p>You become the person in your team who understands AI from a practitioner's perspective. Not because you coded it — because you <strong>used it intelligently.</strong> That is now a career-defining skill.</p>
+        <p><strong>This stage is available to you right now.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div style="background:#f5f3ff;border:2px solid #a78bfa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#a78bfa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;">CTA Strategy — Soft Sell — AI for Beginners Ebook</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#7c3aed;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">AI for Beginners Ebook (English)</p>
+        <p style="font-size:9.5pt;color:#4c1d95;line-height:1.5;">Professionals at Stage 1–3 need an accessible, non-technical intro. This ebook is your bridge from anxiety to action. Position it as the shortcut they're looking for.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#7c3aed;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"AI for Beginners ebook at learnermachine.com. DM me EBOOK and I will send you the direct product page."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#4c1d95;padding:3px 0;display:flex;gap:8px;"><span style="color:#7c3aed;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"STAGES"</strong> → auto-reply sends AI for Beginners ebook link. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption — Written for Professionals</div>
+    <p>If you're a professional watching AI enter your industry and feeling a mixture of anxiety, confusion, and pressure to "figure it out" — you're not behind.<br><br>
+    You're at Stage 2. Most smart professionals are.<br><br>
+    The move from Stage 2 to Stage 5 doesn't require a coding bootcamp or a career change. It requires the right perspective — and consistent, practical exposure.<br><br>
+    That's exactly what I'm building here.<br><br>
+    <strong>Which stage are you at right now?</strong> Tell me below 👇 (and be honest — there's no wrong answer here)</p>
+  </div>
+  <div class="hashtag-box">
+    #ProfessionalDevelopment #CareerGrowth #AIforProfessionals #FutureOfWork #WorkplaceAI #CareerAdvice #UpskillYourself #LearnerMachine #AIatWork #LinkedInIndia #ProfessionalLife #GrowthMindset
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost carousel + "Which stage are you at? 5 stages most professionals go through with AI."</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Poll: "Professionally — where are you with AI?" Avoiding it / Learning slowly / Using it daily</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Share poll results. "Most of you are Stage 2–3. Good. Here's exactly what happens at Stage 4."</div></div>
+  </div>
+</div>
+
+<!-- DAY 5 — FRIDAY — BUSINESS OWNERS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">05</div>
+      <div class="dl">FRI</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue</div>
+      <div class="aud-tag at-biz">🏪 Primary: Small Business Owners</div>
+      <h2>"Big Companies Spend Crores on AI.<br>You Can Do the Same Work for ₹0."</h2>
+      <p class="day-sub">The message that resonates most with SMB owners: the playing field is being levelled and you need to act before your competitors do. Real, specific, no hype.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="pain-box pb-biz">
+    <div class="pain-lbl">🏪 Business Owner — What They're Feeling Right Now</div>
+    <p>"I'm running my business with a small team and a tight budget. I read about Reliance and Infosys investing thousands of crores into AI. I see startups with AI-powered everything. I feel like by the time I figure this out, the big companies will have already won. I don't have time to take a course. I need to know: what do I do, specifically, today?"</p>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot Notes</div>
+    <ul>
+      <li>This audience respects directness and business talk. Open with a number or a fact. No soft preambles.</li>
+      <li>Use the words "competitor", "customer", "revenue", "team" — their language.</li>
+      <li>The goal is to leave them with ONE thing they can try before the weekend is over.</li>
+      <li>45–55 seconds. Business owners are the most time-conscious audience.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 5 sec</div>
+      <p>"Large companies are spending crores building AI systems. You can do the same work — right now — for free."</p>
+      <p><em>(pause)</em></p>
+      <p>"And most business owners don't know this yet."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-build">THE REALITY — 5 to 25 sec</div>
+      <p>"For the first time in business history, the tools that the largest companies in the world are using are available to every small business owner with a smartphone."</p>
+      <p>"ChatGPT. Claude. Gemini. These are not enterprise software. These are tools you can open in a browser today."</p>
+      <p>"The big companies have the budget. But you have something they don't: the ability to move fast. To make decisions today. To try something by Monday."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">SPECIFIC — 25 to 42 sec</div>
+      <p>"I run a company. I've used AI to write customer responses, generate marketing ideas, summarise long reports, create training materials for my team, and draft proposals — things that used to take hours and now take minutes."</p>
+      <p>"The gap between businesses that are using AI and those that are not is growing every single week."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 42 to 52 sec</div>
+      <p>"The question for you is not 'should I use AI?' The question is 'how much longer can I afford not to?'"</p>
+      <p>"Tell me what kind of business you run in the comments 👇 — or go to learnermachine.com right now. The ebooks and courses are there. Start today." <mark>Point to comments. End.</mark></p>
+    </div>
+  </div>
+
+  
+  <div style="background:#fff8f5;border:2px solid #fed7aa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#fed7aa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c2520c;">CTA Strategy — Hard Sell — Consulting / Course</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">1:1 Consulting or Online Course</p>
+        <p style="font-size:9.5pt;color:#7c2d12;line-height:1.5;">Business owners who feel behind need either the fastest DIY path (course) or direct help (consulting). The DM trigger filters which one is right for them.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"Everything from the free PDF to 1:1 consulting is at learnermachine.com — start where to start for your type of business. No generic advice — specific to you."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#7c2d12;padding:3px 0;display:flex;gap:8px;"><span style="color:#c2520c;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"BUSINESS"</strong> → auto-reply sends a 2-question qualifier and then either the course link or a consulting booking link. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption — Written for Business Owners</div>
+    <p>Large companies are spending crores building AI infrastructure. You can get 80% of the same results — today — for free.<br><br>
+    The tools that enterprise companies are paying millions to license are available in your browser right now. ChatGPT. Claude. Gemini.<br><br>
+    The only difference between you and the big players right now is speed of adoption — and for the first time in business history, the small, fast, owner-operated business has the advantage.<br><br>
+    <strong>Tell me what kind of business you run 👇</strong> and I'll tell you the first 3 AI moves that will have an immediate impact on your time and revenue.</p>
+  </div>
+  <div class="hashtag-box">
+    #SmallBusiness #BusinessOwner #StartupIndia #SMBIndia #AIforBusiness #BusinessGrowth #EntrepreneurIndia #LearnerMachine #BusinessStrategy #AITools #IndianEntrepreneur #BusinessTips
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost reel + "For every business owner watching bigger players use AI and wondering how to catch up."</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Share business types from comments. Answer 3–5 with specific AI suggestions. Screenshot and post.</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Poll: "Have you used AI in your business yet?" Yes regularly / Tried once / Not yet</div></div>
+  </div>
+</div>
+
+
+<!-- ==================== WEEK 2 ==================== -->
+<div class="week-header">
+  <div class="wh-eyebrow">Week 2 — Days 8–14</div>
+  <div class="wh-title">"The Unfair Advantage"</div>
+  <p class="wh-sub">Each audience gets a piece that directly addresses their specific fear — and reframes it as an opportunity. By the end of this week, followers should feel empowered, not threatened.</p>
+  <table class="wh-table">
+    <tr><th>Day</th><th>Format</th><th>Title</th><th>Primary Audience</th><th>Effect</th></tr>
+    <tr><td><strong style="color:#faf8f5;">Mon</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">You Won't Lose Your Job — Honest</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Trust anchor for the week</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Tue</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">The Student AI Advantage</td><td style="color:#22d3ee;">Students</td><td style="color:#a8a29e;">Mass shares in student groups</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Wed</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">What I Tell Professionals Scared of AI</td><td style="color:#a78bfa;">Professionals</td><td style="color:#a8a29e;">Saves + DMs</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Thu</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Small Biz vs Big Company</td><td style="color:#fb923c;">Biz Owners</td><td style="color:#a8a29e;">WhatsApp business groups</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Fri</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">My 5 AI Morning Tasks</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Saves — actionable routine</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Sat</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">AI Idea Generation — 4 Prompts</td><td style="color:#fb923c;">Biz + Pros</td><td style="color:#a8a29e;">Bookmarks + prompt saves</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Sun</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Why LearnerMachine Exists</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Community + product conversion</td></tr>
+  </table>
+</div>
+
+<!-- DAY 9 — TUESDAY — STUDENTS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">09</div>
+      <div class="dl">TUE</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel — 6 Slides</div>
+      <div class="aud-tag at-student">🎓 Primary: Students</div>
+      <h2>"6 AI Skills That Will Make You<br>Unhireable to Ignore by Graduation"</h2>
+      <p class="day-sub">Concrete, shareable, actionable. Students will send this to each other. Make each skill specific enough that they can start today — not after finishing their degree.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="pain-box pb-student">
+    <div class="pain-lbl">🎓 What students need from this piece</div>
+    <p>Not inspiration — <em>specificity</em>. They've heard "learn AI." They need to know: learn WHAT exactly, and how does it show up on a CV or in an interview. Give them a checklist they can act on this weekend.</p>
+  </div>
+
+  <div class="slides-row slides-6">
+    <div class="slide-card">
+      <div class="slide-num sn-student">Slide 1</div>
+      <div class="slide-body">
+        <div class="slide-title">"6 AI skills that will make you stand out in every job interview — regardless of your major"</div>
+        <p>Brand colours. Eyebrow: "For students graduating in the AI era"</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Skill 1</div>
+      <div class="slide-body">
+        <div class="slide-title">🗣️ Prompt Engineering (Not What You Think)</div>
+        <p>Not a technical skill — a communication skill. <strong>Giving AI clear, specific instructions to get useful output.</strong> CV line: "Applied structured prompting to reduce research time by 60%."</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Skill 2</div>
+      <div class="slide-body">
+        <div class="slide-title">🔍 AI-Assisted Research</div>
+        <p>Using AI to <strong>synthesise information across 50 sources in 5 minutes</strong> — then applying your critical thinking to validate and go deeper. Relevant for every field: law, medicine, engineering, marketing.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Skill 3</div>
+      <div class="slide-body">
+        <div class="slide-title">✍️ AI-Augmented Writing</div>
+        <p>Using AI to create a first draft — then editing with your domain expertise and voice. <strong>This is not cheating. This is the future of professional writing.</strong> Every company needs people who do this well.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Skill 4</div>
+      <div class="slide-body">
+        <div class="slide-title">📊 AI-Powered Data Analysis</div>
+        <p>You don't need to code. <strong>AI can read your spreadsheet and find patterns, generate summaries, and suggest insights.</strong> This alone makes you valuable in finance, marketing, operations — any data-heavy role.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Skill 5+6</div>
+      <div class="slide-body">
+        <div class="slide-title">🤖 AI Tool Fluency + Critical Evaluation</div>
+        <p><strong>Skill 5:</strong> Know which AI tool does what (ChatGPT vs Claude vs Gemini vs Perplexity). Interviewers ask this now.<br><strong>Skill 6:</strong> Know when AI is wrong. The most dangerous skill gap — <strong>blindly trusting AI output.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div style="background:#ecfeff;border:2px solid #22d3ee;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#22d3ee;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0e7490;">CTA Strategy — Soft Sell — AI for Beginners Ebook</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#0e7490;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">AI for Beginners Ebook (English + Hindi)</p>
+        <p style="font-size:9.5pt;color:#164e63;line-height:1.5;">Students who just read these 6 skills want to start building them immediately. The ebook is your bridge: it covers exactly how to develop skills 1–4 with step-by-step exercises.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#0e7490;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"The AI for Beginners ebook walks through each of these skills with practical exercises — in English and Hindi. Link in bio. Your CV starts improving the moment you finish it."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#164e63;padding:3px 0;display:flex;gap:8px;"><span style="color:#0e7490;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"SKILLS"</strong> → auto-reply sends AI for Beginners ebook link (with language options). Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>Your classmates are Googling "AI replacing jobs." Meanwhile, you could be building the skills that make you irreplaceable.<br><br>
+    None of these require a coding background. None require a new degree. They require 30–60 minutes of deliberate practice per week — starting now.<br><br>
+    The students who do this are graduating with a 2-year head start on everyone else.<br><br>
+    Save this. Come back to it. Share it with one friend who needs to hear this. 🙏<br><br>
+    <strong>Which skill do you already have? Which one scares you?</strong> Tell me below 👇</p>
+  </div>
+  <div class="hashtag-box">
+    #StudentLife #CareerTips #AISkills #JobReady #GraduateJobs #FutureOfWork #LearnerMachine #AIforStudents #StudyMotivation #IndiaStudents #SkillDevelopment #CareerGrowth
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost carousel + "6 skills. No coding required. Share this with any student you know."</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Q&A: "Which skill are you working on?" — respond to top 5 in stories</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Tease Wednesday: "Tomorrow — for the professionals in the room. Something important."</div></div>
+  </div>
+</div>
+
+<!-- DAY 10 — WEDNESDAY — PROFESSIONALS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">10</div>
+      <div class="dl">WED</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue</div>
+      <div class="aud-tag at-pro">💼 Primary: Professionals</div>
+      <h2>"What I Tell Every Professional<br>Who's Scared of AI Replacing Them"</h2>
+      <p class="day-sub">The most honest, direct version of the AI replacement conversation. Don't dismiss the fear — validate it, then reframe it with something they can actually do.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="pain-box pb-pro">
+    <div class="pain-lbl">💼 What professionals need to hear</div>
+    <p>Not platitudes. Not "AI won't replace you." That's not true and they know it. They need someone to look them in the eye and say: "Yes, parts of your job will change. Here's the specific thing you need to do about it." Honesty builds trust. Trust builds following.</p>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot Notes</div>
+    <ul>
+      <li>This reel requires emotional directness. Look at the camera like you're talking to a friend who is genuinely worried.</li>
+      <li>The first 8 seconds must validate — not dismiss — the fear. Do NOT open with "AI won't replace you." That's the platitude everyone's sick of.</li>
+      <li>55–65 seconds. This audience will watch longer if the content respects their intelligence.</li>
+      <li>Lean slightly forward at the "here's what I actually think" moment. Physical movement signals sincerity.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 8 sec</div>
+      <p>"I'm not going to tell you AI won't replace your job."</p>
+      <p><em>(pause)</em></p>
+      <p>"Because the truth is more complicated — and you deserve the honest version."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-conflict">THE REAL TRUTH — 8 to 28 sec</div>
+      <p>"AI will replace the parts of your job that are repetitive. Predictable. Process-driven. And if that's 80% of what you do right now — yes, that's a real problem that needs a real response."</p>
+      <p>"But here's what I've watched happen inside companies over the last two years: the professionals who adapted fastest were not the ones who knew the most about AI. They were the ones who were <em>most honest</em> about what their job actually involved — and started deliberately protecting the 20% that AI couldn't do."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">THE MOVE — 28 to 50 sec</div>
+      <p>"The 20% AI can't replace is: judgment under ambiguity. Human relationships. Ethical reasoning. Creative problem-solving in novel situations. Reading a room."</p>
+      <p>"The move is not to learn to code. It's to deliberately develop those capacities — while also learning to use AI to get the repetitive work done faster. So you have more time for your most human work."</p>
+      <p>"The professionals who do this become <em>indispensable.</em>"</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 50 to 62 sec</div>
+      <p>"That's what I'm helping people do here. Not survive AI. Use it to do the work that actually matters."</p>
+      <p>"The AI for Beginners guide at learnermachine.com is your fastest starting point. And if you're ready to go deeper — the course and training are there too." <mark>Nod. Hold. End.</mark></p>
+    </div>
+  </div>
+
+  
+  <div style="background:#f5f3ff;border:2px solid #a78bfa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#a78bfa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;">CTA Strategy — Hard Sell — Online Course or Live Training</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#7c3aed;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">Online Course / Live Training Programme</p>
+        <p style="font-size:9.5pt;color:#4c1d95;line-height:1.5;">Professionals at Stage 3–4 are ready to invest. The DM trigger lets you qualify them: someone doing individual upskilling → course. Someone managing a team → training.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#7c3aed;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"Course and live training at learnermachine.com. DM me COURSE or TRAINING and I will send you the right page for your situation."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#4c1d95;padding:3px 0;display:flex;gap:8px;"><span style="color:#7c3aed;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"CAREER"</strong> → auto-reply sends a personalised reply + the course or training page link. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>The "AI won't replace you" line is the most overused — and least helpful — thing being said to professionals right now.<br><br>
+    So let me be direct: AI will replace the parts of your job that are repetitive. If that's most of what you do — that's a real signal that needs a real response.<br><br>
+    But the professionals I've watched thrive through this didn't panic and they didn't pretend. They did two things:<br><br>
+    1. They started using AI to handle the repetitive parts — faster and better than before.<br>
+    2. They deliberately built the skills AI can't replicate: judgment, relationships, ethical reasoning, creativity in ambiguous situations.<br><br>
+    They became indispensable. Not because AI couldn't touch their role. Because they combined AI's speed with human depth.<br><br>
+    <strong>Which part of your job do you think AI can't replace?</strong> Genuinely curious — drop it below 👇</p>
+  </div>
+  <div class="hashtag-box">
+    #CareerAdvice #ProfessionalDevelopment #AIatWork #FutureOfWork #WorkplaceSkills #CareerGrowth #LearnerMachine #AIforProfessionals #JobMarket #UpskillNow #IndiaJobs #CorporateIndia
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost reel + "For the professionals in the room. The honest version of this conversation."</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Share top 5 "irreplaceable skills" from comments — "You're all naming exactly the right things."</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Tease Thursday: "Tomorrow — for business owners. Specifically the ones watching big companies and feeling left behind."</div></div>
+  </div>
+</div>
+
+<!-- DAY 11 — THURSDAY — BUSINESS OWNERS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">11</div>
+      <div class="dl">THU</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel — 6 Slides</div>
+      <div class="aud-tag at-biz">🏪 Primary: Small Business Owners</div>
+      <h2>"5 Things a Small Business Can Now Do<br>That Only Big Companies Could Before"</h2>
+      <p class="day-sub">Concrete competitive advantages that AI gives small businesses. Each slide names a specific capability — and how to activate it this week. No theory. Pure activation.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="pain-box pb-biz">
+    <div class="pain-lbl">🏪 What this carousel must do</div>
+    <p>Business owners will scan this in 30 seconds and decide in the first two slides whether it's for them. Lead with outcomes — not explanations. Every slide should end with: "You can do this today." That's the hook that converts a viewer into a follower.</p>
+  </div>
+
+  <div class="slides-row slides-5">
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Slide 1</div>
+      <div class="slide-body">
+        <div class="slide-title">"5 things large companies spent crores to do — that your small business can now do for free"</div>
+        <p>Orange brand background. Bold white text. "If you run a small business, this is your window."</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Thing 1</div>
+      <div class="slide-body">
+        <div class="slide-title">📞 24/7 Customer Support — Without Hiring</div>
+        <p>Large companies spent crores on support teams. <strong>You can set up an AI chatbot that answers FAQs, handles common queries, and captures leads — in one afternoon.</strong> Tools: Tidio, Intercom AI, ChatGPT API.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Thing 2</div>
+      <div class="slide-body">
+        <div class="slide-title">✍️ A Marketing Team of One</div>
+        <p>Corporate marketing teams write 20 pieces of content a week. <strong>You can now do the same with AI drafting and you editing.</strong> Captions, blogs, emails, WhatsApp messages — in under 2 hours a week.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Thing 3</div>
+      <div class="slide-body">
+        <div class="slide-title">📊 Data Insights Without a Data Analyst</div>
+        <p>Upload your sales data to ChatGPT. Ask "what are my top 3 revenue patterns?" <strong>You now have a data analyst on demand — for free.</strong> Large companies paid lakhs a month for this.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Thing 4+5</div>
+      <div class="slide-body">
+        <div class="slide-title">🤝 Personalised Proposals + Training</div>
+        <p><strong>Thing 4:</strong> AI-written proposals personalised for each client — in 15 minutes. Enterprise sales teams had copywriters do this.<br><strong>Thing 5:</strong> AI-generated onboarding documents for every new team member. HR departments charged for this.</p>
+        <p><strong>All available to you. Today. Free.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div style="background:#fff8f5;border:2px solid #fed7aa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#fed7aa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c2520c;">CTA Strategy — Hard Sell — Course or 1:1 Consulting</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">Online Course (DIY) or 1:1 Consulting (Done-with-you)</p>
+        <p style="font-size:9.5pt;color:#7c2d12;line-height:1.5;">Business owners who saved or commented on this are the highest intent audience in your funnel. The DM trigger filters which product fits: DIY-inclined → course. Want guidance → consulting.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"The course and consulting options are at learnermachine.com — start with whichever fits your pace and budget."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#7c2d12;padding:3px 0;display:flex;gap:8px;"><span style="color:#c2520c;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"AUTOMATE"</strong> → auto-reply sends a 1-question qualifier + either the course link or consulting booking link. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>Three years ago, these capabilities cost lakhs per month. Enterprise-only.<br><br>
+    Today, they're available to any business owner with a laptop and 30 minutes.<br><br>
+    The companies that move first — regardless of size — will hold that advantage for years. Because while your competitor is still "thinking about AI," you've already built your systems.<br><br>
+    <strong>Which of these 5 would make the biggest difference in your business right now?</strong> Tell me below and I'll share how to set it up. 👇</p>
+  </div>
+  <div class="hashtag-box">
+    #SmallBusinessIndia #BusinessOwner #AITools #SmallBizGrowth #EntrepreneurIndia #BusinessStrategy #LearnerMachine #StartupIndia #BusinessAutomation #AIforSMB #GrowYourBusiness #BusinessTips
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost carousel + "For every small business watching big companies and wondering when it's your turn. It's now."</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Share top 3 most popular responses. "These are the most wanted. Here's where to start."</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Poll: "What's your biggest business time drain right now?" Options: Customer queries / Content / Admin / Team training</div></div>
+  </div>
+</div>
+
+
+<!-- ==================== WEEK 3 ==================== -->
+<div class="week-header">
+  <div class="wh-eyebrow">Week 3 — Days 15–21</div>
+  <div class="wh-title">"AI In YOUR World"</div>
+  <p class="wh-sub">Practical. Specific. Audience-tailored applications. This week, each audience gets a piece that shows exactly where AI fits into their daily reality — not theory, not hype, actual use cases they can try this week.</p>
+  <table class="wh-table">
+    <tr><th>Day</th><th>Format</th><th>Title</th><th>Primary Audience</th><th>Effect</th></tr>
+    <tr><td><strong style="color:#faf8f5;">Mon</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">3 Ways AI Changes Every Industry</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Hook for the week — anticipation</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Tue</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">5 AI Workflows for College</td><td style="color:#22d3ee;">Students</td><td style="color:#a8a29e;">Shares + saves — practical toolkit</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Wed</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Your Boss Doesn't Know This Yet</td><td style="color:#a78bfa;">Professionals</td><td style="color:#a8a29e;">Creates urgency + insider feeling</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Thu</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Your First 5 AI Automations</td><td style="color:#fb923c;">Biz Owners</td><td style="color:#a8a29e;">Bookmarks + implementation</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Fri</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">The Task I Was Most Wrong About</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Authenticity — highest comments week</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Sat</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Prompting Isn't the Skill — THIS Is</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Saves + bookmarks</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Sun</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">What I'm Building Right Now</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Trust + behind-the-scenes connection</td></tr>
+  </table>
+</div>
+
+<!-- DAY 16 — TUESDAY — STUDENTS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">16</div>
+      <div class="dl">TUE</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel — 6 Slides</div>
+      <div class="aud-tag at-student">🎓 Primary: Students</div>
+      <h2>"5 AI Workflows That Will Save You<br>10 Hours a Week in College"</h2>
+      <p class="day-sub">The most practical student content of the month. Students will share this with their entire batch. Make it so specific that they can try it tonight — not "someday."</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-5">
+    <div class="slide-card">
+      <div class="slide-num sn-student">Slide 1</div>
+      <div class="slide-body">
+        <div class="slide-title">"5 AI workflows every student should be using — and almost none are"</div>
+        <p>Save this. Share it. This is the practical version of every "learn AI" post you've seen.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Workflow 1</div>
+      <div class="slide-body">
+        <div class="slide-title">📚 Research Synthesis in 10 Minutes</div>
+        <p>Paste 3–5 articles/papers into Claude. Ask: <strong>"Summarise the key arguments, identify where they agree and disagree, and flag what's missing."</strong> What took 3 hours now takes 10 minutes. Then you add your analysis.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Workflow 2</div>
+      <div class="slide-body">
+        <div class="slide-title">✍️ Essay First Draft in 20 Minutes</div>
+        <p>Not "write my essay" — that's cheating and it shows. Instead: <strong>"Give me 5 different ways to argue this thesis, then outline the strongest one."</strong> Your thinking. AI structure. You write. 20-minute head start.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Workflow 3</div>
+      <div class="slide-body">
+        <div class="slide-title">🎓 Exam Prep with a Personal Tutor</div>
+        <p><strong>"Explain [concept] like I'm a smart student who has read the textbook but doesn't quite get the intuition. Then give me 5 exam-style questions."</strong> This is Socratic dialogue on demand. Free. Available at 2 AM.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Workflows 4+5</div>
+      <div class="slide-body">
+        <div class="slide-title">📧 Emails + Internship Applications</div>
+        <p><strong>Workflow 4:</strong> "Write a professional email to [professor/company] asking for [X]. Tone: respectful, confident, concise." Then edit it to sound like you.<br><strong>Workflow 5:</strong> "Review my CV and cover letter for [role]. Flag weak phrases and suggest improvements." Then decide what to keep.</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div style="background:#ecfeff;border:2px solid #22d3ee;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#22d3ee;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0e7490;">CTA Strategy — Soft Sell — AI for Beginners Ebook</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#0e7490;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">AI for Beginners Ebook</p>
+        <p style="font-size:9.5pt;color:#164e63;line-height:1.5;">Students who try workflow 1 or 2 from this carousel will want more. The ebook is the natural next step — it contains the full set of prompts and templates behind each workflow.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#0e7490;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"The AI for Beginners ebook has the step-by-step version of all 5 workflows — with the exact prompts to copy and the output examples. Link in bio. Try it tonight."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#164e63;padding:3px 0;display:flex;gap:8px;"><span style="color:#0e7490;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"WORKFLOWS"</strong> → auto-reply sends AI for Beginners ebook download link. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>Your classmates are spending 3 hours on research you could do in 10 minutes.<br><br>
+    Not because they're less smart — because they're not using the right tools.<br><br>
+    None of these workflows replace your thinking. They give you a 20-minute head start and 3 extra hours to think deeper, work on other subjects, or actually sleep.<br><br>
+    Try one of these today. Come back and tell me what happened.<br><br>
+    <strong>Share this with your study group.</strong> At least one person in there needs to see this. 🙏</p>
+  </div>
+  <div class="hashtag-box">
+    #StudentLife #StudyTips #AIStudyHacks #CollegeLife #ExamPrep #StudentMotivation #LearnerMachine #AIforStudents #ProductivityTips #StudySmart #IndiaStudents #UniversityLife
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "Which workflow are you trying first? Link in bio for more."</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Share student DMs/comments trying the workflows. Real reactions = social proof.</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Poll: "Tried any of these?" Yes — saved hours / Not yet, will try / Already doing this</div></div>
+  </div>
+</div>
+
+<!-- DAY 17 — WEDNESDAY — PROFESSIONALS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">17</div>
+      <div class="dl">WED</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue</div>
+      <div class="aud-tag at-pro">💼 Primary: Professionals</div>
+      <h2>"Your Manager Doesn't Know This Yet.<br>That's Your Advantage."</h2>
+      <p class="day-sub">Create the insider feeling — the professional watching this should feel like they're getting information their peers and bosses haven't caught up to yet. That urgency drives follows and saves.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="pain-box pb-pro">
+    <div class="pain-lbl">💼 The psychological hook for this reel</div>
+    <p>Professionals are competitive. They want to be ahead of their peers — especially their managers. Frame AI knowledge as insider advantage, not catch-up work. This shifts the emotional register from anxiety to opportunity.</p>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot Notes</div>
+    <ul>
+      <li>Slightly conspiratorial tone — like you're sharing something valuable that most people haven't figured out yet. Lean in.</li>
+      <li>This reel should feel like insider advice from a senior colleague over coffee, not a lecture.</li>
+      <li>50–58 seconds. End on something specific they can do Monday morning.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 6 sec</div>
+      <p>"Most companies still haven't figured out how to integrate AI into their teams. That means if you figure it out first — you become the person your entire organisation turns to."</p>
+      <p><em>(pause — slight lean forward)</em></p>
+      <p>"That window is open right now. It won't stay open."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-build">THE OPPORTUNITY — 6 to 28 sec</div>
+      <p>"I've watched professionals become the internal AI expert in their company — not because they had a qualification, but because they started using it six months before everyone else. They figured out what worked. They saved time. Their managers started asking them for advice."</p>
+      <p>"That's a career-defining moment. And it's available to anyone who moves in the next three to six months."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">WHAT TO ACTUALLY DO — 28 to 50 sec</div>
+      <p>"Here's what I'd do: Pick one task you repeat every week. A report. A summary. A proposal. An email chain. Spend one hour learning to do that specific task with AI."</p>
+      <p>"If you save three hours a week, in a month you've saved twelve hours. In a year — you've reclaimed a full working month. And you've built a skill your colleagues are still Googling how to start."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 50 to 58 sec</div>
+      <p>"The professionals who act now won't just survive the AI shift. They'll lead their teams through it."</p>
+            <p>"The course and training to do exactly that are at learnermachine.com — link in bio." <mark>Direct look. End.</mark></p>
+    </div>
+  </div>
+
+  
+  <div style="background:#f5f3ff;border:2px solid #a78bfa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#a78bfa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;">CTA Strategy — Hard Sell — Live Training or 1:1 Consulting</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#7c3aed;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">Live Training Programme or 1:1 Consulting Session</p>
+        <p style="font-size:9.5pt;color:#4c1d95;line-height:1.5;">This reel creates high commercial intent. Professionals who want to become 'the AI person' in their team need either the live training (if they want structured, group-based learning) or consulting (if they want a custom plan).</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#7c3aed;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"The training programme and 1:1 consulting are at learnermachine.com — built for professionals who want to move fast."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#4c1d95;padding:3px 0;display:flex;gap:8px;"><span style="color:#7c3aed;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"AHEAD"</strong> → auto-reply sends a 2-question qualifier then either training registration link or consulting booking. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>Most companies are still figuring out their "AI strategy." That means the professionals who act individually — right now — become invaluable before their organisation even has a policy.<br><br>
+    The formula is simple:<br>
+    1. Pick one repetitive task you do weekly<br>
+    2. Spend 60 minutes learning to do it with AI<br>
+    3. Save 3 hours per week<br>
+    4. Repeat for the next 3 months<br><br>
+    By then, you're the person everyone asks. That's not a coincidence. That's a strategy.<br><br>
+    <strong>What's the one task you'd pick?</strong> Tell me below — I'll tell you exactly how to start. 👇</p>
+  </div>
+  <div class="hashtag-box">
+    #CareerGrowth #ProfessionalAdvice #AIatWork #WorkSmart #OfficeLife #CareerDevelopment #LearnerMachine #FutureOfWork #AIforProfessionals #GetAhead #ProductivityHacks #CorporateLife
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "The window to be the AI person in your team. It's open right now."</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Share the top tasks from comments. "These are the exact ones worth starting with."</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Tease Thursday: "Tomorrow — business owners. Specifically about automation."</div></div>
+  </div>
+</div>
+
+<!-- DAY 18 — THURSDAY — BUSINESS OWNERS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">18</div>
+      <div class="dl">THU</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel — 5 Slides</div>
+      <div class="aud-tag at-biz">🏪 Primary: Small Business Owners</div>
+      <h2>"Your First 5 AI Automations —<br>Set Up Over One Weekend"</h2>
+      <p class="day-sub">A step-by-step setup guide. Business owners need to be told exactly what to do. No theory. Name the tool. Name the task. Name the time saving.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-5">
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Slide 1</div>
+      <div class="slide-body">
+        <div class="slide-title">"5 AI automations — set up in one weekend — that will save 10+ hours every week"</div>
+        <p>For business owners who are done talking about AI and ready to actually use it.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Auto 1</div>
+      <div class="slide-body">
+        <div class="slide-title">📧 Customer Email Responses</div>
+        <p>Tool: ChatGPT or Claude. Create a prompt with your brand voice + FAQ answers. <strong>Paste any customer query → get a reply in 30 seconds.</strong> Time saved: 2–4 hrs/week. Setup time: 45 mins.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Auto 2+3</div>
+      <div class="slide-body">
+        <div class="slide-title">📱 Weekly Content + Proposals</div>
+        <p><strong>Auto 2:</strong> Create a weekly prompt: "Write 7 social media captions for [my business]. Tone: [your tone]. Topics: [list]." One session = one week of content. <strong>Saves 3 hrs/week.</strong><br><strong>Auto 3:</strong> Paste project brief → AI writes first draft proposal. You edit. <strong>Saves 2 hrs per proposal.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Auto 4+5</div>
+      <div class="slide-body">
+        <div class="slide-title">📊 Reports + Team Training</div>
+        <p><strong>Auto 4:</strong> Paste raw sales/inquiry data → "Summarise the top 3 patterns and what I should focus on next week." <strong>10-minute weekly review instead of 2 hours.</strong><br><strong>Auto 5:</strong> New team member? AI generates a custom onboarding doc in 20 mins. No HR needed.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Your ROI</div>
+      <div class="slide-body">
+        <div class="slide-title">🧮 The Numbers</div>
+        <p>5 automations × 2 hrs saved each = <strong>10 hours per week.</strong><br>10 hours × ₹1,000/hr (your time value) = <strong>₹10,000 per week saved.</strong><br>In a month: <strong>₹40,000 in recovered time.</strong><br>Setup cost: <strong>₹0 to ₹2,000/month</strong> for the tools.</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div style="background:#fff8f5;border:2px solid #fed7aa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#fed7aa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c2520c;">CTA Strategy — Hard Sell — Consulting or Team Training</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">1:1 Consulting or Team AI Training</p>
+        <p style="font-size:9.5pt;color:#7c2d12;line-height:1.5;">Business owners who want to implement all 5 automations properly need either consulting (1:1 setup help) or team training (if they have staff to train). The ROI slide in this carousel is your best pre-sales asset.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"Book a consulting session or enroll in the course at learnermachine.com — and have all 5 running within a month."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#7c2d12;padding:3px 0;display:flex;gap:8px;"><span style="color:#c2520c;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"AUTOMATE"</strong> → auto-reply sends consulting intro + calendar booking link. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>Most business owners spend 10–15 hours a week on tasks that AI can handle in minutes.<br><br>
+    That's not a technology problem. It's a setup problem.<br><br>
+    These 5 automations take one weekend to set up. After that, they run every week — saving you time you can put back into the work that actually grows your business.<br><br>
+    Save this. Share it with any business owner you know who's been "meaning to look into AI."<br><br>
+    <strong>Which automation would make the biggest difference for you?</strong> Drop it below 👇</p>
+  </div>
+  <div class="hashtag-box">
+    #BusinessAutomation #SmallBusinessIndia #AITools #BusinessOwner #Productivity #EntrepreneurLife #LearnerMachine #WorkSmarter #BusinessGrowth #TimeManagement #SMBIndia #StartupIndia
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "One weekend. 5 setups. 10 hours saved every week after that. This is the ROI of starting now."</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Share which automation is most popular. "This is what people are starting with — and why."</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Poll: "Would you try these this weekend?" Yes — tell me where to start / Maybe / Already doing some of these</div></div>
+  </div>
+</div>
+
+
+<!-- ==================== WEEK 4 ==================== -->
+<div class="week-header">
+  <div class="wh-eyebrow">Week 4 — Days 22–28</div>
+  <div class="wh-title">"The Future Is Already Here"</div>
+  <p class="wh-sub">Vision, identity, and conversion. This week converts engaged followers into community members and product buyers. Each audience gets a piece that defines who they can become — not just what they can do.</p>
+  <table class="wh-table">
+    <tr><th>Day</th><th>Format</th><th>Title</th><th>Primary Audience</th><th>Effect</th></tr>
+    <tr><td><strong style="color:#faf8f5;">Mon</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">The Question That Separates Leaders</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">High-share opener — leadership identity</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Tue</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">The CV That Gets Shortlisted in 2025</td><td style="color:#22d3ee;">Students</td><td style="color:#a8a29e;">Viral shares in student groups</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Wed</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">How to Talk to Your Manager About AI</td><td style="color:#a78bfa;">Professionals</td><td style="color:#a8a29e;">High saves — actionable positioning</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Thu</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Build Your First AI System in 30 Days</td><td style="color:#fb923c;">Biz Owners</td><td style="color:#a8a29e;">Bookmarks + product conversion</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Fri</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">What I Wish I Knew on Day 1</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Vulnerability + depth — highest trust</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Sat</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">4 Types of AI Users — Which Are You?</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Identity + comments + shares</td></tr>
+    <tr><td><strong style="color:#faf8f5;">Sun</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Month 1 Complete — What's Next</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Community anchor + product launch window</td></tr>
+  </table>
+</div>
+
+<!-- DAY 23 — TUESDAY — STUDENTS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">23</div>
+      <div class="dl">TUE</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel — 6 Slides</div>
+      <div class="aud-tag at-student">🎓 Primary: Students</div>
+      <h2>"The CV Section That's Getting Graduates<br>Shortlisted in 2025 (Most Don't Have It)"</h2>
+      <p class="day-sub">The highest-stakes practical career content of the month. Students will share this widely. Make it concrete enough to implement before their next application.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-6">
+    <div class="slide-card">
+      <div class="slide-num sn-student">Slide 1</div>
+      <div class="slide-body">
+        <div class="slide-title">"HR teams are now filtering CVs for AI literacy. Here's exactly what to put in yours."</div>
+        <p>Dark background. High contrast. "This is the difference between shortlisted and ignored in 2025."</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Slide 2</div>
+      <div class="slide-body">
+        <div class="slide-title">🚫 What Not to Write</div>
+        <p>"Familiar with AI tools" — meaningless.<br>"Used ChatGPT for projects" — vague.<br>"Interest in artificial intelligence" — filler.<br><strong>These phrases appear on 10,000 CVs. They signal nothing.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Slide 3</div>
+      <div class="slide-body">
+        <div class="slide-title">✅ The Formula That Works</div>
+        <p><strong>[Task] + [AI Tool] + [Specific Outcome]</strong><br><br>"Used Claude to synthesise 40+ research papers for my thesis, reducing literature review time by 60%."<br>"Used ChatGPT to draft and iterate client-facing proposals, resulting in 3 accepted applications during internship."</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Slide 4</div>
+      <div class="slide-body">
+        <div class="slide-title">📊 By Field — What to Write</div>
+        <p><strong>Engineering:</strong> "Used AI-assisted code review to reduce debugging time by 40%"<br><strong>Marketing:</strong> "Developed AI-augmented content pipeline producing 5x output"<br><strong>Finance:</strong> "Applied AI data analysis to surface patterns across 3 years of P&L data"<br><strong>Law:</strong> "Used AI research tools to reduce case research time from 8 hours to 90 minutes"</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Slide 5</div>
+      <div class="slide-body">
+        <div class="slide-title">🎤 What to Say in the Interview</div>
+        <p>When asked about AI: <strong>"I use AI as an amplifier for my domain expertise — it handles the research and first drafts, I bring the judgment and quality control."</strong><br>This one sentence positions you as thoughtful, not just tech-literate.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-student">Slide 6</div>
+      <div class="slide-body">
+        <div class="slide-title">📌 This Week's Action</div>
+        <p>Identify 2 things you've done with AI in the last month. Write them using the [Task + Tool + Outcome] formula. Add them to your CV under a new section: <strong>"AI-Augmented Work"</strong> or under each relevant experience. Take 30 minutes. Do it today.</p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div style="background:#ecfeff;border:2px solid #22d3ee;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#22d3ee;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#0e7490;">CTA Strategy — Hard Sell — AI for Beginners Ebook (direct conversion)</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#0e7490;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">AI for Beginners Ebook — Highest-intent student post of the month</p>
+        <p style="font-size:9.5pt;color:#164e63;line-height:1.5;">Students who just read the CV slide are in buying mode. This is your hardest sell to students. Every slide in this carousel is a pre-sell for the ebook. The call to action should be clear and direct.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#0e7490;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"The AI for Beginners ebook is how you build every skill in this carousel — with exercises, templates, and the exact prompts. Link in bio. One purchase that pays for itself the first time you use it in an application."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#164e63;padding:3px 0;display:flex;gap:8px;"><span style="color:#0e7490;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"CV"</strong> → auto-reply sends AI for Beginners ebook link + a note about the course for deeper learning. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>HR teams aren't just looking for degrees anymore. They're looking for graduates who already know how to work in an AI-augmented environment.<br><br>
+    The problem: most students either don't have this experience — or don't know how to describe the experience they DO have.<br><br>
+    "Used ChatGPT for projects" doesn't cut it. Specificity does.<br><br>
+    Use the [Task + Tool + Outcome] formula and you'll be in the top 5% of CVs they read today.<br><br>
+    <strong>Share this with every student in your circle who's applying for jobs or internships.</strong> This is the kind of thing nobody tells you. 🙏</p>
+  </div>
+  <div class="hashtag-box">
+    #CVTips #JobHunt #GraduateJobs #StudentLife #CareerAdvice #AISkills #LearnerMachine #JobReady #ResumeWriting #IndiaJobs #PlacementSeason #CareerGrowth
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "Most student CVs have this gap. Here's exactly how to fill it."</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Q: "What's your field? Drop it below" — reply with a custom CV line for 5 people in stories.</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Tease Thursday: "For business owners — a 30-day AI implementation roadmap. Tomorrow."</div></div>
+  </div>
+</div>
+
+<!-- DAY 24 — WEDNESDAY — PROFESSIONALS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">24</div>
+      <div class="dl">WED</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue</div>
+      <div class="aud-tag at-pro">💼 Primary: Professionals</div>
+      <h2>"How to Have the AI Conversation<br>With Your Manager (Without Sounding Like a Threat)"</h2>
+      <p class="day-sub">Hyper-practical. Professionals know they should be using AI at work but don't know how to bring it up without looking like they're trying to automate their colleagues' jobs. Give them the exact script.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot Notes</div>
+    <ul>
+      <li>Lean into the practical. This is not inspirational — it's tactical. Professionals will save this to watch before a meeting.</li>
+      <li>Use the phrase "the exact framing" or "here's what to actually say" — professionals respond to precision.</li>
+      <li>55–65 seconds. End with a specific phrase they can use verbatim.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 6 sec</div>
+      <p>"Most professionals who want to use AI at work don't bring it up — because they don't know how to frame it without it seeming like they're trying to eliminate jobs."</p>
+      <p>"Here's the exact framing that works."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-build">THE FRAMING — 6 to 28 sec</div>
+      <p>"Don't walk into your manager's office and say 'I want to use AI.' That triggers defensiveness."</p>
+      <p>"Instead, frame it as a productivity conversation. 'I've been experimenting with some tools that could help our team produce [X] faster. Would you be open to me running a pilot on [specific task] and showing you the results in two weeks?'"</p>
+      <p>"You're not asking for permission. You're proposing an experiment. That's a different conversation entirely."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">THE POSITIONING — 28 to 50 sec</div>
+      <p>"When you come back with results — actual time saved, actual work produced — you've just become the person who brought something valuable to the team. That's career capital."</p>
+      <p>"Most managers aren't resisting AI because they disagree with it. They're resisting because they don't understand it well enough to approve it. Your job is to de-risk it for them — by doing the small experiment first and showing them the data."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 50 to 62 sec</div>
+      <p>"The professionals who do this become the bridge between leadership and the future of work inside their companies. That's an extraordinary position to be in."</p>
+      <p>"If you want help designing the pilot for your specific role — book a 1:1 session at learnermachine.com. Save this either way." <mark>Direct look. End.</mark></p>
+    </div>
+  </div>
+
+  
+  <div style="background:#f5f3ff;border:2px solid #a78bfa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#a78bfa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#7c3aed;">CTA Strategy — Hard Sell — Live Training or 1:1 Consulting</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#7c3aed;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">Live Training (team) or 1:1 Consulting</p>
+        <p style="font-size:9.5pt;color:#4c1d95;line-height:1.5;">Professionals who watch this reel before a meeting with their manager are your hottest leads of the month. They are ready to act. The DM trigger 'PILOT' is specific enough to only attract high-intent people.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#7c3aed;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"Book a 1:1 consulting session at learnermachine.com — I'll help you design the pilot and walk you through presenting it."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#4c1d95;padding:3px 0;display:flex;gap:8px;"><span style="color:#7c3aed;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"PILOT"</strong> → auto-reply sends consulting intro + booking link + a brief description of what a 1:1 session covers. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>The conversation most professionals are avoiding — because they don't know how to start it without it sounding wrong.<br><br>
+    The framing that works:<br><br>
+    <strong>"I've been experimenting with tools that could help our team produce [X] faster. Can I run a 2-week pilot on [specific task] and show you the results?"</strong><br><br>
+    Not "I want to use AI." That triggers defensiveness.<br><br>
+    An experiment with a defined end date and measurable results? That's something every manager can say yes to.<br><br>
+    When you come back with the data — you've just become the most valuable person in the room.<br><br>
+    <strong>Have you had this conversation with your manager yet?</strong> Tell me how it went 👇</p>
+  </div>
+  <div class="hashtag-box">
+    #CareerAdvice #WorkplaceStrategy #AIatWork #ProfessionalGrowth #CorporateLife #LearnerMachine #CareerDevelopment #ManagementTips #OfficeLife #GetAhead #AIforProfessionals #IndiaJobs
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "The exact script for the AI conversation with your manager. Save this."</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Poll: "Have you talked to your manager about using AI at work?" Yes / Not yet / My manager brought it up first</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Share responses. Note: "The majority haven't had this conversation. That means there's still a window."</div></div>
+  </div>
+</div>
+
+<!-- DAY 25 — THURSDAY — BUSINESS OWNERS -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">25</div>
+      <div class="dl">THU</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel — 5 Slides</div>
+      <div class="aud-tag at-biz">🏪 Primary: Small Business Owners</div>
+      <h2>"The 30-Day AI Business Roadmap —<br>Week by Week, No Overwhelm"</h2>
+      <p class="day-sub">Business owners need a clear sequence. Don't give them everything at once. Give them a pathway — one thing per week for 4 weeks. This carousel converts followers into LearnerMachine product interest.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-5">
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Slide 1</div>
+      <div class="slide-body">
+        <div class="slide-title">"The 30-day AI business roadmap. One week at a time. No overwhelm."</div>
+        <p>For business owners who want to actually implement AI — not just read about it.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Week 1</div>
+      <div class="slide-body">
+        <div class="slide-title">🔍 Audit Week — "Where Does My Time Actually Go?"</div>
+        <p>Track your week. List every repeating task. Rank by time spent. <strong>Identify the top 3 tasks that are repetitive, rule-based, and don't require a human judgment call.</strong> These are your first AI targets. Don't start without this list.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Week 2</div>
+      <div class="slide-body">
+        <div class="slide-title">⚡ First Win Week — "Get One Quick Win"</div>
+        <p>Take your #1 task from Week 1. Open ChatGPT or Claude. Spend 90 minutes learning to do it with AI. <strong>Your goal: save at least 2 hours this week.</strong> Don't add more tasks yet. One win builds confidence. Confidence builds consistency.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Week 3</div>
+      <div class="slide-body">
+        <div class="slide-title">📋 Systemise Week — "Turn It Into a Repeatable Process"</div>
+        <p>Take what worked in Week 2 and write a simple SOP: the exact prompt you use, the exact steps, the output format. <strong>Now it's not a trick you know — it's a business system.</strong> Add your #2 task this week.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Week 4</div>
+      <div class="slide-body">
+        <div class="slide-title">📈 Compound Week — "Delegate to Your Team"</div>
+        <p>Share your SOPs with your team. <strong>Now you're not just saving your own time — you're multiplying across everyone who works with you.</strong> This is where 10 saved hours becomes 50. Review what worked. Plan Month 2.</p>
+        <p><strong>Month 1 result: A business that runs measurably faster.</strong></p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div style="background:#fff8f5;border:2px solid #fed7aa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#fed7aa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c2520c;">CTA Strategy — Hard Sell — 1:1 Consulting (Month Peak Conversion)</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">1:1 Consulting — Your highest-ticket offer</p>
+        <p style="font-size:9.5pt;color:#7c2d12;line-height:1.5;">This is the highest-intent business owner post of the month. The 30-day roadmap is a teaser for exactly what a consulting engagement delivers. Week 4, Thursday — this is when business owners convert. Make the ask clear.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"Book a consulting session at learnermachine.com — I build a custom version of this roadmap for your business specifically."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#7c2d12;padding:3px 0;display:flex;gap:8px;"><span style="color:#c2520c;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      <li>DM trigger: Someone comments or DMs <strong>"ROADMAP"</strong> → auto-reply sends consulting offer overview + booking calendar link. Set up in Instagram automated responses.</li>
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>The reason most business owners don't get results with AI: they try to do everything at once and overwhelm themselves in Week 1.<br><br>
+    This roadmap is designed for how real businesses work — one thing, done properly, built into a system, then scaled.<br><br>
+    Week 1: Know where your time goes.<br>
+    Week 2: Get one real win.<br>
+    Week 3: Make it a system.<br>
+    Week 4: Multiply it across your team.<br><br>
+    By the end of Month 1, you're running a measurably faster, more capable business — with the same team you have today.<br><br>
+    <strong>Save this. Share it with any business owner who keeps saying "I'll start with AI soon."</strong> Soon is now. 🙏</p>
+  </div>
+  <div class="hashtag-box">
+    #BusinessGrowth #SmallBusinessIndia #AIRoadmap #EntrepreneurIndia #BusinessStrategy #LearnerMachine #AIforBusiness #StartupIndia #BusinessOwner #Productivity #GrowthMindset #SmallBiz
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "Month 1 AI roadmap for business owners. No overwhelm. Just one week at a time."</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Poll: "If you followed this, which week would you be in right now?" Share results.</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Soft product mention: "If you want the full guided version of this — with templates and prompts — something's coming. Watch this space."</div></div>
+  </div>
+</div>
+
+<!-- DAY 28 — SUNDAY — ALL AUDIENCES — MONTH CLOSE -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-tl">
+      <div class="dn">28</div>
+      <div class="dl">SUN</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-tl">🎥 Face Reel — Mission</div>
+      <div class="aud-tag at-all">All Three Audiences</div>
+      <h2>"Month 1 Done. Here's What I Learned<br>From Building This in Public."</h2>
+      <p class="day-sub">Vulnerable, honest, personal. Recap the month from your perspective — what surprised you about your audience, what you're building next, and why this matters. Convert followers into community.</p>
+    </div>
+    <div class="post-time-pill">⏰ 11:00 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot Notes</div>
+    <ul>
+      <li>Most personal reel of the month. This is a founder talking to their community — not a content creator hitting a posting schedule.</li>
+      <li>Reference real comments or DMs you received. Real names (with permission) or paraphrased. "A student told me..." "A business owner from Chennai wrote..." Specificity creates connection.</li>
+      <li>60–70 seconds. Let it breathe. This is the reel people will send to friends saying "follow this person."</li>
+      <li>End with what's coming in Month 2. Create genuine anticipation — not a sales pitch.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 6 sec</div>
+      <p>"One month ago I decided to share something I've been living inside — not from a classroom, not from a textbook."</p>
+      <p><em>(pause)</em></p>
+      <p>"I want to tell you what happened."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-build">WHAT SURPRISED ME — 6 to 30 sec</div>
+      <p>"I expected to hear from business owners. I didn't expect hundreds of students writing to me saying they've been scared to admit they don't understand what AI means for their future."</p>
+      <p>"I expected professionals to ask about tools. I didn't expect how many of them said 'I've been pretending I know what I'm doing with AI in front of my team — and I'm terrified someone will find out.'"</p>
+      <p>"That honesty changed how I think about what I'm building here."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">WHAT THIS IS ABOUT — 30 to 50 sec</div>
+      <p>"This is not a channel about AI tools. It's about closing the gap between people who have access to practical, honest knowledge — and people who don't."</p>
+      <p>"Students. Professionals. Business owners. The people who are brilliant but weren't in the rooms where these conversations happen first."</p>
+      <p>"You're here. That means you've already made a choice that most people in your position haven't."</p>
+    </div>
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">MONTH 2 — 50 to 68 sec</div>
+      <p>"Month 2 starts Monday. We're going deeper. More specific. I'll be talking to each of you — students, professionals, business owners — directly, with content designed exactly for where you are."</p>
+      <p>"If there's one question you want me to answer in Month 2 — drop it below. I read everything."</p>
+      <p>"And if you want to start with something practical right now — the ebooks, courses, and consulting are all at learnermachine.com. Link in bio." <mark>Pause. Genuine nod. End.</mark></p>
+    </div>
+  </div>
+
+  
+  <div style="background:#fff8f5;border:2px solid #fed7aa;border-radius:12px;padding:18px 22px;margin-bottom:20px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <div style="background:#fed7aa;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;font-size:13pt;flex-shrink:0;">💰</div>
+      <div style="font-size:8pt;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#c2520c;">CTA Strategy — Hard Sell — Full Product Range (Month Close)</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">PRODUCT TO PUSH</p>
+        <p style="font-size:10.5pt;font-weight:700;color:#1c1917;margin-bottom:2px;">All Products at learnermachine.com</p>
+        <p style="font-size:9.5pt;color:#7c2d12;line-height:1.5;">This is your month-end conversion moment. After 28 posts, your audience trusts you. Reference the entire product range — ebooks for beginners, courses for those ready to go deeper, training/consulting for those who want guided implementation.</p>
+      </div>
+      <div>
+        <p style="font-size:9pt;font-weight:700;color:#c2520c;margin-bottom:6px;">ADD TO END OF CAPTION</p>
+        <p style="font-size:10pt;color:#1c1917;font-style:italic;line-height:1.6;">"Everything is at learnermachine.com — from the free 7 Prompts PDF all the way to 1:1 consulting. Start wherever you are. Month 2 unlocks the next level."</p>
+      </div>
+    </div>
+    <ul style="margin-top:12px;list-style:none;padding:0;">
+      <li style="font-size:9.5pt;color:#7c2d12;padding:3px 0;display:flex;gap:8px;"><span style="color:#c2520c;font-weight:700;flex-shrink:0;">→</span> In the reel: Never mention the product directly. Build trust. The caption does the selling.</li>
+      
+    </ul>
+  </div>
+<div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>One month. 28 pieces of content. And the conversations that happened in the comments changed how I think about this.<br><br>
+    Students told me they're scared but nobody is giving them honest answers.<br>
+    Professionals told me they're pretending to understand AI in front of their teams.<br>
+    Business owners told me they've been waiting for someone to give them a roadmap — not more hype.<br><br>
+    That's what LearnerMachine is for.<br><br>
+    Month 2 starts Monday. More specific. More direct. More tailored to where you actually are.<br><br>
+    <strong>What's the one question you want me to answer in Month 2?</strong><br><br>
+    Drop it below. I'll build the next month around your answers. 🙏</p>
+  </div>
+  <div class="hashtag-box">
+    #LearnerMachine #AIEducation #BuildingInPublic #FounderLife #ThoughtLeadership #StartupIndia #AIforEveryone #CommunityFirst #MonthOneComplete #WhatIsAI #LearnAI #IndiaAI
+  </div>
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">11 AM</div><div class="story-text">Repost reel + "Month 1 done. Grateful for everyone who's been here. Here's what came out of it."</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Share the best 5–6 comments from the month. "These are the conversations I'm here for."</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Month 2 tease: "Starting Monday. If you know someone who needs this — send them here this weekend." DM link to profile.</div></div>
+  </div>
+</div>
+
+
+<!-- ==================== CLOSING REFERENCE ==================== -->
+<div style="padding:50px 80px; background:var(--dark);">
+  <div style="font-size:9pt;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--brand);margin-bottom:16px;">Month 1 — Complete Reference</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:26pt;color:#faf8f5;margin-bottom:32px;line-height:1.2;">Every Post.<br>Every Audience.<br>Every Day.</h2>
+
+  <table>
+    <tr><th>Day</th><th>Format</th><th>Title</th><th>Audience</th><th>Primary Effect</th></tr>
+    <tr style="background:rgba(255,255,255,.04)"><td style="color:#faf8f5;"><strong>1 Mon W1</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">The Founder Who Stopped</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Authority + curiosity</td></tr>
+    <tr><td style="color:#faf8f5;"><strong>2 Tue W1</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">AI's 70-Year History</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Depth + credibility</td></tr>
+    <tr style="background:rgba(14,116,144,.1)"><td style="color:#22d3ee;"><strong>3 Wed W1</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Your Degree Isn't Obsolete</td><td style="color:#22d3ee;">Students</td><td style="color:#a8a29e;">Relief → student group shares</td></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#a78bfa;"><strong>4 Thu W1</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">5 Stages of Professional AI Anxiety</td><td style="color:#a78bfa;">Professionals</td><td style="color:#a8a29e;">Saves — "This is exactly me"</td></tr>
+    <tr style="background:rgba(194,82,12,.1)"><td style="color:#fb923c;"><strong>5 Fri W1</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Big Companies Spend Crores — You Spend ₹0</td><td style="color:#fb923c;">Biz Owners</td><td style="color:#a8a29e;">WhatsApp business shares</td></tr>
+    <tr style="background:rgba(255,255,255,.04)"><td style="color:#faf8f5;"><strong>6 Sat W1</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Gen AI vs Old AI</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Bookmarks — foundational</td></tr>
+    <tr><td style="color:#faf8f5;"><strong>7 Sun W1</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Why LearnerMachine</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Community + product interest</td></tr>
+    <tr style="background:rgba(255,255,255,.04)"><td style="color:#faf8f5;"><strong>8 Mon W2</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">You Won't Lose Your Job — The Honest Part</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Trust anchor</td></tr>
+    <tr style="background:rgba(14,116,144,.1)"><td style="color:#22d3ee;"><strong>9 Tue W2</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">6 AI Skills — Unhireable to Ignore</td><td style="color:#22d3ee;">Students</td><td style="color:#a8a29e;">Mass shares in student groups</td></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#a78bfa;"><strong>10 Wed W2</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">What I Tell Professionals Scared of AI</td><td style="color:#a78bfa;">Professionals</td><td style="color:#a8a29e;">Saves + DMs</td></tr>
+    <tr style="background:rgba(194,82,12,.1)"><td style="color:#fb923c;"><strong>11 Thu W2</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">5 Things Small Biz Can Now Do</td><td style="color:#fb923c;">Biz Owners</td><td style="color:#a8a29e;">Business WhatsApp shares</td></tr>
+    <tr style="background:rgba(255,255,255,.04)"><td style="color:#faf8f5;"><strong>12 Fri W2</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">My 5 AI Morning Tasks</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Saves — routine adoption</td></tr>
+    <tr style="background:rgba(194,82,12,.1)"><td style="color:#fb923c;"><strong>13 Sat W2</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">AI Idea Generation — 4 Prompts</td><td style="color:#fb923c;">Biz + Pros</td><td style="color:#a8a29e;">Bookmarks + saves</td></tr>
+    <tr><td style="color:#faf8f5;"><strong>14 Sun W2</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">The Mission Behind LearnerMachine</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Community + product conversion</td></tr>
+    <tr style="background:rgba(255,255,255,.04)"><td style="color:#faf8f5;"><strong>15 Mon W3</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">3 Ways AI Changes Every Industry</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Hook for the week</td></tr>
+    <tr style="background:rgba(14,116,144,.1)"><td style="color:#22d3ee;"><strong>16 Tue W3</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">5 AI Workflows for College</td><td style="color:#22d3ee;">Students</td><td style="color:#a8a29e;">Shares + practical toolkit</td></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#a78bfa;"><strong>17 Wed W3</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Your Boss Doesn't Know This Yet</td><td style="color:#a78bfa;">Professionals</td><td style="color:#a8a29e;">Urgency + insider feeling</td></tr>
+    <tr style="background:rgba(194,82,12,.1)"><td style="color:#fb923c;"><strong>18 Thu W3</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Your First 5 AI Automations</td><td style="color:#fb923c;">Biz Owners</td><td style="color:#a8a29e;">Bookmarks + implementation</td></tr>
+    <tr style="background:rgba(255,255,255,.04)"><td style="color:#faf8f5;"><strong>19 Fri W3</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">The Task I Was Most Wrong About</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Authenticity — highest comments</td></tr>
+    <tr><td style="color:#faf8f5;"><strong>20 Sat W3</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Prompting Isn't the Skill — THIS Is</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Saves + bookmarks</td></tr>
+    <tr style="background:rgba(255,255,255,.04)"><td style="color:#faf8f5;"><strong>21 Sun W3</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">What I'm Building Right Now</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Trust + behind the scenes</td></tr>
+    <tr><td style="color:#faf8f5;"><strong>22 Mon W4</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">The Question That Separates Leaders</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Leadership identity — shares</td></tr>
+    <tr style="background:rgba(14,116,144,.1)"><td style="color:#22d3ee;"><strong>23 Tue W4</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">The CV That Gets Shortlisted in 2025</td><td style="color:#22d3ee;">Students</td><td style="color:#a8a29e;">Viral — placement season</td></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#a78bfa;"><strong>24 Wed W4</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">How to Talk to Your Manager About AI</td><td style="color:#a78bfa;">Professionals</td><td style="color:#a8a29e;">High saves — actionable script</td></tr>
+    <tr style="background:rgba(194,82,12,.1)"><td style="color:#fb923c;"><strong>25 Thu W4</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">30-Day AI Business Roadmap</td><td style="color:#fb923c;">Biz Owners</td><td style="color:#a8a29e;">Bookmarks + product conversion</td></tr>
+    <tr style="background:rgba(255,255,255,.04)"><td style="color:#faf8f5;"><strong>26 Fri W4</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">What I Wish I Knew on Day 1</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Vulnerability + trust peak</td></tr>
+    <tr><td style="color:#faf8f5;"><strong>27 Sat W4</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">4 Types of AI Users — Which Are You?</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Identity + comments</td></tr>
+    <tr style="background:rgba(6,78,59,.2)"><td style="color:#34d399;"><strong>28 Sun W4</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">Month 1 Complete — What's Next</td><td style="color:#a8a29e;">All</td><td style="color:#a8a29e;">Community anchor + Month 2 launch</td></tr>
+  </table>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:24px;">
+    <div style="background:rgba(14,116,144,.12);border:1px solid rgba(14,116,144,.3);border-radius:12px;padding:20px;">
+      <div style="font-size:9pt;color:#22d3ee;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">🎓 Student Content</div>
+      <p style="font-size:10pt;color:#a8a29e;line-height:1.7;">Days 3, 9, 16, 23<br>Tone: Mentor + peer<br>Language: Opportunity, edge, ahead<br>Never: Overwhelm, "AI is hard"</p>
+    </div>
+    <div style="background:rgba(124,58,237,.12);border:1px solid rgba(124,58,237,.3);border-radius:12px;padding:20px;">
+      <div style="font-size:9pt;color:#a78bfa;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">💼 Professional Content</div>
+      <p style="font-size:10pt;color:#a8a29e;line-height:1.7;">Days 4, 10, 17, 24<br>Tone: Peer + senior colleague<br>Language: Judgment, strategy, career capital<br>Never: "AI will take your job"</p>
+    </div>
+    <div style="background:rgba(194,82,12,.12);border:1px solid rgba(194,82,12,.3);border-radius:12px;padding:20px;">
+      <div style="font-size:9pt;color:#fb923c;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">🏪 Business Owner Content</div>
+      <p style="font-size:10pt;color:#a8a29e;line-height:1.7;">Days 5, 11, 13, 18, 25<br>Tone: Founder to founder<br>Language: ROI, time, revenue, specific tools<br>Never: Theory without action</p>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;text-align:center;color:#44403c;font-size:9.5pt;padding-bottom:10px;">
+    LearnerMachine — learnermachine.com &nbsp;·&nbsp; hello@learnermachine.com<br>
+    <span style="display:block;margin-top:6px;color:#2a2a2a;">28-day audience-sensitive content calendar · strategy/month-content-calendar.html</span>
+  </div>
+</div>
+
+</body>
+</html>

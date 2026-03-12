@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI for Beginners — LearnerMachine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+  :root {
+    --orange: #c2520c;
+    --orange-light: #fde8d8;
+    --bg: #faf8f5;
+    --dark: #1c1917;
+    --mid: #57534e;
+    --muted: #a8a29e;
+    --border: #e8e0d8;
+    --white: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #1c1917 0%, #2d1f10 60%, #3b1a08 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -100px; left: 50%;
+    transform: translateX(-50%);
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,82,12,0.35) 0%, transparent 70%);
+  }
+  .cover .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 60px;
+    position: relative;
+  }
+  .cover .logo-icon {
+    width: 44px; height: 44px;
+    background: var(--orange);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .cover .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .cover .badge {
+    display: inline-block;
+    background: rgba(194,82,12,0.25);
+    border: 1px solid rgba(194,82,12,0.5);
+    color: #f97316;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 28px;
+    position: relative;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .cover h1 span { color: var(--orange); }
+  .cover .subtitle {
+    font-size: 20px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 8px;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    position: relative;
+  }
+  .cover .hindi-sub {
+    font-size: 24px;
+    color: rgba(255,255,255,0.85);
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 50px;
+    position: relative;
+  }
+  .cover .meta {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    margin-bottom: 50px;
+    position: relative;
+  }
+  .cover .meta-item {
+    text-align: center;
+  }
+  .cover .meta-item .val {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--orange);
+    font-family: 'Playfair Display', serif;
+  }
+  .cover .meta-item .lbl {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .cover .price-box {
+    background: var(--orange);
+    color: #fff;
+    padding: 14px 40px;
+    border-radius: 14px;
+    font-size: 22px;
+    font-weight: 700;
+    position: relative;
+  }
+  .cover .footer-note {
+    position: absolute;
+    bottom: 30px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  /* ── TOC PAGE ── */
+  .toc-page {
+    padding: 60px 70px;
+    page-break-after: always;
+    background: var(--white);
+  }
+  .toc-page h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .toc-page h2 span { color: var(--orange); }
+  .toc-divider {
+    height: 3px;
+    background: linear-gradient(to right, var(--orange), transparent);
+    margin-bottom: 36px;
+    border-radius: 2px;
+  }
+  .toc-part {
+    margin-bottom: 24px;
+  }
+  .toc-part-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    margin-bottom: 10px;
+  }
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 7px 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: 14px;
+    color: var(--mid);
+  }
+  .toc-item .ch-title { font-weight: 500; color: var(--dark); }
+  .toc-item .pg { color: var(--muted); font-size: 13px; }
+
+  /* ── CONTENT PAGES ── */
+  .page {
+    padding: 55px 70px;
+    background: var(--bg);
+    page-break-after: always;
+    min-height: 100vh;
+  }
+  .page-white {
+    background: var(--white);
+  }
+
+  /* Part opener */
+  .part-opener {
+    padding: 60px 70px;
+    background: linear-gradient(135deg, #1c1917, #2d1a0a);
+    page-break-after: always;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .part-opener .part-num {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+  .part-opener h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 44px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.15;
+  }
+  .part-opener h2 span { color: var(--orange); }
+  .part-opener p {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 16px;
+    max-width: 500px;
+  }
+
+  /* Header */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 36px;
+  }
+  .chapter-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+  }
+  .brand-small {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  h1.chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    color: var(--dark);
+  }
+  h1.chapter-title span { color: var(--orange); }
+  .chapter-desc {
+    font-size: 15px;
+    color: var(--mid);
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--dark);
+    margin: 32px 0 12px;
+  }
+  h3.sub-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--dark);
+    margin: 22px 0 8px;
+  }
+
+  p { margin-bottom: 14px; color: var(--mid); }
+  strong { color: var(--dark); font-weight: 600; }
+
+  /* Callout boxes */
+  .callout {
+    background: var(--orange-light);
+    border-left: 4px solid var(--orange);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin: 20px 0;
+    font-size: 14px;
+    color: var(--dark);
+  }
+  .callout .callout-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+
+  .tip-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #166534;
+  }
+  .tip-box::before { content: '💡 '; }
+
+  .warning-box {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #9a3412;
+  }
+
+  /* Checklist */
+  .checklist { list-style: none; margin: 12px 0; padding: 0; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 14px;
+    color: var(--mid);
+    border-bottom: 1px solid var(--border);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist li .check { color: var(--orange); font-weight: 700; flex-shrink: 0; }
+  .checklist li .cross { color: #ef4444; font-weight: 700; flex-shrink: 0; }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 13px;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  th {
+    background: var(--dark);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--mid);
+    background: var(--white);
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: var(--bg); }
+
+  /* Prompt box */
+  .prompt-box {
+    background: #1c1917;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin: 14px 0;
+    font-family: 'DM Sans', monospace;
+    font-size: 13px;
+    color: #e7e5e4;
+    line-height: 1.7;
+    border-left: 3px solid var(--orange);
+    page-break-inside: avoid;
+  }
+  .prompt-box .prompt-num {
+    font-size: 10px;
+    color: var(--orange);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+  }
+
+  /* Quote */
+  blockquote {
+    border-left: 4px solid var(--orange);
+    padding: 14px 20px;
+    margin: 20px 0;
+    background: var(--white);
+    border-radius: 0 12px 12px 0;
+  }
+  blockquote p {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--dark);
+    margin: 0;
+  }
+  blockquote cite {
+    font-size: 12px;
+    color: var(--muted);
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 20px 0;
+  }
+  .stat-item {
+    flex: 1;
+    padding: 18px 16px;
+    text-align: center;
+    border-right: 1px solid var(--border);
+    background: var(--white);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-item .val {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--orange);
+  }
+  .stat-item .lbl {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+
+  /* Day plan */
+  .day-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    page-break-inside: avoid;
+  }
+  .day-badge {
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .day-content { flex: 1; color: var(--mid); }
+  .day-time {
+    font-size: 12px;
+    color: var(--muted);
+    flex-shrink: 0;
+  }
+
+  /* Numbered list */
+  ol.styled {
+    counter-reset: item;
+    list-style: none;
+    padding: 0;
+    margin: 12px 0;
+  }
+  ol.styled li {
+    counter-increment: item;
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    color: var(--mid);
+    page-break-inside: avoid;
+  }
+  ol.styled li::before {
+    content: counter(item);
+    background: var(--orange);
+    color: #fff;
+    font-weight: 700;
+    font-size: 12px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Income comparison */
+  .income-compare {
+    display: flex;
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .income-box {
+    flex: 1;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 13px;
+  }
+  .income-box.before {
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #991b1b;
+  }
+  .income-box.after {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    color: #166534;
+  }
+  .income-box .label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+  .income-box .amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  /* Back cover */
+  .back-cover {
+    background: linear-gradient(135deg, #1c1917, #2d1a0a);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+  }
+  .back-cover h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 16px;
+  }
+  .back-cover h2 span { color: var(--orange); }
+  .back-cover p { color: rgba(255,255,255,0.6); max-width: 480px; margin-bottom: 32px; }
+  .back-cover .cta-btn {
+    display: inline-block;
+    background: var(--orange);
+    color: #fff;
+    padding: 16px 40px;
+    border-radius: 14px;
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-bottom: 40px;
+  }
+  .back-cover .website {
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    margin-top: 16px;
+  }
+  .back-cover .hindi {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--orange);
+    margin-top: 40px;
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    .page, .toc-page { page-break-after: always; }
+    .part-opener { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     COVER PAGE
+═══════════════════════════════════════ -->
+<div class="cover">
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    <div class="logo-text">LearnerMachine</div>
+  </div>
+  <div class="badge">✦ &nbsp; Beginner Friendly &nbsp; ✦</div>
+  <h1>AI for <span>Beginners</span></h1>
+  <p class="subtitle">Artificial Intelligence — Complete Guide</p>
+  <p class="hindi-sub">आर्टिफिशियल इंटेलिजेंस — शुरुआती लोगों के लिए</p>
+  <div class="meta">
+    <div class="meta-item"><div class="val">50+</div><div class="lbl">Prompts</div></div>
+    <div class="meta-item"><div class="val">14</div><div class="lbl">Chapters</div></div>
+    <div class="meta-item"><div class="val">60+</div><div class="lbl">Pages</div></div>
+    <div class="meta-item"><div class="val">₹499</div><div class="lbl">Value</div></div>
+  </div>
+  <div class="price-box">Hindi + English &nbsp;|&nbsp; All Levels</div>
+  <div class="footer-note">© 2024 LearnerMachine · learnermachine.com</div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     TABLE OF CONTENTS
+═══════════════════════════════════════ -->
+<div class="toc-page">
+  <h2>Table of <span>Contents</span></h2>
+  <div class="toc-divider"></div>
+
+  <div class="toc-part">
+    <div class="toc-part-title">Part 1 — AI की दुनिया को समझो</div>
+    <div class="toc-item"><span class="ch-title">Chapter 1: AI क्या है? — Robot नहीं, Tool है</span><span class="pg">4</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 2: AI कैसे काम करता है?</span><span class="pg">7</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 3: आज के Top AI Tools</span><span class="pg">10</span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-title">Part 2 — ChatGPT Master करो</div>
+    <div class="toc-item"><span class="ch-title">Chapter 4: ChatGPT — आपका Personal Assistant</span><span class="pg">14</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 5: Prompt Engineering — सही जवाब कैसे लो</span><span class="pg">18</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 6: 50+ Ready-to-Use Hindi Prompts</span><span class="pg">23</span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-title">Part 3 — AI से पैसे कमाओ</div>
+    <div class="toc-item"><span class="ch-title">Chapter 7: AI से Freelancing — ₹50,000+ महीना</span><span class="pg">33</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 8: AI से Passive Income के तरीके</span><span class="pg">38</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 9: Students के लिए AI</span><span class="pg">42</span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-title">Part 4 — Advanced Use</div>
+    <div class="toc-item"><span class="ch-title">Chapter 10: Google Gemini Deep Dive</span><span class="pg">46</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 11: AI से Images बनाओ — Canva AI</span><span class="pg">50</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 12: AI का Responsible Use</span><span class="pg">54</span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-title">Part 5 — Action Plan</div>
+    <div class="toc-item"><span class="ch-title">Chapter 13: 30-Day AI Learning Plan</span><span class="pg">57</span></div>
+    <div class="toc-item"><span class="ch-title">Chapter 14: Resources और Next Steps</span><span class="pg">60</span></div>
+    <div class="toc-item"><span class="ch-title">Bonus: Top 10 AI Mistakes</span><span class="pg">62</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 1 OPENER
+═══════════════════════════════════════ -->
+<div class="part-opener">
+  <div class="part-num">Part 1</div>
+  <h2>AI की दुनिया को<br/><span>समझो</span></h2>
+  <p>बिना किसी technical background के — AI क्या है, कैसे काम करता है, और कौन से tools आज available हैं।</p>
+</div>
+
+<!-- CHAPTER 1 -->
+<div class="page page-white">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 1 · Part 1</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">AI क्या है? —<br/><span>Robot नहीं, Tool है</span></h1>
+  <p class="chapter-desc">AI को लेकर बहुत myths हैं। इस chapter में उन्हें तोड़ेंगे और समझेंगे कि AI actually क्या है।</p>
+
+  <h2 class="section-title">1.1 AI का मतलब क्या होता है?</h2>
+  <p>AI का full form है <strong>Artificial Intelligence</strong> — यानी एक ऐसी machine या computer program जो इंसानों की तरह सोच सके, सीख सके और decisions ले सके।</p>
+  <p>लेकिन घबराइए मत। AI कोई robot नहीं है जो आपकी नौकरी चुराने आया है। AI एक <strong>tool</strong> है — जैसे calculator एक tool है।</p>
+
+  <div class="callout">
+    <div class="callout-label">Real Examples आपकी जिंदगी में</div>
+    जब आप Google पर search करते हैं → <strong>AI</strong> &nbsp;|&nbsp; YouTube suggestions → <strong>AI</strong> &nbsp;|&nbsp; Swiggy delivery time estimate → <strong>AI</strong> &nbsp;|&nbsp; Spam emails filter → <strong>AI</strong>
+  </div>
+
+  <h2 class="section-title">1.2 AI इतना popular क्यों हो गया?</h2>
+  <p>2022 के अंत में <strong>ChatGPT</strong> launch हुआ। और सब कुछ बदल गया। पहले AI सिर्फ बड़ी companies के लिए था। लेकिन ChatGPT ने AI को हर आम इंसान के हाथ में दे दिया।</p>
+
+  <ul class="checklist">
+    <li><span class="check">✓</span> एक student ChatGPT से अपना assignment समझ सकता है</li>
+    <li><span class="check">✓</span> एक shopkeeper AI से अपनी marketing content बना सकता है</li>
+    <li><span class="check">✓</span> एक freelancer AI से 5 घंटे का काम 30 मिनट में कर सकता है</li>
+    <li><span class="check">✓</span> एक job seeker AI से interview prep कर सकता है</li>
+  </ul>
+
+  <h2 class="section-title">1.3 AI से डरना बंद करो — Myths vs Facts</h2>
+
+  <ul class="checklist">
+    <li><span class="cross">✗</span> <div><strong>"AI सब की नौकरी ले लेगा"</strong><br/>सच: AI उन लोगों की नौकरी लेगा जो AI use नहीं करते। AI users आगे बढ़ेंगे।</div></li>
+    <li><span class="cross">✗</span> <div><strong>"AI के लिए coding आनी चाहिए"</strong><br/>सच: आज के AI tools बिल्कुल simple हैं। बस Hindi में type करो और answer मिलता है।</div></li>
+    <li><span class="cross">✗</span> <div><strong>"AI सिर्फ English में काम करता है"</strong><br/>सच: ChatGPT, Gemini जैसे tools Hindi में बहुत अच्छे से काम करते हैं।</div></li>
+    <li><span class="cross">✗</span> <div><strong>"AI बहुत expensive है"</strong><br/>सच: सबसे powerful AI tools बिल्कुल free हैं।</div></li>
+  </ul>
+
+  <blockquote>
+    <p>"AI वो नहीं है जो Hollywood movies में दिखाते हैं। AI वो tool है जो आज आपकी जिंदगी आसान बना सकता है।"</p>
+    <cite>— LearnerMachine Team</cite>
+  </blockquote>
+</div>
+
+<!-- CHAPTER 2 -->
+<div class="page">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 2 · Part 1</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">AI कैसे काम करता है?<br/><span>बिना Technical बात के</span></h1>
+  <p class="chapter-desc">No coding, no math — सिर्फ simple analogies से समझेंगे।</p>
+
+  <h2 class="section-title">2.1 AI के पीछे का idea</h2>
+  <p>सोचिए आपने अपनी जिंदगी में लाखों किताबें, articles, और conversations पढ़े हों। तो आप किसी भी सवाल का जवाब देने में expert हो जाते।</p>
+  <p>AI के साथ भी यही हुआ। ChatGPT को internet पर available करोड़ों pages का data पढ़ाया गया। इससे वो सीखा कि कैसे सवालों के जवाब दिए जाते हैं। इसे कहते हैं <strong>Machine Learning।</strong></p>
+
+  <h2 class="section-title">2.2 AI के 3 Main Types</h2>
+
+  <table>
+    <tr><th>Type</th><th>क्या करता है</th><th>Examples</th></tr>
+    <tr><td><strong>Generative AI</strong></td><td>नया content बनाता है</td><td>ChatGPT, Gemini, Midjourney</td></tr>
+    <tr><td><strong>Predictive AI</strong></td><td>Future predict करता है</td><td>Netflix, Weather apps, Fraud detection</td></tr>
+    <tr><td><strong>Automation AI</strong></td><td>Repetitive tasks automate करता है</td><td>Email filters, Chatbots, Maps</td></tr>
+  </table>
+
+  <div class="tip-box">अगर आप beginner हैं, तो सिर्फ <strong>Generative AI</strong> पर focus करें — खासकर ChatGPT। यही आपको सबसे ज्यादा काम आएगा।</div>
+</div>
+
+<!-- CHAPTER 3 -->
+<div class="page page-white">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 3 · Part 1</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">आज के <span>Top AI Tools</span><br/>Free वाले भी</h1>
+  <p class="chapter-desc">₹0 में use होने वाले powerful AI tools — आज से ही शुरू करो।</p>
+
+  <h2 class="section-title">Text AI Tools (लिखने के लिए)</h2>
+  <table>
+    <tr><th>Tool</th><th>Free?</th><th>Best For</th></tr>
+    <tr><td><strong>ChatGPT</strong> (chat.openai.com)</td><td>✅ हाँ</td><td>हर काम के लिए — most versatile</td></tr>
+    <tr><td><strong>Google Gemini</strong> (gemini.google.com)</td><td>✅ हाँ</td><td>Real-time internet + Google integration</td></tr>
+    <tr><td><strong>Claude</strong> (claude.ai)</td><td>✅ हाँ</td><td>लंबे documents, detailed analysis</td></tr>
+    <tr><td><strong>Perplexity</strong> (perplexity.ai)</td><td>✅ हाँ</td><td>Research और fact-checking</td></tr>
+    <tr><td><strong>Microsoft Copilot</strong></td><td>✅ हाँ</td><td>Word, Excel, PowerPoint के साथ</td></tr>
+  </table>
+
+  <h2 class="section-title">Image & Design AI Tools</h2>
+  <table>
+    <tr><th>Tool</th><th>Free?</th><th>Best For</th></tr>
+    <tr><td><strong>Canva AI</strong> (canva.com)</td><td>✅ हाँ</td><td>Social media posts, presentations</td></tr>
+    <tr><td><strong>Adobe Firefly</strong></td><td>✅ Limited</td><td>Professional quality images</td></tr>
+    <tr><td><strong>Remove.bg</strong></td><td>✅ हाँ</td><td>Image background remove करना</td></tr>
+    <tr><td><strong>Leonardo AI</strong></td><td>✅ हाँ</td><td>Detailed artwork और illustrations</td></tr>
+  </table>
+
+  <h2 class="section-title">Other Must-Have AI Tools</h2>
+  <table>
+    <tr><th>Tool</th><th>क्या करता है</th></tr>
+    <tr><td><strong>Grammarly</strong></td><td>English grammar automatically fix करता है</td></tr>
+    <tr><td><strong>Otter.ai</strong></td><td>Meeting record और transcribe करता है</td></tr>
+    <tr><td><strong>ElevenLabs</strong></td><td>Text को realistic voice में बदलता है</td></tr>
+    <tr><td><strong>CapCut AI</strong></td><td>Videos automatically edit करता है</td></tr>
+    <tr><td><strong>Notion AI</strong></td><td>Smart notes और documents बनाता है</td></tr>
+  </table>
+
+  <div class="callout">
+    <div class="callout-label">Beginner Starter Pack (सब Free)</div>
+    Day 1 से इन्हें use करना शुरू करो: <strong>ChatGPT + Google Gemini + Canva + Grammarly + Remove.bg</strong>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 2 OPENER
+═══════════════════════════════════════ -->
+<div class="part-opener">
+  <div class="part-num">Part 2</div>
+  <h2>ChatGPT<br/><span>Master करो</span></h2>
+  <p>Account setup से लेकर advanced prompting तक — और 50+ ready-to-use Hindi prompts।</p>
+</div>
+
+<!-- CHAPTER 4 -->
+<div class="page page-white">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 4 · Part 2</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">ChatGPT —<br/><span>आपका Personal Assistant</span></h1>
+  <p class="chapter-desc">Account बनाओ, interface समझो, और आज ही पहला काम करवाओ।</p>
+
+  <h2 class="section-title">4.1 ChatGPT Account बनाओ (Step by Step)</h2>
+  <ol class="styled">
+    <li>Browser में जाएं: <strong>chat.openai.com</strong></li>
+    <li><strong>"Sign Up"</strong> पर click करें</li>
+    <li>अपना <strong>Gmail address</strong> डालें</li>
+    <li>एक strong <strong>password</strong> set करें</li>
+    <li>अपना <strong>email verify</strong> करें (inbox check करें)</li>
+    <li>Done! अब ChatGPT free में use करें</li>
+  </ol>
+
+  <div class="tip-box">Free plan में GPT-3.5 मिलता है जो बहुत capable है। Beginners के लिए यह बिल्कुल काफी है।</div>
+
+  <h2 class="section-title">4.2 पहली बात करो अभी</h2>
+  <p>ChatGPT में यह type करके देखो:</p>
+  <div class="prompt-box">
+    <div class="prompt-num">Try This Now</div>
+    नमस्ते! मैं AI के बारे में सीखना चाहता हूँ। मुझे ChatGPT के 5 best uses बताओ जो एक Indian student के लिए useful हों।
+  </div>
+  <p>ChatGPT Hindi में जवाब देगा। यह देखकर आप हैरान हो जाएंगे! 😊</p>
+</div>
+
+<!-- CHAPTER 5 -->
+<div class="page">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 5 · Part 2</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">Prompt Engineering —<br/><span>AI से सही जवाब कैसे लो</span></h1>
+  <p class="chapter-desc">यह chapter इस पूरी book का सबसे important chapter है। इसे ध्यान से पढ़ो।</p>
+
+  <h2 class="section-title">5.1 Perfect Prompt का Formula</h2>
+  <p>एक अच्छे prompt में 4 चीजें होती हैं:</p>
+  <ol class="styled">
+    <li><strong>Role</strong> — AI को बताओ कि वो कौन है<br/><em style="color:var(--muted)">"तुम एक experienced marketing expert हो..."</em></li>
+    <li><strong>Task</strong> — क्या करना है<br/><em style="color:var(--muted)">"...मुझे एक Instagram caption लिखकर दो..."</em></li>
+    <li><strong>Context</strong> — जरूरी details<br/><em style="color:var(--muted)">"...मेरे नए clothing brand के लिए जो youth को target करता है..."</em></li>
+    <li><strong>Format</strong> — जवाब कैसा चाहिए<br/><em style="color:var(--muted)">"...5 options दो, हर एक 2-3 lines का हो और Hindi में हो।"</em></li>
+  </ol>
+
+  <h2 class="section-title">5.2 Bad Prompt vs Good Prompt</h2>
+  <table>
+    <tr><th>❌ Bad Prompt</th><th>✅ Good Prompt</th></tr>
+    <tr><td>"Recipe बताओ"</td><td>"Microwave में बिना oven के बनने वाली chocolate cake recipe दो। Ingredients Indian market में available होने चाहिए।"</td></tr>
+    <tr><td>"Email लिखो"</td><td>"मेरे client को delay के बारे में professional और polite apology email लिखो। Tone: formal लेकिन friendly।"</td></tr>
+    <tr><td>"Business idea दो"</td><td>"₹10,000 से कम investment में India में शुरू हो सकने वाले 5 online business ideas दो जो 2024 में trending हैं।"</td></tr>
+  </table>
+
+  <div class="callout">
+    <div class="callout-label">Golden Rule</div>
+    AI को वो सब बताओ जो आप किसी नए employee को बताते। जितनी ज्यादा context, उतना बेहतर जवाब।
+  </div>
+</div>
+
+<!-- CHAPTER 6 — PROMPTS -->
+<div class="page page-white">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 6 · Part 2</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title"><span>50+ Ready-to-Use</span><br/>Hindi Prompts</h1>
+  <p class="chapter-desc">Copy करो, अपनी details भरो, use करो। इतना आसान है।</p>
+
+  <h2 class="section-title">Students के लिए (Prompts 1–7)</h2>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 1 — Concept Simplify करो</div>
+    मैं [subject] का student हूँ। [topic] को मुझे बिल्कुल simple भाषा में समझाओ जैसे मैं 10th class का student हूँ।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 2 — Essay Writing</div>
+    [Topic] पर एक 1000 words का essay लिखो। Structure: Introduction, 3 main points, Conclusion। Hindi में।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 3 — Exam Questions</div>
+    मेरे exam के लिए [chapter name] के 20 most important questions बनाओ answers के साथ।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 4 — Comparison Table</div>
+    [Concept A] और [Concept B] में क्या अंतर है? Simple table format में बताओ।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 5 — Memory Trick</div>
+    मुझे [topic] को याद रखने के लिए एक मजेदार story या trick बताओ।
+  </div>
+</div>
+
+<div class="page">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 6 Continued — 50+ Prompts</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+
+  <h2 class="section-title">Job Seekers के लिए (Prompts 8–13)</h2>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 8 — Resume Summary</div>
+    मेरा experience है: [अपना experience बताओ]। मेरे लिए एक professional resume summary लिखो जो ATS-friendly हो।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 9 — Interview Prep</div>
+    [Job role] के लिए interview में कौन से 10 common questions पूछे जाते हैं? Hindi में answers के साथ।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 10 — Self Introduction</div>
+    HR ने पूछा: 'अपने आप के बारे में बताइए।' एक impressive 2-minute answer लिखो। मेरा background है: [background]
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 11 — Salary Negotiation</div>
+    मेरी salary negotiation के लिए script लिखो। Current CTC: [amount], Expected: [amount]। Confident लेकिन polite tone।
+  </div>
+
+  <h2 class="section-title">Freelancers के लिए (Prompts 14–18)</h2>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 14 — Gig Description</div>
+    मैं [service] offer करता हूँ। Fiverr के लिए एक attractive gig description लिखो जो buyers को click करने पर मजबूर करे।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 15 — Client Proposal</div>
+    एक client को project proposal email लिखो। Project: [details]। Professional और confident tone। 200 words।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 16 — Pricing Strategy</div>
+    Freelancer के तौर पर मेरी service [service name] है। इसके लिए एक complete pricing strategy बनाओ — Basic, Standard, Premium packages।
+  </div>
+</div>
+
+<div class="page page-white">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 6 Continued — 50+ Prompts</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+
+  <h2 class="section-title">Business Owners के लिए (Prompts 19–25)</h2>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 19 — Content Calendar</div>
+    मेरा business है: [business type]। Instagram के लिए 30 days का content calendar बनाओ — post ideas, captions, और best posting time के साथ।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 20 — Social Media Captions</div>
+    मेरे product [product name] के लिए 5 different Instagram captions लिखो — funny, emotional, informational, promotional, और story-based।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 21 — WhatsApp Marketing</div>
+    [Product/Service] के benefits को एक WhatsApp message में लिखो जो customers को forward करना चाहें। Max 100 words।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 22 — Customer Complaint Reply</div>
+    मेरे customer ने complaint की: "[complaint text]"। एक professional और empathetic reply लिखो जो customer को retain करे।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 23 — SWOT Analysis</div>
+    मेरे business की SWOT analysis करो: [business description]। Table format में दो।
+  </div>
+
+  <h2 class="section-title">Content Creators के लिए (Prompts 26–30)</h2>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 26 — YouTube SEO</div>
+    [Topic] पर YouTube video के लिए एक catchy title, 200-word description, और 10 tags suggest करो जो high search volume वाले हों।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 27 — Reel Script</div>
+    [Trending topic] पर एक Instagram Reel का script लिखो जो 60 seconds का हो। Hook, main content, और CTA include करो।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Prompt 28 — Video Ideas</div>
+    मेरे YouTube channel का niche है [niche]। अगले 3 months के लिए 12 video ideas दो जो high views मिलने की possibility हो।
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 3 OPENER
+═══════════════════════════════════════ -->
+<div class="part-opener">
+  <div class="part-num">Part 3</div>
+  <h2>AI से <span>पैसे कमाओ</span></h2>
+  <p>Freelancing से ₹50K+ महीना, passive income के तरीके, और students के लिए special guide।</p>
+</div>
+
+<!-- CHAPTER 7 -->
+<div class="page page-white">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 7 · Part 3</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">AI से Freelancing —<br/><span>₹50,000+ महीना</span></h1>
+
+  <h2 class="section-title">7.1 AI ने Freelancing कैसे बदल दी?</h2>
+  <div class="income-compare">
+    <div class="income-box before">
+      <div class="label">❌ पहले (Without AI)</div>
+      <div class="amount">₹12,500</div>
+      <div>1 article/day × 25 days × ₹500</div>
+      <div style="margin-top:8px;font-size:12px">3-4 hours per article</div>
+    </div>
+    <div class="income-box after">
+      <div class="label">✅ अब (With AI)</div>
+      <div class="amount">₹75,000</div>
+      <div>6 articles/day × 25 days × ₹500</div>
+      <div style="margin-top:8px;font-size:12px">30-45 minutes per article</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">7.2 AI-Powered Freelance Services</h2>
+  <table>
+    <tr><th>Service</th><th>Tools Used</th><th>Rate (per piece)</th></tr>
+    <tr><td><strong>AI Content Writing</strong></td><td>ChatGPT + Grammarly</td><td>₹1,000–₹5,000</td></tr>
+    <tr><td><strong>AI Image Creation</strong></td><td>Canva AI, Firefly</td><td>₹500–₹3,000</td></tr>
+    <tr><td><strong>AI Video Creation</strong></td><td>Invideo, CapCut AI</td><td>₹2,000–₹15,000</td></tr>
+    <tr><td><strong>AI Chatbot Setup</strong></td><td>Various platforms</td><td>₹5,000–₹25,000</td></tr>
+    <tr><td><strong>AI Prompt Writing</strong></td><td>ChatGPT testing</td><td>₹2,000–₹10,000</td></tr>
+  </table>
+
+  <h2 class="section-title">7.3 शुरुआत कैसे करें — 7 Days Plan</h2>
+  <div class="day-row"><div class="day-badge">Day 1–2</div><div class="day-content">ChatGPT और Canva AI पर practice करो — sample work बनाओ</div><div class="day-time">2 hrs/day</div></div>
+  <div class="day-row"><div class="day-badge">Day 3</div><div class="day-content">Fiverr/Upwork पर profile बनाओ — complete और professional</div><div class="day-time">3 hrs</div></div>
+  <div class="day-row"><div class="day-badge">Day 4</div><div class="day-content">Portfolio के लिए 3 sample projects बनाओ</div><div class="day-time">4 hrs</div></div>
+  <div class="day-row"><div class="day-badge">Day 5</div><div class="day-content">पहला gig publish करो — low price से शुरू (₹500–₹999)</div><div class="day-time">2 hrs</div></div>
+  <div class="day-row"><div class="day-badge">Day 6–7</div><div class="day-content">LinkedIn/Instagram पर 10 potential clients को DM करो</div><div class="day-time">2 hrs/day</div></div>
+
+  <div class="tip-box">First client मिलने के बाद 5-star review लो, फिर price बढ़ाओ। Repeat customers ही असली income हैं।</div>
+</div>
+
+<!-- CHAPTER 8 -->
+<div class="page">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 8 · Part 3</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">AI से <span>Passive Income</span><br/>के तरीके</h1>
+
+  <h2 class="section-title">8.1 Digital Products बेचो</h2>
+  <table>
+    <tr><th>Product Type</th><th>Time to Create</th><th>Platform</th><th>Price Range</th></tr>
+    <tr><td><strong>Ebooks</strong></td><td>2–3 days</td><td>Instamojo, Gumroad</td><td>₹199–₹999</td></tr>
+    <tr><td><strong>Canva Templates</strong></td><td>1 day</td><td>Etsy, Creative Market</td><td>₹299–₹1,999</td></tr>
+    <tr><td><strong>Notion Templates</strong></td><td>1 day</td><td>Gumroad, own site</td><td>₹499–₹2,999</td></tr>
+    <tr><td><strong>Prompt Packs</strong></td><td>Few hours</td><td>Gumroad, own site</td><td>₹199–₹799</td></tr>
+    <tr><td><strong>Online Courses</strong></td><td>1–2 weeks</td><td>Teachable, Udemy</td><td>₹999–₹9,999</td></tr>
+  </table>
+
+  <div class="callout">
+    <div class="callout-label">यह ebook ही एक example है!</div>
+    यह ebook ChatGPT की help से बनाई गई, Canva से formatted, और LearnerMachine पर sell हो रही है। आप भी यही कर सकते हो।
+  </div>
+
+  <h2 class="section-title">8.2 Faceless YouTube Channel</h2>
+  <ol class="styled">
+    <li>ChatGPT से script लिखो</li>
+    <li>ElevenLabs से AI voiceover बनाओ</li>
+    <li>Pictory/Invideo से video बनाओ</li>
+    <li>Upload करो और SEO optimize करो</li>
+    <li>AdSense + Sponsorship से income</li>
+  </ol>
+
+  <div class="stats-row">
+    <div class="stat-item"><div class="val">₹0</div><div class="lbl">Investment</div></div>
+    <div class="stat-item"><div class="val">2–3 hrs</div><div class="lbl">Per Video</div></div>
+    <div class="stat-item"><div class="val">3–6 mo</div><div class="lbl">To Monetize</div></div>
+    <div class="stat-item"><div class="val">∞</div><div class="lbl">Income Potential</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 4 OPENER
+═══════════════════════════════════════ -->
+<div class="part-opener">
+  <div class="part-num">Part 4</div>
+  <h2>Advanced <span>AI Use</span></h2>
+  <p>Gemini, Canva AI, और responsible use — एक step आगे जाओ।</p>
+</div>
+
+<!-- CHAPTER 10 -->
+<div class="page page-white">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 10 · Part 4</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">Google Gemini —<br/><span>ChatGPT का Indian Alternative</span></h1>
+
+  <h2 class="section-title">Gemini vs ChatGPT — Head to Head</h2>
+  <table>
+    <tr><th>Feature</th><th>ChatGPT (Free)</th><th>Gemini (Free)</th></tr>
+    <tr><td>Internet Access (Real-time)</td><td>❌ नहीं</td><td>✅ हाँ</td></tr>
+    <tr><td>Image Reading</td><td>❌ नहीं</td><td>✅ हाँ</td></tr>
+    <tr><td>Google Docs/Gmail Integration</td><td>❌ नहीं</td><td>✅ हाँ</td></tr>
+    <tr><td>Hindi Quality</td><td>✅ बढ़िया</td><td>✅ बहुत बढ़िया</td></tr>
+    <tr><td>Creative Writing</td><td>✅ Excellent</td><td>✅ Good</td></tr>
+    <tr><td>Math/Reasoning</td><td>✅ Good</td><td>✅ Very Good</td></tr>
+  </table>
+
+  <div class="tip-box"><strong>Pro Tip:</strong> दोनों use करो। Research और current events के लिए Gemini, creative writing के लिए ChatGPT। दोनों free हैं!</div>
+
+  <h2 class="section-title">Gemini का Best Use — Prompts</h2>
+  <div class="prompt-box">
+    <div class="prompt-num">Gemini Prompt — Latest News Research</div>
+    [Topic] के बारे में आज की latest news और developments बताओ। Sources के साथ।
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-num">Gemini Prompt — Gmail Draft</div>
+    मुझे [situation] के बारे में एक professional email draft करनी है। Recipient: [name], Purpose: [purpose]।
+  </div>
+</div>
+
+<!-- CHAPTER 12 -->
+<div class="page">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 12 · Part 4</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">AI का <span>Responsible Use</span></h1>
+
+  <h2 class="section-title">Privacy — यह Information AI में कभी मत डालो</h2>
+  <ul class="checklist">
+    <li><span class="cross">✗</span> Aadhaar number, PAN card, Passport number</li>
+    <li><span class="cross">✗</span> Bank details, UPI pins, Passwords</li>
+    <li><span class="cross">✗</span> Confidential business information, Trade secrets</li>
+    <li><span class="cross">✗</span> दूसरों की personal information उनकी permission के बिना</li>
+    <li><span class="check">✓</span> General questions, Public information — यह safe है</li>
+    <li><span class="check">✓</span> Personal details को fictional names से replace करके use करो</li>
+  </ul>
+
+  <h2 class="section-title">AI Hallucination — जब AI गलत बोले</h2>
+  <p>AI कभी-कभी confidently गलत जानकारी देता है। इसे <strong>"Hallucination"</strong> कहते हैं।</p>
+
+  <div class="warning-box">
+    <strong>इन topics पर AI को 100% trust मत करो:</strong> Medical advice, Legal advice, Current news, Statistics, Historical dates — हमेशा verify करो।
+  </div>
+
+  <h2 class="section-title">Ethical Use — क्या करें, क्या नहीं</h2>
+  <ul class="checklist">
+    <li><span class="check">✓</span> AI से सीखो और improve करो — यह ethical है</li>
+    <li><span class="check">✓</span> AI को draft tool की तरह use करो, फिर खुद edit करो</li>
+    <li><span class="cross">✗</span> AI-generated content को without disclosure बेचो — avoid करो</li>
+    <li><span class="cross">✗</span> Fake news, Deepfakes बनाओ — strictly avoid करो</li>
+    <li><span class="cross">✗</span> Exam में AI use करो — यह cheating है</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PART 5 OPENER
+═══════════════════════════════════════ -->
+<div class="part-opener">
+  <div class="part-num">Part 5</div>
+  <h2>Action Plan &<br/><span>Next Steps</span></h2>
+  <p>30-day learning plan, resources, और top 10 mistakes जो beginners करते हैं।</p>
+</div>
+
+<!-- CHAPTER 13 -->
+<div class="page page-white">
+  <div class="page-header">
+    <span class="chapter-label">Chapter 13 · Part 5</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title"><span>30-Day</span> AI Learning Plan</h1>
+
+  <h2 class="section-title">Week 1 — Foundation (Days 1–7)</h2>
+  <div class="day-row"><div class="day-badge">Day 1</div><div class="day-content">ChatGPT account बनाओ और 10 questions पूछो</div><div class="day-time">30 min</div></div>
+  <div class="day-row"><div class="day-badge">Day 2</div><div class="day-content">Google Gemini try करो, ChatGPT से compare करो</div><div class="day-time">30 min</div></div>
+  <div class="day-row"><div class="day-badge">Day 3</div><div class="day-content">Chapter 6 से 5 prompts practice करो</div><div class="day-time">45 min</div></div>
+  <div class="day-row"><div class="day-badge">Day 4</div><div class="day-content">Canva AI try करो — 1 social media post बनाओ</div><div class="day-time">45 min</div></div>
+  <div class="day-row"><div class="day-badge">Day 5</div><div class="day-content">अपने काम/study के लिए 10 custom prompts बनाओ</div><div class="day-time">1 hr</div></div>
+  <div class="day-row"><div class="day-badge">Day 6</div><div class="day-content">AI से एक complete document बनाओ (resume/essay/plan)</div><div class="day-time">1 hr</div></div>
+  <div class="day-row"><div class="day-badge">Day 7</div><div class="day-content">Week review — क्या सीखा? एक दोस्त को AI के बारे में बताओ</div><div class="day-time">30 min</div></div>
+
+  <h2 class="section-title">Week 2 — Skill Building (Days 8–14)</h2>
+  <div class="day-row"><div class="day-badge">Day 8</div><div class="day-content">Image AI explore करो (Canva AI / Adobe Firefly)</div><div class="day-time">1 hr</div></div>
+  <div class="day-row"><div class="day-badge">Day 9</div><div class="day-content">AI से एक business idea explore करो — full plan बनाओ</div><div class="day-time">1 hr</div></div>
+  <div class="day-row"><div class="day-badge">Day 10</div><div class="day-content">AI income opportunities research करो (Chapter 7–8)</div><div class="day-time">1 hr</div></div>
+  <div class="day-row"><div class="day-badge">Day 11–14</div><div class="day-content">एक mini project complete करो जो real value दे</div><div class="day-time">2 hrs/day</div></div>
+
+  <h2 class="section-title">Week 3–4 — Application</h2>
+  <ul class="checklist">
+    <li><span class="check">✓</span> Daily काम में AI को integrate करो</li>
+    <li><span class="check">✓</span> एक small income project शुरू करो</li>
+    <li><span class="check">✓</span> LinkedIn/Twitter पर AI community join करो</li>
+    <li><span class="check">✓</span> हर दिन 1 नया AI use case try करो</li>
+  </ul>
+</div>
+
+<!-- BONUS — MISTAKES -->
+<div class="page">
+  <div class="page-header">
+    <span class="chapter-label">Bonus Chapter</span>
+    <span class="brand-small">LearnerMachine</span>
+  </div>
+  <h1 class="chapter-title">Top 10 AI <span>Mistakes</span><br/>जो Beginners करते हैं</h1>
+
+  <ol class="styled">
+    <li><div><strong>सिर्फ पढ़ते हैं, practice नहीं करते</strong><br/><span style="color:var(--muted)">Fix: रोज कम से कम 15 minutes AI practice करो</span></div></li>
+    <li><div><strong>बहुत vague prompts देते हैं</strong><br/><span style="color:var(--muted)">Fix: Chapter 5 का RTCF formula use करो</span></div></li>
+    <li><div><strong>AI का पहला जवाब final मान लेते हैं</strong><br/><span style="color:var(--muted)">Fix: Iterate करो — "इसे improve करो, और specific बनाओ"</span></div></li>
+    <li><div><strong>Free tools को ignore करते हैं</strong><br/><span style="color:var(--muted)">Fix: Free tools से शुरू करो — वो बहुत powerful हैं</span></div></li>
+    <li><div><strong>AI को 100% trust करते हैं</strong><br/><span style="color:var(--muted)">Fix: Important information हमेशा independently verify करो</span></div></li>
+    <li><div><strong>सिर्फ एक tool use करते हैं</strong><br/><span style="color:var(--muted)">Fix: ChatGPT + Gemini + Canva — different tools की different strengths हैं</span></div></li>
+    <li><div><strong>AI content को बिना edit किए use करते हैं</strong><br/><span style="color:var(--muted)">Fix: AI का draft लो, फिर अपनी personality और facts add करो</span></div></li>
+    <li><div><strong>Privacy का ध्यान नहीं रखते</strong><br/><span style="color:var(--muted)">Fix: Personal और confidential info AI में share मत करो</span></div></li>
+    <li><div><strong>AI को skill की जगह shortcut समझते हैं</strong><br/><span style="color:var(--muted)">Fix: AI tool है — असली skill यह है कि इसे कैसे use करें</span></div></li>
+    <li><div><strong>शुरुआत ही नहीं करते</strong><br/><span style="color:var(--muted)">Fix: Perfect time कभी नहीं आता। अभी ChatGPT.com खोलो।</span></div></li>
+  </ol>
+
+  <blockquote>
+    <p>"AI आपकी नौकरी नहीं लेगा। AI use करने वाला इंसान आपकी नौकरी लेगा। — तो वो इंसान आप बनो।"</p>
+    <cite>— LearnerMachine</cite>
+  </blockquote>
+</div>
+
+<!-- ═══════════════════════════════════════
+     BACK COVER
+═══════════════════════════════════════ -->
+<div class="back-cover">
+  <div style="font-size:48px;margin-bottom:24px">✦</div>
+  <h2>अगला Step लो —<br/><span>आज ही</span></h2>
+  <p>यह ebook आपका पहला step था। LearnerMachine पर और भी resources हैं जो आपको अगले level पर ले जाएंगे।</p>
+
+  <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:32px">
+    <div style="background:rgba(194,82,12,0.15);border:1px solid rgba(194,82,12,0.3);border-radius:12px;padding:16px 24px;text-align:center">
+      <div style="font-size:24px;font-weight:800;color:#c2520c;font-family:Playfair Display,serif">₹399</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:4px">Side Hustle Blueprint</div>
+    </div>
+    <div style="background:rgba(194,82,12,0.15);border:1px solid rgba(194,82,12,0.3);border-radius:12px;padding:16px 24px;text-align:center">
+      <div style="font-size:24px;font-weight:800;color:#c2520c;font-family:Playfair Display,serif">₹599</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:4px">Freelancing Masterclass</div>
+    </div>
+    <div style="background:rgba(194,82,12,0.15);border:1px solid rgba(194,82,12,0.3);border-radius:12px;padding:16px 24px;text-align:center">
+      <div style="font-size:24px;font-weight:800;color:#c2520c;font-family:Playfair Display,serif">₹699</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-top:4px">Digital Marketing Guide</div>
+    </div>
+  </div>
+
+  <a href="https://learnermachine.com" class="cta-btn">learnermachine.com →</a>
+  <div class="website">hello@learnermachine.com</div>
+  <div class="hindi">सीखो. बढ़ो. कामयाब बनो.</div>
+  <div style="margin-top:40px;font-size:12px;color:rgba(255,255,255,0.2)">© 2024 LearnerMachine · Personal use only · Do not redistribute</div>
+</div>
+
+</body>
+</html>

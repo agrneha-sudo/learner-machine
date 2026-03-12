@@ -23,6 +23,7 @@ create table if not exists products (
   pages         integer,
   duration      text,
   file_path     text,
+  cover_image_path text,
   published     boolean default true,
   created_at    timestamptz default now(),
   updated_at    timestamptz default now()
@@ -40,8 +41,19 @@ create table if not exists orders (
   razorpay_order_id    text unique,
   razorpay_payment_id  text,
   status               text default 'pending' check (status in ('pending', 'paid', 'failed')),
+  download_token       uuid unique default gen_random_uuid(),
+  download_count       integer default 0,
   created_at           timestamptz default now()
 );
+
+-- Migration: add download protection columns to existing orders table
+-- Run this if the table already exists:
+-- alter table orders add column if not exists download_token uuid unique default gen_random_uuid();
+-- alter table orders add column if not exists download_count integer default 0;
+
+-- Note: razorpay_order_id and razorpay_payment_id columns are reused as generic
+-- gateway_order_id / gateway_payment_id for Cashfree and Instamojo orders.
+-- No schema change needed — the column names are legacy but the data is correct.
 
 -- Auto-update updated_at
 create or replace function update_updated_at()

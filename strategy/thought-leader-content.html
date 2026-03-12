@@ -1,0 +1,1796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LearnerMachine — Thought Leader Content Strategy</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  :root {
+    --brand:#c2520c; --brand-light:#fff8f5;
+    --dark:#1c1917; --text:#292524; --muted:#78716c;
+    --border:#e8e0d8; --bg:#faf8f5; --card:#ffffff;
+    --face:#7c3aed; --face-light:#f5f3ff;
+    --carousel:#0369a1; --carousel-light:#f0f9ff;
+    --tl:#064e3b; --tl-light:#ecfdf5;
+  }
+  body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); font-size:10.5pt; line-height:1.7; }
+
+  /* COVER */
+  .cover { background:var(--dark); padding:70px 80px; position:relative; overflow:hidden; page-break-after:always; }
+  .cover::before { content:''; position:absolute; right:-100px; top:-100px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(194,82,12,.25) 0%,transparent 70%); }
+  .cover::after { content:''; position:absolute; left:-60px; bottom:-60px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle,rgba(194,82,12,.12) 0%,transparent 70%); }
+  .cover-eyebrow { font-size:9pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--brand); margin-bottom:20px; position:relative; z-index:1; }
+  .cover h1 { font-family:'Playfair Display',serif; font-size:42pt; color:#faf8f5; line-height:1.12; margin-bottom:18px; position:relative; z-index:1; }
+  .cover h1 span { color:#fb923c; }
+  .cover-sub { font-size:12pt; color:#a8a29e; max-width:560px; margin-bottom:44px; position:relative; z-index:1; line-height:1.7; }
+  .cover-pills { display:flex; gap:12px; flex-wrap:wrap; position:relative; z-index:1; margin-bottom:50px; }
+  .cover-pill { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:100px; padding:8px 18px; font-size:9.5pt; font-weight:600; color:#e7e5e4; }
+  .persona-box { background:rgba(194,82,12,.12); border:1px solid rgba(194,82,12,.3); border-radius:14px; padding:28px 32px; max-width:620px; position:relative; z-index:1; }
+  .persona-box h3 { font-size:11pt; font-weight:700; color:#fb923c; margin-bottom:10px; }
+  .persona-box p { font-size:10.5pt; color:#a8a29e; line-height:1.7; }
+  .persona-box p strong { color:#e7e5e4; }
+
+  /* SECTION */
+  .section { padding:52px 80px; border-bottom:2px solid var(--border); }
+  .section-eyebrow { font-size:8.5pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--brand); margin-bottom:12px; }
+  .section h2 { font-family:'Playfair Display',serif; font-size:26pt; color:var(--dark); margin-bottom:8px; line-height:1.2; }
+  .section-sub { font-size:11pt; color:var(--muted); margin-bottom:36px; }
+
+  /* CARDS */
+  .grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:24px; }
+  .grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:24px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:22px 24px; }
+  .card h3 { font-size:12pt; font-weight:700; color:var(--dark); margin-bottom:10px; }
+  .card p { font-size:10pt; color:var(--text); line-height:1.6; margin-bottom:8px; }
+  .card p:last-child { margin-bottom:0; }
+  .card-accent { border-left:4px solid var(--brand); }
+  .card-tl { border-left:4px solid var(--tl); background:var(--tl-light); }
+
+  /* PILLAR */
+  .pillar { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px 26px; margin-bottom:16px; display:flex; gap:20px; align-items:flex-start; }
+  .pillar-icon { width:52px; height:52px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:22pt; flex-shrink:0; }
+  .pillar-body h3 { font-size:13pt; font-weight:700; color:var(--dark); margin-bottom:6px; }
+  .pillar-body p { font-size:10.5pt; color:var(--text); line-height:1.6; margin-bottom:6px; }
+  .pillar-body .examples { font-size:9.5pt; color:var(--muted); font-style:italic; }
+
+  /* SCRIPT */
+  .script-wrap { background:var(--dark); border-radius:14px; padding:28px 32px; margin-bottom:20px; }
+  .script-label { font-size:8pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--brand); margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+  .script-beat { margin-bottom:20px; }
+  .beat-tag { display:inline-block; font-size:8pt; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:4px; margin-bottom:8px; }
+  .bt-hook { background:rgba(251,146,60,.15); color:#fb923c; }
+  .bt-build { background:rgba(167,139,250,.15); color:#a78bfa; }
+  .bt-insight { background:rgba(52,211,153,.15); color:#34d399; }
+  .bt-cta { background:rgba(194,82,12,.2); color:#fb923c; }
+  .bt-conflict { background:rgba(248,113,113,.15); color:#f87171; }
+  .bt-pivot { background:rgba(96,165,250,.15); color:#60a5fa; }
+  .script-wrap p { font-size:10.5pt; color:#e7e5e4; line-height:1.85; margin-bottom:8px; }
+  .script-wrap p:last-child { margin-bottom:0; }
+  .script-wrap em { color:#a78bfa; font-style:normal; font-weight:600; }
+  .script-wrap mark { background:rgba(194,82,12,.25); color:#fb923c; border-radius:3px; padding:1px 5px; }
+  .script-wrap .stage-dir { color:#44403c; font-size:9pt; font-style:italic; }
+  .time-stamp { font-size:8pt; font-weight:700; color:#44403c; background:rgba(255,255,255,.05); padding:3px 10px; border-radius:4px; display:inline-block; margin-bottom:8px; }
+
+  /* CAROUSEL SLIDES */
+  .slides-row { display:grid; gap:12px; margin-bottom:20px; }
+  .slides-5 { grid-template-columns:repeat(5,1fr); }
+  .slides-4 { grid-template-columns:repeat(4,1fr); }
+  .slide-card { background:var(--card); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+  .slide-num { padding:6px 12px; font-size:8pt; font-weight:800; text-align:center; color:white; }
+  .sn-blue { background:var(--carousel); }
+  .sn-dark { background:var(--dark); }
+  .sn-brand { background:var(--brand); }
+  .slide-body { padding:13px 15px; }
+  .slide-title { font-size:9.5pt; font-weight:700; color:var(--dark); margin-bottom:6px; line-height:1.3; }
+  .slide-body p { font-size:8.5pt; color:var(--muted); line-height:1.5; }
+  .slide-body strong { color:var(--brand); }
+
+  /* CONTENT BLOCK */
+  .content-block { background:var(--card); border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:14px; }
+  .block-hdr { padding:11px 18px; font-size:8.5pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; border-bottom:1px solid var(--border); }
+  .bh-neutral { background:var(--bg); color:var(--muted); }
+  .bh-tl { background:var(--tl-light); color:var(--tl); }
+  .bh-brand { background:var(--brand-light); color:var(--brand); }
+  .bh-face { background:var(--face-light); color:var(--face); }
+  .bh-blue { background:var(--carousel-light); color:var(--carousel); }
+  .block-body { padding:16px 18px; }
+  .block-body p { font-size:10pt; color:var(--text); margin-bottom:9px; }
+  .block-body p:last-child { margin-bottom:0; }
+  .block-body strong { color:var(--dark); }
+
+  /* DAY HEADER */
+  .day-wrap { padding:48px 80px; border-bottom:3px solid var(--border); }
+  .day-top { display:flex; align-items:flex-start; gap:22px; margin-bottom:30px; }
+  .day-badge { width:68px; height:68px; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; flex-shrink:0; }
+  .db-face { background:var(--face); }
+  .db-carousel { background:var(--carousel); }
+  .db-tl { background:var(--tl); }
+  .day-badge .dn { font-size:22pt; font-weight:900; color:white; line-height:1; }
+  .day-badge .dl { font-size:7.5pt; font-weight:700; color:rgba(255,255,255,.7); letter-spacing:1px; text-transform:uppercase; }
+  .day-meta { flex:1; }
+  .day-type-badge { display:inline-flex; align-items:center; gap:7px; font-size:8.5pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:5px 14px; border-radius:100px; margin-bottom:10px; }
+  .dtb-face { background:var(--face-light); color:var(--face); border:1px solid #ddd6fe; }
+  .dtb-carousel { background:var(--carousel-light); color:var(--carousel); border:1px solid #bae6fd; }
+  .dtb-tl { background:var(--tl-light); color:var(--tl); border:1px solid #a7f3d0; }
+  .day-meta h2 { font-family:'Playfair Display',serif; font-size:22pt; color:var(--dark); line-height:1.2; margin-bottom:6px; }
+  .day-meta .day-sub { font-size:10.5pt; color:var(--muted); }
+  .post-time-pill { background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:6px 14px; font-size:9pt; font-weight:600; color:var(--muted); white-space:nowrap; align-self:flex-start; }
+
+  /* SHOOT BOX */
+  .shoot-box { background:#fffbeb; border:1px solid #fde68a; border-radius:10px; padding:16px 20px; margin-bottom:20px; }
+  .shoot-lbl { font-size:8pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#92400e; margin-bottom:10px; }
+  .shoot-box ul { list-style:none; padding:0; }
+  .shoot-box ul li { font-size:10pt; color:#78350f; padding:4px 0; display:flex; gap:8px; }
+  .shoot-box ul li::before { content:'→'; color:#d97706; font-weight:700; flex-shrink:0; }
+
+  /* CAPTION */
+  .caption-box { background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:16px 20px; margin-bottom:14px; }
+  .caption-lbl { font-size:8pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:10px; }
+  .caption-box p { font-size:10pt; color:var(--text); line-height:1.75; }
+
+  /* HASHTAGS */
+  .hashtag-box { font-size:9pt; color:var(--carousel); font-weight:500; line-height:1.9; padding:12px 16px; background:var(--carousel-light); border-radius:8px; margin-bottom:16px; }
+
+  /* STORIES */
+  .story-row { display:flex; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .story-item { display:flex; align-items:flex-start; gap:10px; background:#f5f3ff; border:1px solid #ddd6fe; border-radius:8px; padding:10px 14px; flex:1; min-width:180px; }
+  .story-time { font-size:8.5pt; font-weight:800; color:var(--face); white-space:nowrap; min-width:40px; }
+  .story-text { font-size:9.5pt; color:var(--text); line-height:1.5; }
+
+  /* TABLE */
+  table { width:100%; border-collapse:collapse; margin-bottom:20px; font-size:10pt; border-radius:10px; overflow:hidden; }
+  th { background:var(--dark); color:#faf8f5; padding:11px 16px; text-align:left; font-size:9pt; font-weight:600; }
+  td { padding:10px 16px; border-bottom:1px solid var(--border); color:var(--text); vertical-align:top; }
+  tr:nth-child(even) td { background:#faf8f5; }
+  tr:last-child td { border-bottom:none; }
+
+  /* CALLOUT */
+  .callout { border-left:4px solid var(--brand); background:var(--brand-light); padding:16px 22px; margin:16px 0; border-radius:0 10px 10px 0; }
+  .callout p { font-size:10.5pt; color:var(--text); margin:0; }
+  .callout strong { color:var(--brand); }
+
+  .tl-callout { border-left:4px solid var(--tl); background:var(--tl-light); padding:16px 22px; margin:16px 0; border-radius:0 10px 10px 0; }
+  .tl-callout p { font-size:10.5pt; color:#064e3b; margin:0; }
+
+  .section-divider { height:1px; background:var(--border); margin:30px 0; }
+
+  strong { color:var(--dark); }
+  .sml { font-size:9pt; color:var(--muted); }
+
+  @media print {
+    .day-wrap { page-break-after:always; page-break-inside:avoid; }
+    .cover { page-break-after:always; }
+    .section { page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+  <div class="cover-eyebrow">LearnerMachine — Thought Leadership Content System</div>
+  <h1>The <span>Founder's Voice</span><br>Content Strategy</h1>
+  <p class="cover-sub">You're not a trainer who learned AI last year. You're a founder who has seen how businesses are built, broken, and rebuilt — and now AI is the biggest shift of your lifetime. That's the story. That's the brand.</p>
+
+  <div class="cover-pills">
+    <div class="cover-pill">Startup Founder Lens</div>
+    <div class="cover-pill">AI Thought Leadership</div>
+    <div class="cover-pill">Generative vs Traditional AI</div>
+    <div class="cover-pill">Business Automation</div>
+    <div class="cover-pill">Idea Generation</div>
+    <div class="cover-pill">Commanding Respect</div>
+  </div>
+
+  <div class="persona-box">
+    <h3>Your On-Screen Persona (Read This Before Every Shoot)</h3>
+    <p>You are a <strong>founder who has seen companies start, struggle, pivot, and scale.</strong> You've sat in rooms making hard decisions. You've hired people, lost clients, rebuilt. AI didn't scare you — it <strong>fascinated you</strong>, because you immediately recognised it as the shift your industry had been building toward for 30 years.<br><br>
+    You're not teaching AI. <strong>You're sharing what you're actually seeing and doing</strong> — from inside a company, not a classroom. That's why people should listen to you. Not because you have a certification. Because you have <strong>context.</strong></p>
+  </div>
+</div>
+
+<!-- ==================== POSITIONING ==================== -->
+<div class="section">
+  <div class="section-eyebrow">Part 1 — Foundation</div>
+  <h2>Positioning & The Founder Persona</h2>
+  <p class="section-sub">Before you post a single piece of content, you need to be clear on exactly who you are on screen — and what separates you from every other "AI teacher" on Instagram.</p>
+
+  <div class="grid-2">
+    <div class="card card-accent">
+      <h3>What Makes You Different</h3>
+      <p><strong>Other AI educators:</strong> Learned ChatGPT in 2023. Teaching prompts. No business context.</p>
+      <p><strong>You:</strong> Have been building and running companies. You understand operations, teams, decisions under pressure, revenue cycles, business failure, customer relationships.</p>
+      <p>When you talk about AI, you're not talking about a cool tool — you're talking about <strong>what this changes in the reality of running a company.</strong> That's a completely different conversation.</p>
+    </div>
+    <div class="card card-tl">
+      <h3>The Thought Leader Equation</h3>
+      <p><strong>Trainer:</strong> "Here's how to use ChatGPT. Step 1, Step 2, Step 3."</p>
+      <p><strong>Thought Leader:</strong> "I've been building companies for years. The way humans think about work is fundamentally changing — and most business owners don't see it yet. Let me show you what I'm seeing."</p>
+      <p>One teaches a tool. The other <strong>changes how people see the world.</strong> People follow world-changers, not tool teachers.</p>
+    </div>
+  </div>
+
+  <div class="grid-3">
+    <div class="card">
+      <h3>📌 What You Talk About</h3>
+      <p>Business decisions you've actually made. Mistakes you've made running companies. What AI is changing in your actual workflow. What founders and business owners are getting wrong about AI. The history of how businesses adapted to big technological shifts.</p>
+    </div>
+    <div class="card">
+      <h3>🚫 What You Never Do</h3>
+      <p>Never say "Here's a tutorial." Never say "Step 1, Step 2." Never position yourself as a course seller. Never use language like "I'll teach you." Instead: "I've been thinking about this." "Here's what I'm seeing." "This changed how I run my company."</p>
+    </div>
+    <div class="card">
+      <h3>🎯 Who You're Talking To</h3>
+      <p>Curious but overwhelmed business owners. Founders who feel behind. Smart professionals who sense AI is important but don't know where to start. People who want to understand — not just follow tutorials. They want a guide, not a teacher.</p>
+    </div>
+  </div>
+
+  <div class="tl-callout">
+    <p><strong>The Golden Rule of Thought Leadership:</strong> Never explain what you know. Share what you've lived. Every post should feel like a conversation with someone who has been in the room where decisions are made — not a lesson from someone who read a book about it.</p>
+  </div>
+</div>
+
+<!-- ==================== CONTENT PILLARS ==================== -->
+<div class="section">
+  <div class="section-eyebrow">Part 2 — Content Architecture</div>
+  <h2>5 Content Pillars</h2>
+  <p class="section-sub">Every post you create belongs to one of these pillars. Together they build a complete worldview — not just a collection of tips.</p>
+
+  <div class="pillar">
+    <div class="pillar-icon" style="background:#fde8d8;">🏗️</div>
+    <div class="pillar-body">
+      <h3>Pillar 1 — "The Builder's Lens" (25%)</h3>
+      <p>Stories and insights from the actual experience of starting and running companies. The decisions, the failures, the pivots. This is what makes you credible. Everything else is built on this foundation.</p>
+      <p class="examples">Examples: "The day I realised my entire operations team was doing AI's job." | "Why I almost hired 3 people — and then didn't." | "What 10 years of building companies taught me about systems — and why AI is the logical conclusion."</p>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-icon" style="background:#dbeafe;">🤖</div>
+    <div class="pillar-body">
+      <h3>Pillar 2 — "AI Decoded" (25%)</h3>
+      <p>Explaining AI concepts as a founder would — not technically, but through the lens of what it means for business and society. Starting with curiosity, building to depth. This is where generative AI vs other AI lives.</p>
+      <p class="examples">Examples: "AI didn't start with ChatGPT — here's the 70-year story nobody tells." | "Generative AI vs the AI you've been using for years — what's actually different." | "Why most people confuse AI with automation — and why that confusion is expensive."</p>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-icon" style="background:#dcfce7;">⚡</div>
+    <div class="pillar-body">
+      <h3>Pillar 3 — "AI in My Company" (20%)</h3>
+      <p>Real, honest, specific account of how you're applying AI to your own business right now. Not polished success stories — actual experiments, surprises, failures, and wins. This is the most shareable content because it's real.</p>
+      <p class="examples">Examples: "I automated our entire customer onboarding last week. Here's what happened." | "AI wrote our marketing plan. I hated 40% of it — and that 40% was the most interesting part." | "3 tasks I completely removed from my to-do list by giving them to AI."</p>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-icon" style="background:#f5f3ff;">🔭</div>
+    <div class="pillar-body">
+      <h3>Pillar 4 — "The Future I'm Seeing" (20%)</h3>
+      <p>Contrarian, forward-looking takes. What's coming that most people aren't ready for. This is pure thought leadership — opinions backed by experience and pattern recognition. People follow you because you see around corners.</p>
+      <p class="examples">Examples: "The job title 'Manager' will look completely different in 5 years." | "Most startups in 2025 are solving yesterday's problem." | "The companies that will win the next decade aren't the ones with the best AI — they're the ones with the best questions."</p>
+    </div>
+  </div>
+
+  <div class="pillar">
+    <div class="pillar-icon" style="background:#fff7ed;">🌱</div>
+    <div class="pillar-body">
+      <h3>Pillar 5 — "For the Curious Beginner" (10%)</h3>
+      <p>Accessible entry points for people completely new to AI. But even here — framed through the founder's lens. Not "here's a tutorial" but "here's what I wish I understood about this when I first started." Always bridges to the bigger business picture.</p>
+      <p class="examples">Examples: "If you've never used ChatGPT — start here. A founder's first steps." | "I explained AI to my 60-year-old father last week. Here's what I said." | "The simplest mental model for understanding AI — one that actually holds up."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CONTENT ARC ==================== -->
+<div class="section">
+  <div class="section-eyebrow">Part 3 — Content Arc</div>
+  <h2>The 4-Week Story Arc</h2>
+  <p class="section-sub">Your content should build on itself like chapters in a book. Week 1 plants curiosity. Week 2 adds depth. Week 3 connects AI to business reality. Week 4 positions you as the person people need to follow.</p>
+
+  <table>
+    <tr><th>Week</th><th>Theme</th><th>Where the Audience Is</th><th>Where You Take Them</th></tr>
+    <tr>
+      <td><strong>Week 1</strong></td>
+      <td>AI Curiosity + What AI Really Is</td>
+      <td>"I've heard of AI but don't really understand it"</td>
+      <td>"Oh — AI is not what I thought. This is actually fascinating."</td>
+    </tr>
+    <tr>
+      <td><strong>Week 2</strong></td>
+      <td>Generative AI vs Other AI + The History</td>
+      <td>"I understand the basics but the depth is confusing"</td>
+      <td>"I understand the landscape now. I know where to focus."</td>
+    </tr>
+    <tr>
+      <td><strong>Week 3</strong></td>
+      <td>AI in Business — Automation + Ideas</td>
+      <td>"I get what AI is — how do I actually use it?"</td>
+      <td>"I can see exactly where AI fits in MY work and life."</td>
+    </tr>
+    <tr>
+      <td><strong>Week 4</strong></td>
+      <td>The Founder's Playbook — Decisions + Future</td>
+      <td>"I want to go deeper. Who should I follow for this?"</td>
+      <td>"This person is thinking about AI differently. I need to follow them."</td>
+    </tr>
+  </table>
+</div>
+
+<!-- ==================== WEEK 1 CONTENT ==================== -->
+<div class="section">
+  <div class="section-eyebrow">Part 4 — Full Scripts & Content</div>
+  <h2>Week 1 — Complete Content</h2>
+  <p class="section-sub">Theme: <strong>AI Curiosity.</strong> Starting with the big picture — what AI really is, its history, and the difference between generative AI and everything else. Plant seeds of fascination, not FOMO.</p>
+</div>
+
+<!-- DAY 1 — MONDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">01</div>
+      <div class="dl">MON</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue | Pillar: AI Decoded</div>
+      <h2>"I've Been Building Companies<br>for Years. AI Still Shocked Me."</h2>
+      <p class="day-sub">Your opening statement to the world. This is your first impression as a thought leader — establish authority, create curiosity, make the audience feel like they're talking to someone who actually knows things.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot & Tone Notes</div>
+    <ul>
+      <li>Shoot this in your workspace, office or desk — not a bedroom. You're a founder. The setting should feel like one.</li>
+      <li>Tone: Calm authority. Not excited. Not trying to impress. Like someone who has seen a lot and is choosing to share something important.</li>
+      <li>No fast cuts on this one. Let sentences breathe. Pause after insights. This is deliberate, not hyper-edited.</li>
+      <li>Dress well. First impressions set the entire brand. Solid colour shirt, clean look. No logo tees.</li>
+      <li>Target: 55–65 seconds. Slightly longer than average — you're establishing a different kind of creator.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script — Speak This Like a Conversation, Not a Presentation</div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 6 sec</div>
+      <p>"I've started and run companies for over a decade. I thought I'd seen every major shift. Internet. Mobile. Social media. I adapted. I moved on."</p>
+      <p><em>(pause — slight smile)</em></p>
+      <p>"AI was the first thing that genuinely made me stop."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-build">BUILD — 6 to 28 sec</div>
+      <p>"Not because it's a better Google. Not because it writes captions faster. But because — for the first time in my career — I saw a tool that doesn't just do what you tell it. It <em>reasons.</em>"</p>
+      <p>"And when I realised that — I went back and looked at every part of my business. Every process. Every decision. Every hire. And I asked: is my team spending their days on the things only a human mind can do? Or am I filling their hours with work that AI can handle — so they never get to their most important work?"</p>
+      <p><em>(pause)</em></p>
+      <p>"That question changed everything about how I run my company."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">INSIGHT — 28 to 50 sec</div>
+      <p>"Here's what I want to share with you — not as a trainer. I'm not here to teach you prompts."</p>
+      <p>"I'm here because I'm a founder who is <em>living</em> through this shift in real time. Making real decisions. Getting things wrong. Getting things right."</p>
+      <p>"And the one thing I know for certain: the people who will be left behind in the next five years are not the ones who don't understand AI. They're the ones who never took the time to be genuinely curious about it."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 50 to 62 sec</div>
+      <p>"If you're curious — follow along. I'm going to share what I'm actually seeing, thinking, and doing. No hype. No tutorials. Just honest conversations about the biggest shift of our professional lifetime." <mark>Look at camera. Hold 2 seconds. Done.</mark></p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="content-block">
+      <div class="block-hdr bh-neutral">Text Overlays — CapCut</div>
+      <div class="block-body">
+        <p><strong>0–6s:</strong> "Decade of building companies. Then AI stopped me."</p>
+        <p><strong>16s:</strong> "It doesn't just do. It <em>reasons.</em>"</p>
+        <p><strong>26s:</strong> "Is my team spending their time on their best work?"</p>
+        <p><strong>38s:</strong> "I'm not a trainer. I'm a founder in the middle of this shift."</p>
+        <p><strong>54s:</strong> "Follow → Honest AI conversations from inside a company"</p>
+      </div>
+    </div>
+    <div class="content-block">
+      <div class="block-hdr bh-tl">Thought Leadership Notes</div>
+      <div class="block-body">
+        <p>Never say "AI is amazing" — that's fandom. Say "AI made me question how I've been running my company" — that's leadership.</p>
+        <p>"I'm not here to teach you prompts" is a <strong>pattern interrupt</strong>. It immediately separates you from 99% of AI content creators.</p>
+        <p>The phrase "genuine curiosity" positions your audience as thoughtful people — not beginners who need hand-holding. They'll want to live up to that framing.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>I've built companies through the internet era. The mobile era. The social media era.<br><br>
+    AI is the first shift that made me go back and question the fundamentals of how I work — not just the tools.<br><br>
+    I'm not going to be posting tutorials here. I'm going to share what I'm actually seeing and thinking as a founder navigating this in real time.<br><br>
+    If that's the kind of conversation you've been looking for — follow along. 🙏<br><br>
+    What's the one thing about AI you're most curious or confused about? Drop it below — I read every comment. 👇</p>
+  </div>
+
+  <div class="hashtag-box">
+    #StartupFounder #AIforBusiness #ArtificialIntelligence #ThoughtLeadership #LearnerMachine #BusinessStrategy #Entrepreneurship #AIinBusiness #FounderLife #FutureOfWork #StartupIndia #TechIndia
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost reel + text: "New series starting today. This one's different." No link. Pure intrigue.</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Question box: "What's the one thing about AI you're most curious or confused about?" — collect topics for future content</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Share 3 interesting answers from question box. "People are asking exactly the right things."</div></div>
+  </div>
+</div>
+
+<!-- DAY 2 — TUESDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">02</div>
+      <div class="dl">TUE</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel | Pillar: AI Decoded</div>
+      <h2>"AI Has Been Around for 70 Years.<br>So Why Does It Feel New?"</h2>
+      <p class="day-sub">A short history of AI — told through the lens of business evolution. Creates context, depth, and makes followers feel like they understand something most people don't. Pure thought leadership.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-5">
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 1 — Cover</div>
+      <div class="slide-body">
+        <div class="slide-title">"AI is not new. You've just been using it without knowing."</div>
+        <p>Dark background. White headline. Brand orange accent line. Founder name/logo bottom.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 2 — 1950s</div>
+      <div class="slide-body">
+        <div class="slide-title">🧠 1950: The Question That Started Everything</div>
+        <p>Alan Turing asked: <strong>"Can machines think?"</strong> That single question launched 70 years of computer science. Every AI system today traces back to that moment.</p>
+        <p><strong>Business parallel:</strong> The best founders also start with one question that changes everything.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 3 — 1980s–2000s</div>
+      <div class="slide-body">
+        <div class="slide-title">⚙️ "Old AI" — Rules & Logic</div>
+        <p>For decades, AI was about rules. If X → then Y. Spam filters, chess engines, navigation apps, recommendation algorithms.</p>
+        <p><strong>You've been using this AI for 20+ years.</strong> Gmail, Google Maps, Netflix — all rule-based AI.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 4 — 2010s</div>
+      <div class="slide-body">
+        <div class="slide-title">📊 Machine Learning Changes the Game</div>
+        <p>Instead of humans writing rules — machines learned rules from data. The more data, the smarter the system. This is how YouTube knows what you'll watch before you do.</p>
+        <p>But it could only <strong>predict.</strong> It couldn't create.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 5 — 2022–Now</div>
+      <div class="slide-body">
+        <div class="slide-title">✨ Generative AI — The Shift That Changes Business</div>
+        <p>For the first time, AI doesn't just predict — it <strong>generates.</strong> New text. New images. New code. New ideas. ChatGPT wasn't a better search engine. It was a fundamentally different kind of machine.</p>
+        <p><strong>This is what changed everything.</strong></p>
+      </div>
+    </div>
+  </div>
+  <div class="slides-row slides-4">
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 6</div>
+      <div class="slide-body">
+        <div class="slide-title">🔍 Old AI vs Generative AI — The Real Difference</div>
+        <p><strong>Old AI:</strong> Given data → finds patterns → makes predictions<br><em>"Based on what you watched, you'll probably like this."</em></p>
+        <p><strong>Generative AI:</strong> Given a prompt → creates something new<br><em>"Write me a business plan for a chai stall in Mumbai."</em></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 7</div>
+      <div class="slide-body">
+        <div class="slide-title">💡 The Founder's Takeaway</div>
+        <p>Old AI automated repetitive decisions. Generative AI automates <strong>creative thinking.</strong></p>
+        <p>That's why it's different. That's why it's big. And that's why the people who understand this first — win first.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 8</div>
+      <div class="slide-body">
+        <div class="slide-title">🏢 What This Means for Every Business</div>
+        <p>Every company already uses old AI (spam filter, payment fraud detection, GPS routing).</p>
+        <p>Generative AI means every company can now have a <strong>thinking partner available 24/7 for zero cost.</strong> The question is: are you using it?</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 9 — Save Prompt</div>
+      <div class="slide-body">
+        <div class="slide-title">📌 Save This Slide</div>
+        <p>Next time someone asks you "what's the big deal about AI?" — show them this carousel.</p>
+        <p style="color:var(--brand); font-weight:700; font-size:9pt;">Follow @learnermachine for more founder-lens AI content.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>Most people think AI started with ChatGPT in 2022. It didn't.<br><br>
+    The story starts in 1950 — with one question: "Can machines think?"<br><br>
+    And understanding that 70-year journey is actually what helps you understand <em>why</em> what's happening right now is different. Not just "new feature" different. Fundamentally different.<br><br>
+    Swipe through. Save this. The distinction between old AI and generative AI is the most important thing to understand right now — especially if you're running a business.<br><br>
+    📌 Save this carousel — share it with any founder or business owner you know who's still confused about AI.</p>
+  </div>
+
+  <div class="hashtag-box">
+    #ArtificialIntelligence #GenerativeAI #AIHistory #ChatGPT #LearnerMachine #BusinessStrategy #FounderMindset #AIforBusiness #TechTrends #FutureOfWork #StartupIndia #MachineLearning
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost carousel + "70 years of AI in 9 slides 👆 Swipe."</div></div>
+    <div class="story-item"><div class="story-time">12 PM</div><div class="story-text">Poll: "Did you know AI has been around since the 1950s?" → Yes I knew / No, surprised me / Kind of</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Text story: "Tomorrow — the difference between Generative AI and Machine Learning, explained in a way that actually makes sense for business people."</div></div>
+  </div>
+</div>
+
+<!-- DAY 3 — WEDNESDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">03</div>
+      <div class="dl">WED</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue | Pillar: Builder's Lens</div>
+      <h2>"One of My Best Team Members<br>Was Drowning in Work She Hated. AI Gave Her Time Back."</h2>
+      <p class="day-sub">A real story about what AI actually does for people inside a company. Not replacement — elevation. This is the kind of content professionals share because it reflects their own experience.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Tone Notes</div>
+    <ul>
+      <li>Warm and reflective. Like you're proud of something your team figured out together. Not a lecture — a story.</li>
+      <li>Slow down on the pivot moment — "She was brilliant, and I had buried her in the wrong work." Let that land.</li>
+      <li>Use your hands when talking about the team. It signals care, not detachment.</li>
+      <li>End with genuine warmth. This episode builds trust — don't rush the close.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 7 sec</div>
+      <p>"One of the smartest people on my team was spending nearly 4 hours every day on tasks she hated. Research compilation. Report formatting. Summarising documents. Drafting standard emails."</p>
+      <p><em>(pause — direct look at camera)</em></p>
+      <p>"She was brilliant. And I had buried her in work that had nothing to do with her brilliance."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-conflict">THE HONEST REALISATION — 7 to 28 sec</div>
+      <p>"When I started properly using AI in our workflow — those 4 hours came back. The research, the formatting, the summaries — AI handled it in minutes."</p>
+      <p>"She didn't lose her job. She got her job back."</p>
+      <p><em>(pause)</em></p>
+      <p>"The work she does now — strategy, client thinking, creative decisions — she's thriving. Her output has gone up. Her energy has gone up. And she told me it's the first time in years she feels like she's actually using her brain."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-pivot">THE BIGGER INSIGHT — 28 to 48 sec</div>
+      <p>"Here's what I've come to believe as a founder: <em>most talented people are spending most of their day on tasks beneath their capability.</em> Not because they're lazy. Because that's how most organisations are designed."</p>
+      <p>"AI doesn't have to replace people. It can free people — to do the work that actually requires human intelligence. Relationships. Judgement. Creativity. Conviction."</p>
+      <p>"Those are things AI genuinely cannot replicate. And they're the things your best people want to be doing."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">CLOSE — 48 to 60 sec</div>
+      <p>"So the question I'd ask any founder or business owner watching this: what is your most capable person actually brilliant at — and how much of their day are they actually doing that?"</p>
+      <p>"If the answer makes you uncomfortable — that's the signal. AI might be the fix." <mark>Pause. End.</mark></p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="content-block">
+      <div class="block-hdr bh-neutral">Text Overlays</div>
+      <div class="block-body">
+        <p><strong>0–7s:</strong> "My best team member was spending 4 hours a day on work that hid her brilliance."</p>
+        <p><strong>14s:</strong> "AI gave those 4 hours back."</p>
+        <p><strong>24s:</strong> "She didn't lose her job. She got her job back."</p>
+        <p><strong>36s:</strong> "Most talented people spend most of their day beneath their capability."</p>
+        <p><strong>50s:</strong> "What is your best person actually brilliant at?"</p>
+      </div>
+    </div>
+    <div class="content-block">
+      <div class="block-hdr bh-tl">Why This Works as Thought Leadership</div>
+      <div class="block-body">
+        <p>This reel speaks to <strong>professionals directly</strong> — they immediately see themselves in this story. They know exactly which 4 hours they want back.</p>
+        <p>It positions AI as an empowerment tool, not a threat. The fear drops, the curiosity rises.</p>
+        <p>The closing question makes every viewer audit their own situation — and motivates action. That's what great content does.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>One of the sharpest people on my team was spending 4 hours a day on tasks that had nothing to do with why I hired her.<br><br>
+    Research summaries. Document formatting. Standard replies. Work that needed to get done — but didn't need her brain to do it.<br><br>
+    When AI took those tasks over — she got those 4 hours back. Her actual work — strategy, client thinking, creative problems — that's where she went.<br><br>
+    Her output doubled. Her energy returned. She told me it's the first time in two years she feels like she's working at her real level.<br><br>
+    <strong>AI doesn't have to replace people. It can free people — to do work that actually requires a human.</strong><br><br>
+    Question for anyone watching: what is the most capable person in your life actually brilliant at — and how much of their day are they actually doing that?<br><br>
+    💬 Drop your answer below. I read every comment.</p>
+  </div>
+
+  <div class="hashtag-box">
+    #FounderStory #AIinBusiness #LearnerMachine #FutureOfWork #AITools #ProfessionalGrowth #TeamEmpowerment #Entrepreneurship #AIStrategy #WorkSmarter #StartupIndia #CareerGrowth
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost reel + "AI didn't replace her — it gave her the best part of her job back. Watch 👆"</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Question box: "What's the one task at work you wish you could hand off to AI?" — collect answers for future content</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Share 3 most relatable answers from the question box. "This is exactly the conversation we needed to have."</div></div>
+  </div>
+</div>
+
+<!-- DAY 4 — THURSDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">04</div>
+      <div class="dl">THU</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel | Pillar: AI Decoded</div>
+      <h2>"Generative AI vs Machine Learning vs Automation — The Map Most People Don't Have"</h2>
+      <p class="day-sub">The single most important clarification in the AI conversation. Explained through business examples. This carousel will be saved and shared heavily by professionals.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-4">
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 1 — Cover</div>
+      <div class="slide-body">
+        <div class="slide-title">"Everyone talks about AI. Almost nobody knows there are 3 completely different things being called AI."</div>
+        <p>Dark. Authoritative headline. "Swipe for the map." — founder's name.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 2</div>
+      <div class="slide-body">
+        <div class="slide-title">Type 1: Automation AI ⚙️</div>
+        <p><strong>What it does:</strong> Follows rules. If X happens → do Y. Zero learning.</p>
+        <p><strong>Examples:</strong> Email auto-replies, payment reminders, inventory alerts, spam filters.</p>
+        <p><strong>Think of it as:</strong> A very reliable employee who follows a manual perfectly — but can't handle anything outside the manual.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 3</div>
+      <div class="slide-body">
+        <div class="slide-title">Type 2: Machine Learning AI 📊</div>
+        <p><strong>What it does:</strong> Learns from data. Finds patterns. Makes predictions. Gets better over time.</p>
+        <p><strong>Examples:</strong> Netflix recommendations, Google Ads targeting, credit score calculations, fraud detection.</p>
+        <p><strong>Think of it as:</strong> An analyst who has read every customer file and finds patterns no human could see in that volume of data.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Slide 4</div>
+      <div class="slide-body">
+        <div class="slide-title">Type 3: Generative AI ✨ ← This is the new one</div>
+        <p><strong>What it does:</strong> Creates new content. Writes, designs, codes, reasons, plans — from a simple text instruction.</p>
+        <p><strong>Examples:</strong> ChatGPT, Claude, Gemini, Midjourney, DALL-E.</p>
+        <p><strong>Think of it as:</strong> A junior employee with unlimited reading time who can draft anything, explain anything, and never gets tired — waiting for your direction.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slides-row slides-4">
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 5</div>
+      <div class="slide-body">
+        <div class="slide-title">The Critical Difference 🎯</div>
+        <p><strong>Automation AI:</strong> Does what you programmed. Rigid.</p>
+        <p><strong>Machine Learning:</strong> Predicts based on past data. Analytical.</p>
+        <p><strong>Generative AI:</strong> Creates something that didn't exist before. Based on your request. Right now. <strong>This is new.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 6</div>
+      <div class="slide-body">
+        <div class="slide-title">Real Business Scenario 🏢</div>
+        <p><strong>Automation AI:</strong> Sends invoice reminder at day 30</p>
+        <p><strong>Machine Learning:</strong> Predicts which clients are likely to be late payers</p>
+        <p><strong>Generative AI:</strong> Writes a personalised, empathetic follow-up email for that specific client based on your relationship history</p>
+        <p><strong>All three. Different jobs. Different value.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 7</div>
+      <div class="slide-body">
+        <div class="slide-title">The Founder's Framework 🧭</div>
+        <p>Ask about every business task:</p>
+        <p>→ Repetitive rule? <strong>Automate it.</strong><br>→ Pattern in data? <strong>ML it.</strong><br>→ Needs thinking/writing/creativity? <strong>Generative AI it.</strong><br>→ Needs real human judgment? <strong>Keep a human.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 8 — Save</div>
+      <div class="slide-body">
+        <div class="slide-title">📌 The Map</div>
+        <p>Automation → Rules → Reliable<br>Machine Learning → Data → Predictive<br>Generative AI → Prompt → Creative</p>
+        <p style="color:var(--brand); font-weight:700; margin-top:6px; font-size:9pt;">Save this. Share with any business owner still using these terms interchangeably.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>"AI" is being used to describe three fundamentally different types of technology. And most business owners are making strategy decisions without knowing the difference.<br><br>
+    That's like trying to decide between a car, a plane, and a bicycle — calling all three "transport" — and wondering why your choice isn't getting you where you want to go.<br><br>
+    Swipe through. Save this. The framework on slide 7 is the one I use with every team I work with.<br><br>
+    📌 Save → Send to one business owner who needs this clarity today.</p>
+  </div>
+
+  <div class="hashtag-box">
+    #GenerativeAI #MachineLearning #AIautomation #ChatGPT #LearnerMachine #AIforBusiness #BusinessStrategy #FounderMindset #TechIndia #AIExplained #StartupIndia #FutureOfWork
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost carousel + "The map that clears up 90% of AI confusion 👆"</div></div>
+    <div class="story-item"><div class="story-time">12 PM</div><div class="story-text">Poll: "Which type of AI does your company currently use?" → Automation / ML / Generative / Not sure</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Tease tomorrow: "Tomorrow I'm sharing something I've never posted publicly before — a real look inside how I'm actually using AI to run LearnerMachine."</div></div>
+  </div>
+</div>
+
+<!-- DAY 5 — FRIDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">05</div>
+      <div class="dl">FRI</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue | Pillar: AI in My Company</div>
+      <h2>"I Let AI Run My Business<br>for 48 Hours. Here's What Happened."</h2>
+      <p class="day-sub">A real experiment. Real outcomes. This is the content that goes viral — because it's something people have wondered about but no one has actually done and shared openly.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:30 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Tone Notes</div>
+    <ul>
+      <li>This should feel like you're back from an adventure and you're debriefing. A bit excited. A bit surprised. Honest about what didn't work.</li>
+      <li>Slightly faster pace than other reels — there's more story to cover. Use jump cuts freely here.</li>
+      <li>If you have a screen recording of AI doing something interesting from those 48 hours — cut it in at the 25-second mark. Pure gold.</li>
+      <li>Don't make it all positive. The parts where AI failed are what make this believable and interesting.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 5 sec</div>
+      <p>"Last week I decided to do something I'd been thinking about for months. I handed as much of my company's daily operations to AI as I possibly could — for 48 hours."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-build">WHAT I GAVE TO AI — 5 to 25 sec</div>
+      <p>"Content planning — AI. Customer query responses — AI with a template I built. Weekly report summary — AI. Social media captions — AI. Even the brief for a design project — AI."</p>
+      <p>"I was the reviewer. The editor. The decision-maker. But the first draft of everything — AI."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-conflict">WHERE IT FAILED — 25 to 40 sec</div>
+      <p>"Here's what didn't work. Client calls — obviously. Anything that required knowing someone personally. And one thing surprised me — strategy."</p>
+      <p>"AI gave me a marketing strategy. It was technically correct. It hit every framework. But it had no personality. No risk. No bet. Good strategy requires <em>conviction</em> — and AI doesn't have skin in the game. That matters."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">WHERE IT WON — 40 to 56 sec</div>
+      <p>"But here's what it absolutely crushed: first drafts, data organisation, repetitive communication, and — this one shocked me — <em>generating questions I hadn't thought to ask.</em>"</p>
+      <p>"I'd give it a business problem and it would give me back 8 questions I should be considering. Half of them I'd never thought of. That's not drafting. That's thinking partnership."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 56 to 65 sec</div>
+      <p>"48 hours. Real company. Real work. The conclusion: AI can't run your company. But it <em>dramatically</em> frees up the parts that only you can run — so you spend more time on the decisions, relationships, and bets that actually move the needle."</p>
+      <p>"Follow for part 2 — I'm going deeper on the thinking partnership piece." <mark>End.</mark></p>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>I spent 48 hours letting AI handle as much of LearnerMachine's daily operations as possible.<br><br>
+    What worked: first drafts, data, repetitive communication, and — unexpectedly — generating questions I hadn't thought to ask about my own business.<br><br>
+    What didn't: strategy with conviction. Anything requiring personal knowledge. Client relationships.<br><br>
+    The real learning: AI doesn't run your company. It frees you from the parts that are beneath your level — so you can spend your time on the decisions, relationships, and bets that only a human with skin in the game can make.<br><br>
+    That shift in how I think about my role as a founder has been the most valuable thing AI has given me.<br><br>
+    💬 What's the part of your work you're most excited to hand off to AI — so you can finally focus on the stuff only you can do? Drop it below. 👇</p>
+  </div>
+
+  <div class="hashtag-box">
+    #AIinBusiness #FounderExperiment #LearnerMachine #BusinessAutomation #ChatGPT #StartupLife #AIStrategy #FutureOfWork #Entrepreneurship #AITools #FounderMindset #StartupIndia
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "48 hours. Real experiment. Surprising results. Watch 👆"</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Question box: "What's the one task at work you'd love AI to take off your plate?" Read all answers for future content.</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Teaser: "The piece that surprised me most from the 48-hour experiment — I'm turning it into a carousel this weekend. It's about how AI generates questions, not just answers."</div></div>
+  </div>
+</div>
+
+<!-- DAY 6 — SATURDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">06</div>
+      <div class="dl">SAT</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel | Pillar: The Future I'm Seeing</div>
+      <h2>"The Companies That Will Win the Next Decade Aren't the Ones With the Best AI"</h2>
+      <p class="day-sub">Pure thought leadership. A contrarian take that challenges the dominant narrative. This is the content that builds a serious, loyal following of founders and professionals.</p>
+    </div>
+    <div class="post-time-pill">⏰ 10:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-4">
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 1</div>
+      <div class="slide-body">
+        <div class="slide-title">"The companies winning the AI era aren't the ones with the best AI. They're the ones asking the best questions."</div>
+        <p>Bold. Contrarian. Dark background. Author credit.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 2</div>
+      <div class="slide-body">
+        <div class="slide-title">Everyone Has Access to the Same AI</div>
+        <p>ChatGPT, Claude, Gemini — these are available to every company, every founder, every student, every competitor. For the same price. Often free.</p>
+        <p>If everyone has the same tool — <strong>the tool is not the advantage.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 3</div>
+      <div class="slide-body">
+        <div class="slide-title">The Real Competitive Edge</div>
+        <p>The advantage goes to whoever can ask <strong>better questions.</strong></p>
+        <p>AI is only as valuable as the clarity of your thinking. The quality of your prompt reflects the quality of your business understanding.</p>
+        <p>Garbage in → garbage out. Always has been true. AI just makes it more obvious.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 4</div>
+      <div class="slide-body">
+        <div class="slide-title">Historical Parallel 📜</div>
+        <p>When electricity arrived — every factory could access it. The winners weren't the ones with the most electricity. They were the ones who <strong>redesigned their processes</strong> around it.</p>
+        <p>Most factories just electrified their old steam-powered processes. A few redesigned everything. Those few won.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slides-row slides-4">
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 5</div>
+      <div class="slide-body">
+        <div class="slide-title">What "Redesigning Around AI" Looks Like</div>
+        <p>Not: "Let's use AI to do what we already do faster."</p>
+        <p>Yes: "Now that AI exists — what would we build if we were starting this company from scratch today?"</p>
+        <p>That second question leads to completely different companies.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 6</div>
+      <div class="slide-body">
+        <div class="slide-title">The 3 Types of Companies Right Now</div>
+        <p><strong>Ignorers:</strong> "AI is just hype." — Will be disrupted.</p>
+        <p><strong>Adopters:</strong> "Let's add AI to our tools." — Will survive.</p>
+        <p><strong>Redesigners:</strong> "How does AI change what we're fundamentally doing?" — Will lead.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 7</div>
+      <div class="slide-body">
+        <div class="slide-title">The Question Every Founder Must Sit With</div>
+        <p>"If a 22-year-old started a company in my exact industry today — with AI built in from day one — what would they build that I can't?"</p>
+        <p><strong>That answer is your biggest threat. And your biggest opportunity.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 8</div>
+      <div class="slide-body">
+        <div class="slide-title">📌 The Takeaway</div>
+        <p>AI is the electricity of our generation. The question is not "do you have it." The question is "what are you redesigning around it?"</p>
+        <p style="color:var(--brand); font-weight:700; font-size:9pt;">Follow @learnermachine — founder conversations about building in the AI era.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>Unpopular take: the AI race isn't about who has better AI.<br><br>
+    ChatGPT is available to you, your competitor, and a 19-year-old in a tier-3 city for the same price: free.<br><br>
+    The edge goes to whoever has better questions. Clearer thinking. A deeper understanding of the problem they're solving.<br><br>
+    AI amplifies thinking. It doesn't replace it.<br><br>
+    When electricity arrived, the winning factories weren't the ones with the most electricity — they were the ones who redesigned their entire operation around it.<br><br>
+    We're at that moment again. Which type of company are you building? 👇<br><br>
+    📌 Save this — it's the framework I'm using to think about every business decision right now.</p>
+  </div>
+
+  <div class="hashtag-box">
+    #AIStrategy #FounderMindset #BusinessLeadership #LearnerMachine #FutureOfBusiness #GenerativeAI #StartupIndia #ThoughtLeadership #CompanyBuilding #Entrepreneurship #AIforBusiness
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">10 AM</div><div class="story-text">Repost + "Contrarian take on AI. Swipe to see why tools aren't the advantage. 👆"</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Poll: "Which type is your company?" → Ignoring AI / Using some AI tools / Redesigning around AI</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Share the most interesting poll results + "This is exactly what I expected — and exactly why I'm building this community."</div></div>
+  </div>
+</div>
+
+<!-- DAY 7 — SUNDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">07</div>
+      <div class="dl">SUN</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-tl">🎥 Face Reel — Thought Leadership Close | Pillar: For the Curious Beginner</div>
+      <h2>"If You're Starting AI From Zero<br>— Start Here. A Founder's First Steps."</h2>
+      <p class="day-sub">Week 1 closes with a bridge. For everyone who followed along this week and felt fascinated but slightly overwhelmed — this is the welcoming hand. Converts curiosity into community.</p>
+    </div>
+    <div class="post-time-pill">⏰ 11:00 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Tone Notes</div>
+    <ul>
+      <li>Warmer tone than the rest of the week. Slightly slower. This is the welcoming episode.</li>
+      <li>You've spent the week talking about big ideas — now you're bringing it home for the person who's been listening but doesn't know where to start.</li>
+      <li>Can be slightly shorter — 45 to 55 seconds. Quality over length.</li>
+      <li>End with a genuine moment — a smile, a nod, something that feels human. This is about connection, not content.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 5 sec</div>
+      <p>"This week I talked about AI history, generative AI, company experiments, and the future of business. Heavy stuff."</p>
+      <p><em>(slight smile)</em></p>
+      <p>"A few people DM'd me and said — 'This is fascinating, but I haven't even used ChatGPT yet. Where do I start?'"</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-build">THE HONEST ANSWER — 5 to 30 sec</div>
+      <p>"Here's what I told them — and what I genuinely believe as a founder who's been building companies for years:"</p>
+      <p>"Don't start with a course. Don't start with a tutorial. Don't start by trying to understand how it works technically."</p>
+      <p>"Start with a real problem you have right now. An email you've been avoiding. A decision you're stuck on. A document you've been putting off writing."</p>
+      <p>"Open ChatGPT — it's free, it takes 2 minutes to sign up — and describe your problem like you'd describe it to a smart colleague."</p>
+      <p>"That's it. That's step one."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">THE FOUNDER LENS — 30 to 48 sec</div>
+      <p>"The best founders I know didn't learn AI from a course. They learned it by using it on real things that mattered to them."</p>
+      <p>"That's how any real skill is built. Not in theory. In practice, with something at stake."</p>
+      <p>"Your first AI interaction won't be perfect. That's fine. Every conversation makes the next one better. You learn the language by speaking it."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 48 to 58 sec</div>
+      <p>"That's week one. Next week we go deeper — into how AI is changing the way businesses generate ideas, make decisions, and build products."</p>
+      <p>"If you've been here all week — thank you. If you're new — welcome. This is a genuine conversation. And I'm glad you're in it." <mark>Nod. End.</mark></p>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>This week: AI history. Generative vs old AI. A 48-hour company experiment. A contrarian take on who wins the AI era.<br><br>
+    A few people DM'd and said: "This is all fascinating but I haven't even started. Where do I go?"<br><br>
+    Honest founder answer: <strong>Start with a real problem. Not a tutorial.</strong><br><br>
+    Open ChatGPT (free). Describe your problem like you'd tell a smart colleague. See what comes back. Iterate.<br><br>
+    That's how every real skill gets built. Not in courses. In practice, with something at stake.<br><br>
+    Week 2 is coming — we go into how AI changes the way you generate business ideas, make company decisions, and build faster with a smaller team.<br><br>
+    If you're new here — welcome. 🙏 Drop a comment and tell me where you're at with AI right now.</p>
+  </div>
+
+  <div class="hashtag-box">
+    #AIforBeginners #FounderAdvice #LearnerMachine #ChatGPT #StartHere #AIlearning #StartupFounder #ThoughtLeadership #TechIndia #LearnAI #Entrepreneurship #WeeklyWrapup
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">11 AM</div><div class="story-text">Repost reel + "Week 1 wrap. Start here if you're new 👆"</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Week recap story: "This week in 5 slides" — repost highlights from Mon–Sat as a story sequence</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Tease Week 2: "Next week — AI for idea generation, business decisions, and building faster. Follow if you don't want to miss it."</div></div>
+  </div>
+</div>
+
+<!-- ==================== WEEK SUMMARY ==================== -->
+<div style="padding:50px 80px; background:var(--dark);">
+  <div style="font-size:9pt;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--brand);margin-bottom:16px;">Week 1 Summary</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:26pt;color:#faf8f5;margin-bottom:32px;line-height:1.2;">The Arc That Builds<br>a Thought Leader</h2>
+
+  <table>
+    <tr><th>Day</th><th>Format</th><th>Topic</th><th>Pillar</th><th>Primary Effect</th></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#faf8f5;"><strong>Mon</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">"AI still shocked me — as a founder"</td><td style="color:#a8a29e;">AI Decoded</td><td style="color:#a8a29e;">Authority + curiosity hook</td></tr>
+    <tr style="background:rgba(3,105,161,.1)"><td style="color:#faf8f5;"><strong>Tue</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">70 years of AI history</td><td style="color:#a8a29e;">AI Decoded</td><td style="color:#a8a29e;">Context + saves</td></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#faf8f5;"><strong>Wed</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">"AI gave my team member her best work back"</td><td style="color:#a8a29e;">Builder's Lens</td><td style="color:#a8a29e;">Trust + professional shares</td></tr>
+    <tr style="background:rgba(3,105,161,.1)"><td style="color:#faf8f5;"><strong>Thu</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Gen AI vs ML vs Automation map</td><td style="color:#a8a29e;">AI Decoded</td><td style="color:#a8a29e;">Massive saves + shares</td></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#faf8f5;"><strong>Fri</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">48-hour AI company experiment</td><td style="color:#a8a29e;">AI in My Company</td><td style="color:#a8a29e;">Viral curiosity + DMs</td></tr>
+    <tr style="background:rgba(3,105,161,.1)"><td style="color:#faf8f5;"><strong>Sat</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">"Who wins the AI era" — contrarian take</td><td style="color:#a8a29e;">Future I'm Seeing</td><td style="color:#a8a29e;">Deep follows, respect</td></tr>
+    <tr style="background:rgba(6,78,59,.15)"><td style="color:#faf8f5;"><strong>Sun</strong></td><td style="color:#34d399;">Face Reel</td><td style="color:#a8a29e;">Beginner's starting point — founder's way</td><td style="color:#a8a29e;">Curious Beginner</td><td style="color:#a8a29e;">Community + conversion</td></tr>
+  </table>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:24px;">
+    <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;">
+      <div style="font-size:9pt;color:#78716c;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">What You Established</div>
+      <p style="font-size:10pt;color:#a8a29e;line-height:1.7;">A founder who thinks deeply about AI. Not a tutorial channel. A perspective channel. People follow you for how you see things — not what you teach.</p>
+    </div>
+    <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;">
+      <div style="font-size:9pt;color:#78716c;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Words That Build Your Brand</div>
+      <p style="font-size:10pt;color:#a8a29e;line-height:1.7;">"I'm seeing..." / "In my experience building companies..." / "Here's what most people miss..." / "The honest truth is..." / "I've been thinking about this a lot."</p>
+    </div>
+    <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;">
+      <div style="font-size:9pt;color:#78716c;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Words That Undermine It</div>
+      <p style="font-size:10pt;color:#a8a29e;line-height:1.7;">Never say: "In this tutorial..." / "Step 1, Step 2..." / "Today I'm going to teach you..." / "This hack will change your life" / "Follow for more tips."</p>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;text-align:center;color:#44403c;font-size:9.5pt;">
+    LearnerMachine — learnermachine.com &nbsp;·&nbsp; hello@learnermachine.com<br>
+    <span style="display:block;margin-top:6px;color:#2a2a2a;">Strategy file: /strategy/thought-leader-content.html</span>
+  </div>
+</div>
+
+<!-- ==================== WEEK 2 SECTION HEADER ==================== -->
+<div class="section" style="background:var(--dark); border-bottom:none;">
+  <div class="section-eyebrow" style="color:var(--brand);">Part 5 — Week 2 Content</div>
+  <h2 style="color:#faf8f5;">Week 2 — AI as Your<br><span style="color:#fb923c;">Unfair Advantage</span></h2>
+  <p class="section-sub" style="color:#a8a29e;">Week 1 planted curiosity and established the foundation. Week 2 makes it personal. This week, your audience — students, professionals, and small business owners — sees exactly how AI gives <em>them</em> an unfair advantage. The tone shifts from "here's what AI is" to "here's what AI can do for you, specifically."</p>
+
+  <div class="grid-3">
+    <div class="card" style="background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.1);">
+      <h3 style="color:#fb923c;">For Students</h3>
+      <p style="color:#a8a29e;">"You're entering the most interesting time in history to start a career. The students using AI now will graduate with 3 years of experience everyone else doesn't have."</p>
+    </div>
+    <div class="card" style="background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.1);">
+      <h3 style="color:#fb923c;">For Professionals</h3>
+      <p style="color:#a8a29e;">"You won't lose your job to AI. You might lose it to someone who uses AI better. That's a completely solvable problem — and this week we solve it."</p>
+    </div>
+    <div class="card" style="background:rgba(255,255,255,.05); border-color:rgba(255,255,255,.1);">
+      <h3 style="color:#fb923c;">For Business Owners</h3>
+      <p style="color:#a8a29e;">"AI levels the playing field. A solo founder with the right AI workflow can now do what used to need a team of 10. That's your unfair advantage."</p>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK 2 — DAY 1 — MONDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">08</div>
+      <div class="dl">MON</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue | Pillar: Future I'm Seeing</div>
+      <h2>"You Won't Lose Your Job to AI.<br>But Here's the Honest Part."</h2>
+      <p class="day-sub">The most important opening of Week 2. You address the fear directly — and immediately pivot it into empowerment. This reel will be shared by every professional who watches it because it says exactly what they've been afraid to ask.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot & Tone Notes</div>
+    <ul>
+      <li>Start this one direct-to-camera. No warm-up. Eye contact from second 0. You're addressing a real fear — honour it with directness.</li>
+      <li>When you say "that's a solvable problem" — let it land. That's the relief beat. People need to feel it.</li>
+      <li>Tone: serious but optimistic. You're not here to scare anyone — you're here to hand them a solution.</li>
+      <li>55–65 seconds. This is the most important reel of Week 2.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 6 sec</div>
+      <p>"Everyone's asking the same question right now. They're just afraid to say it out loud."</p>
+      <p><em>(pause)</em></p>
+      <p>"Will AI take my job?"</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-build">THE HONEST ANSWER — 6 to 28 sec</div>
+      <p>"Here's what I actually believe — from years of running companies and watching how technology shifts change industries:"</p>
+      <p>"AI won't take your job. But someone who uses AI better than you might."</p>
+      <p><em>(pause — let it land)</em></p>
+      <p>"That's the honest version. And here's why that's actually good news: it means the solution isn't about being born into the right era. It's about a decision you can make right now."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-pivot">THE REFRAME — 28 to 48 sec</div>
+      <p>"Every major technology shift in history created this same moment. When spreadsheets arrived, accountants who learned them became 10 times more productive than the ones who didn't. It wasn't about intelligence — it was about adaptation."</p>
+      <p>"AI is that moment again. And the window to get ahead is still open. This is week two of a conversation about exactly how to do that."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 48 to 60 sec</div>
+      <p>"This week — I'm covering AI for professionals who want to stay ahead, students who want to graduate with an edge, and business owners who want to compete above their weight class."</p>
+      <p>"Follow if that's you. Let's go." <mark>Hold. End.</mark></p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="content-block">
+      <div class="block-hdr bh-neutral">Text Overlays</div>
+      <div class="block-body">
+        <p><strong>0–6s:</strong> "Will AI take my job?" (big text, dark bg)</p>
+        <p><strong>10s:</strong> "AI won't take your job."</p>
+        <p><strong>14s:</strong> "But someone who uses it better than you might."</p>
+        <p><strong>20s:</strong> "That's a solvable problem."</p>
+        <p><strong>48s:</strong> "Week 2: Your AI unfair advantage"</p>
+      </div>
+    </div>
+    <div class="content-block">
+      <div class="block-hdr bh-tl">Why This Opens Week 2</div>
+      <div class="block-body">
+        <p>You address the fear directly instead of pretending it doesn't exist. That immediately builds trust with professionals and job-seekers.</p>
+        <p>"Someone who uses it better than you might" is alarming but solvable — and you say it's solvable in the same breath. That's the emotional architecture of great content.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>The question everyone is thinking but not asking: Will AI take my job?<br><br>
+    Honest founder answer: No. But someone who uses AI better than you might — in the same role, in the same industry, with the same years of experience.<br><br>
+    That sounds scary. Here's why it's actually the best news you've heard this year: it's a solvable problem.<br><br>
+    Not a talent problem. Not a background problem. Not an education problem. A decision problem.<br><br>
+    The accountants who learned spreadsheets in the 80s didn't become more intelligent — they became 10x more productive. The ones who waited got left behind.<br><br>
+    This week I'm covering exactly what the unfair advantage looks like — for professionals, students, and business owners. Follow if you don't want to miss it.<br><br>
+    💬 What's the part of your work you're most nervous AI will change? Comment below — I'll address the most common answers this week. 👇</p>
+  </div>
+
+  <div class="hashtag-box">
+    #AIandJobs #FutureOfWork #LearnerMachine #ProfessionalGrowth #AISkills #CareerAdvice #FounderMindset #AIforProfessionals #StartupIndia #LearnAI #TechIndia #UpskillWithAI
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost reel + "The question nobody's saying out loud — and the honest answer. Watch 👆"</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Poll: "How nervous are you about AI's impact on your career?" → Very nervous / A little / Not at all / I'm excited</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Share poll results + "This is exactly why this week's content matters. Starting tomorrow."</div></div>
+  </div>
+</div>
+
+<!-- WEEK 2 — DAY 2 — TUESDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">09</div>
+      <div class="dl">TUE</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel | Pillar: For the Curious Beginner</div>
+      <h2>"The Student Advantage — How to Graduate With 3 Years of Experience Nobody Else Has"</h2>
+      <p class="day-sub">This carousel will be shared massively in student groups. Every student watching will forward it to their friends. It positions you as the person who actually understands what they're facing — and gives them a playbook.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-5">
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 1 — Cover</div>
+      <div class="slide-body">
+        <div class="slide-title">"The students who start using AI in college today will graduate with an advantage their classmates won't understand."</div>
+        <p>Dark background. Bold headline. "@learnermachine — The Founder's AI Playbook"</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 2</div>
+      <div class="slide-body">
+        <div class="slide-title">The Uncomfortable Truth for Every Student Right Now</div>
+        <p>In 3 years, the job market won't ask "did you get good marks?" It will ask "what can you actually produce?"</p>
+        <p><strong>AI changes what "produce" means.</strong> The students who understand this now will be 3 years ahead when they graduate.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 3</div>
+      <div class="slide-body">
+        <div class="slide-title">What AI Can Do for You as a Student — Right Now</div>
+        <p>→ Research assistant who reads 100 papers and summarises them<br>→ Essay drafting partner who gives you a first draft to improve<br>→ Concept explainer — any topic, any depth, anytime<br>→ Interview coach who gives you real feedback<br>→ Project idea generator tailored to your field</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 4</div>
+      <div class="slide-body">
+        <div class="slide-title">The Student Who Gets This Right</div>
+        <p>Uses AI to <strong>produce more, faster</strong> — so they can take on more projects, more internships, more real work while classmates are still catching up on coursework.</p>
+        <p>By graduation: a portfolio, practical experience, and AI skills most hiring managers don't have themselves.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 5</div>
+      <div class="slide-body">
+        <div class="slide-title">3 AI Prompts Every Student Should Try This Week</div>
+        <p><strong>1.</strong> "Explain [concept from class] to me like I've never studied this field."<br><strong>2.</strong> "Review my assignment draft and tell me what argument is weakest and why."<br><strong>3.</strong> "I want to work in [industry]. What 5 skills should I be developing that most students in my field aren't?"</p>
+      </div>
+    </div>
+  </div>
+  <div class="slides-row slides-4">
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 6</div>
+      <div class="slide-body">
+        <div class="slide-title">The Mistake to Avoid</div>
+        <p>Using AI to <strong>skip the thinking</strong> — having it write your essays, do your assignments, replace your brain.</p>
+        <p>That's not leverage. That's cheating yourself out of the skill-building that makes you valuable.</p>
+        <p><strong>Use AI to think deeper — not to avoid thinking.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 7</div>
+      <div class="slide-body">
+        <div class="slide-title">The Founder's Advice for Students</div>
+        <p>When I hire, I look for people who demonstrate they can think — not just people who know things.</p>
+        <p>AI gives you unlimited time with a thinking partner. Use it to build the rarest skill in any workplace: <strong>clear, structured, original thinking.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 8</div>
+      <div class="slide-body">
+        <div class="slide-title">The Opportunity in One Line</div>
+        <p>Every student has access to the same AI. The ones who graduate ahead won't be the ones who used it — they'll be the ones who used it <strong>with intention.</strong></p>
+        <p>That's the edge. And it's available to everyone reading this right now.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 9 — Save & Share</div>
+      <div class="slide-body">
+        <div class="slide-title">📌 Send this to a student you know</div>
+        <p>The window to build this advantage is open right now. It won't always be this wide.</p>
+        <p style="color:var(--brand); font-weight:700; font-size:9pt;">Follow @learnermachine — AI education for students, professionals & business owners.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>I want to talk directly to every student reading this.<br><br>
+    In 3 years, you're entering a job market that won't just ask what you know — it'll ask what you can produce, how fast, and with what level of thinking.<br><br>
+    The students using AI with intention right now — as a thinking partner, a research assistant, a skills accelerator — will arrive at graduation with what effectively looks like 3 years of extra experience.<br><br>
+    Not because they cheated. Because they compounded.<br><br>
+    <strong>Use AI to think deeper, not to avoid thinking.</strong> That distinction is everything.<br><br>
+    Swipe through. Try the 3 prompts on Slide 5 this week. See what changes.<br><br>
+    📌 Save this — send to one student you know who needs to read it.</p>
+  </div>
+
+  <div class="hashtag-box">
+    #StudentLife #AIforStudents #LearnerMachine #CollegeLife #CareerAdvice #ChatGPT #StudySmarter #FutureOfWork #AISkills #IndianStudents #LearnAI #GraduateReady
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "For every student reading this — swipe before you go to class today. 👆"</div></div>
+    <div class="story-item"><div class="story-time">12 PM</div><div class="story-text">Poll: "Are you a student?" → Yes, college / Yes, school / Not anymore but sharing this / No</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Text story: "Tomorrow — the practical AI playbook for working professionals. Same energy, different stakes."</div></div>
+  </div>
+</div>
+
+<!-- WEEK 2 — DAY 3 — WEDNESDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">10</div>
+      <div class="dl">WED</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue | Pillar: Builder's Lens</div>
+      <h2>"What I Tell Every Professional<br>Who's Scared of AI"</h2>
+      <p class="day-sub">Direct address to the professional. Empathetic, practical, and empowering. This reel will be saved and watched again because it's the most reassuring thing they've heard about AI from someone who actually knows what they're talking about.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Tone Notes</div>
+    <ul>
+      <li>This is a conversation with a friend who's worried. Not a lecture. Warm, direct, reassuring.</li>
+      <li>When you say "that fear is valid" — pause. Let them feel heard before you pivot to the solution.</li>
+      <li>45–55 seconds. Tight and focused. Every sentence earns its place.</li>
+      <li>End with a smile — this is an episode that should make people feel better about their future.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 6 sec</div>
+      <p>"A lot of professionals DM me versions of the same thing: I'm good at my job, I've worked hard for years, and I'm scared AI is going to make all of that irrelevant."</p>
+      <p><em>(pause — softer tone)</em></p>
+      <p>"That fear is valid. And I want to address it properly."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-build">THE FOUNDER'S PERSPECTIVE — 6 to 28 sec</div>
+      <p>"Here's what I've learned from running companies: the thing that makes someone valuable in a role isn't the tasks they do. It's the judgement they apply. The relationships they hold. The decisions they're trusted to make."</p>
+      <p>"AI can draft the email. It cannot decide what the email should accomplish. AI can generate the report. It cannot decide what to do about it."</p>
+      <p>"<em>Judgement</em> is what you've spent years building. AI doesn't touch that."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-pivot">THE PRACTICAL SHIFT — 28 to 48 sec</div>
+      <p>"What AI does is take the tasks surrounding your judgement — the research, the drafting, the formatting, the scheduling — and compress them. What used to take a day might take two hours."</p>
+      <p>"Which means you can do three times the high-value work in the same time. That's not a threat to your career. That's the upgrade your career has been waiting for."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 48 to 58 sec</div>
+      <p>"The professionals who thrive in the next five years won't be the ones who were most afraid of AI. They'll be the ones who picked it up, learned what it could do for their specific role, and moved faster than everyone else."</p>
+      <p>"That's it. That's the whole strategy." <mark>Nod. End.</mark></p>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="content-block">
+      <div class="block-hdr bh-neutral">Text Overlays</div>
+      <div class="block-body">
+        <p><strong>0–6s:</strong> "Scared AI will make your skills irrelevant?"</p>
+        <p><strong>14s:</strong> "AI can't replace judgement — only support it."</p>
+        <p><strong>28s:</strong> "AI takes care of the tasks around your work."</p>
+        <p><strong>38s:</strong> "3x the high-value work in the same time."</p>
+        <p><strong>50s:</strong> "The upgrade your career has been waiting for."</p>
+      </div>
+    </div>
+    <div class="content-block">
+      <div class="block-hdr bh-tl">Why This Works</div>
+      <div class="block-body">
+        <p>You meet the fear with genuine empathy — "that fear is valid." That immediately builds trust with professionals who feel defensive about AI.</p>
+        <p>"Judgement is what you've spent years building" is deeply validating. It names what they know is true but couldn't articulate.</p>
+        <p>The practical reframe — "3x high-value work" — makes the solution concrete and motivating.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>To every professional who's quietly worried about what AI means for their career:<br><br>
+    That concern is legitimate. And I want to give you the most honest, practical answer I have.<br><br>
+    The thing that makes you valuable at work isn't the tasks you do. It's the judgement you apply. The relationships you hold. The decisions you're trusted to make.<br><br>
+    AI can draft the proposal. It cannot decide what the proposal should accomplish. That decision requires experience, context, and skin in the game — things you have.<br><br>
+    What AI does is compress the work surrounding your judgement. The research, the drafts, the formatting, the summaries. That used to take all day. With AI, it takes an hour — which means you get to spend the rest of your day on the actual work only you can do.<br><br>
+    <strong>That's not a threat to your career. That's the upgrade it's been waiting for.</strong><br><br>
+    💬 What's one task at work you'd love to compress with AI? Drop it below and I'll suggest a prompt. 👇</p>
+  </div>
+
+  <div class="hashtag-box">
+    #ProfessionalGrowth #AIforProfessionals #LearnerMachine #FutureOfWork #CareerAdvice #AISkills #WorkSmarter #UpskillWithAI #OfficeLife #TechIndia #LearnAI #CareerGrowth
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "For every professional quietly worried about AI. Watch this. 👆"</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Question box: "What's your biggest fear about AI and your career?" — Collect for future content and reassurance posts</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Share 3 fears from the box + brief response to each. Shows you listen and engage seriously.</div></div>
+  </div>
+</div>
+
+<!-- WEEK 2 — DAY 4 — THURSDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">11</div>
+      <div class="dl">THU</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel | Pillar: AI in My Company</div>
+      <h2>"How a Small Business Owner With AI Can Compete With a Company 10x Their Size"</h2>
+      <p class="day-sub">This carousel is for small business owners and solo founders. It's aspirational and practical. It will be shared in business owner WhatsApp groups across India. This is your highest-reach post of Week 2.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-5">
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 1 — Cover</div>
+      <div class="slide-body">
+        <div class="slide-title">"For the first time in history, a solo founder with AI can do what used to require a team of 10."</div>
+        <p>Dark. Bold. The word "solo" should feel empowering, not lonely.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 2</div>
+      <div class="slide-body">
+        <div class="slide-title">The Old Disadvantage</div>
+        <p>Big companies had teams. Marketing team. Content team. Research team. Legal team. Finance team.</p>
+        <p>Small businesses had: the owner, who did all of this, badly, while also running everything else.</p>
+        <p><strong>AI just erased that gap.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 3</div>
+      <div class="slide-body">
+        <div class="slide-title">What AI Gives Small Business Owners</div>
+        <p>→ Marketing content that would cost ₹50,000/month from an agency<br>→ Customer email drafts that would need a copywriter<br>→ Market research that would take a team weeks<br>→ Business plan drafts and financial projections<br>→ Product descriptions, social posts, pitch decks</p>
+        <p><strong>Available right now. Often free.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 4</div>
+      <div class="slide-body">
+        <div class="slide-title">Real Example — LearnerMachine</div>
+        <p>Running LearnerMachine with a lean team, I use AI for: content strategy, email sequences, product descriptions, research, social captions, customer FAQ drafts, and idea generation.</p>
+        <p>Tasks that would've needed 4–5 specialists two years ago. Now: me + AI + a clear direction.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 5</div>
+      <div class="slide-body">
+        <div class="slide-title">The 5 AI Workflows Every Small Business Should Have</div>
+        <p><strong>1.</strong> Content creation (social + email)<br><strong>2.</strong> Customer query handling templates<br><strong>3.</strong> Competitive research automation<br><strong>4.</strong> Product/service description writing<br><strong>5.</strong> Idea generation — monthly brainstorm session with AI</p>
+      </div>
+    </div>
+  </div>
+  <div class="slides-row slides-4">
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 6</div>
+      <div class="slide-body">
+        <div class="slide-title">What AI Can't Replace (And Shouldn't)</div>
+        <p>Your relationships with customers. Your instinct about your market. The trust you've built over years. Your brand's personality and voice.</p>
+        <p>AI helps you execute faster — your vision is still the engine. <strong>You point the direction. AI handles the fuel.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 7</div>
+      <div class="slide-body">
+        <div class="slide-title">The Mindset Shift</div>
+        <p>Stop thinking: "I'm too small to compete."</p>
+        <p>Start thinking: "I'm small enough to move fast — and AI means I can now produce at the level of companies I couldn't afford to compete with before."</p>
+        <p>Small + AI = <strong>the most dangerous competitor in any market.</strong></p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-brand">Slide 8</div>
+      <div class="slide-body">
+        <div class="slide-title">Start This Week</div>
+        <p>Pick one task your business does repeatedly — social posts, customer emails, product descriptions.</p>
+        <p>Open ChatGPT. Describe your business and the task. Ask it to draft 3 versions. Compare with what you'd normally produce. That's your starting point.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 9 — Save</div>
+      <div class="slide-body">
+        <div class="slide-title">📌 The Level Playing Field</div>
+        <p>Big company: AI + team of 50<br>Smart small business: AI + founder who knows their customer</p>
+        <p><strong>Who wins? The one with better direction.</strong><br>That's you.</p>
+        <p style="color:var(--brand); font-weight:700; font-size:9pt;">Follow @learnermachine for the founder's AI playbook.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>For every small business owner who's ever felt outgunned by a bigger competitor:<br><br>
+    The biggest advantage large companies had was teams. Marketing team. Content team. Research team. They could produce at scale because they had bodies to do the work.<br><br>
+    AI just made that advantage largely irrelevant.<br><br>
+    A solo founder with AI can produce at the content volume of a company 5 times their size. The marketing, the emails, the research, the ideas — AI handles the draft. You handle the direction.<br><br>
+    <strong>Small + fast + AI = the most dangerous thing in any market.</strong><br><br>
+    And here's the real edge: you know your customer in a way a big company never can. AI amplifies that knowledge. They can't buy that with headcount.<br><br>
+    Swipe for the 5 AI workflows every small business should have running right now.<br><br>
+    📌 Save this. Share with a small business owner who needs to hear this today.</p>
+  </div>
+
+  <div class="hashtag-box">
+    #SmallBusiness #BusinessOwner #LearnerMachine #AIforBusiness #StartupIndia #SoloFounder #BusinessGrowth #ChatGPT #Entrepreneurship #MSMEIndia #AITools #SmallBusinessOwner
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "For every small business owner feeling outgunned by bigger competitors. Swipe. 👆"</div></div>
+    <div class="story-item"><div class="story-time">12 PM</div><div class="story-text">Poll: "Do you run your own business?" → Yes, solo / Yes, with a small team / No, but planning to / No</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Tease tomorrow: "Tomorrow — I'm sharing the 5 AI tasks I personally do every morning before 9 AM. My exact routine."</div></div>
+  </div>
+</div>
+
+<!-- WEEK 2 — DAY 5 — FRIDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">12</div>
+      <div class="dl">FRI</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-face">🎥 Face Reel — Monologue | Pillar: AI in My Company</div>
+      <h2>"5 Things I Do With AI Every Morning<br>Before 9 AM"</h2>
+      <p class="day-sub">Practical, specific, behind-the-scenes. This is the most actionable reel of the week. Highest save rate. People love a real founder morning routine — especially when it gives them something immediately usable.</p>
+    </div>
+    <div class="post-time-pill">⏰ 9:30 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Shoot Notes</div>
+    <ul>
+      <li>You can shoot this from your desk — make it feel like the morning. Coffee visible is a nice touch if you have it.</li>
+      <li>Slightly faster pace. This is a list — energy should match. Quick, clear, specific.</li>
+      <li>If you have screen recording of any of these routines — cut it in at each point. Proof beats claims every time.</li>
+      <li>60–70 seconds. Lists can go a little longer if each item is crisp.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 5 sec</div>
+      <p>"Every morning, before I open a single email, I do five things with AI. In under 20 minutes. Here's exactly what they are."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-build">THE 5 THINGS — 5 to 50 sec</div>
+      <p>"One: I give AI my top 3 priorities for the day and ask it to identify anything I might be missing or any conflict in my thinking. It's caught things I've missed more times than I'd like to admit."</p>
+      <p>"Two: I paste in my most important pending email or message and ask AI to suggest 3 different ways I could respond — and pick the tone. Takes 3 minutes. Saves me 20."</p>
+      <p>"Three: One quick research question — something I need to know for a decision I'm making that day. Not Google. AI. Because I get a synthesised answer, not 40 links."</p>
+      <p>"Four: I ask AI to generate 5 content ideas based on what I've been thinking about this week. I use maybe one of them — but the act of generating forces clarity."</p>
+      <p>"Five: I dictate any idea I woke up with and ask AI to develop it into a one-paragraph brief. Ideas that live only in your head die there."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 50 to 62 sec</div>
+      <p>"Twenty minutes every morning. Clearer thinking. Better decisions. Faster output."</p>
+      <p>"You don't need to understand AI deeply to start this. You just need to start." <mark>End.</mark></p>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>My 5-task AI morning routine — under 20 minutes, every day:<br><br>
+    1. Priority check — give AI my top 3 priorities, ask what I might be missing<br>
+    2. Email drafts — paste the most important pending message, get 3 response options<br>
+    3. One research question — synthesised answer, not 40 Google links<br>
+    4. 5 content ideas — based on what I've been thinking this week<br>
+    5. Dictate any idea I woke up with — AI turns it into a one-paragraph brief before it disappears<br><br>
+    None of these are complicated. All of them compound.<br><br>
+    <strong>The founders and professionals who'll be ahead in 2 years are the ones building habits like this today.</strong><br><br>
+    💬 Which of these 5 would make the biggest difference in your morning? Tell me below — I'll share the exact prompt I use for it. 👇</p>
+  </div>
+
+  <div class="hashtag-box">
+    #FounderRoutine #AIProductivity #LearnerMachine #MorningRoutine #ChatGPT #FounderLife #AITools #ProductivityHacks #StartupIndia #BusinessOwner #WorkSmarter #LearnAI
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">9 AM</div><div class="story-text">Repost + "My exact AI morning routine. 5 tasks. Under 20 minutes. Watch 👆"</div></div>
+    <div class="story-item"><div class="story-time">1 PM</div><div class="story-text">Poll: "Which of the 5 would you try first?" → Priority check / Email drafts / Research / Content ideas / Idea capture</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Share winning poll answer + the exact prompt for it: "Here's what I type: [paste actual prompt text]"</div></div>
+  </div>
+</div>
+
+<!-- WEEK 2 — DAY 6 — SATURDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-carousel">
+      <div class="dn">13</div>
+      <div class="dl">SAT</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-carousel">📊 Carousel | Pillar: Builder's Lens</div>
+      <h2>"AI for Idea Generation — How to Never Run Out of Good Business Ideas Again"</h2>
+      <p class="day-sub">Highly practical, immediately applicable. Every entrepreneur, professional, and student has felt stuck for ideas at some point. This carousel gives them a complete framework. Massive save and share potential.</p>
+    </div>
+    <div class="post-time-pill">⏰ 10:00 AM</div>
+  </div>
+
+  <div class="slides-row slides-5">
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 1 — Cover</div>
+      <div class="slide-body">
+        <div class="slide-title">"The best founders I know don't wait for ideas to arrive. They have a system for generating them."</div>
+        <p>Dark. Confident. "AI just made that system 10x more powerful."</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 2</div>
+      <div class="slide-body">
+        <div class="slide-title">Why Most People Struggle with Ideas</div>
+        <p>They wait for inspiration. They try to think of "original" ideas from scratch. They brainstorm alone with the same patterns of thinking they always use.</p>
+        <p>Ideas don't arrive — they emerge from <strong>collision.</strong> Your experience + new inputs + the right questions = ideas.</p>
+        <p>AI provides all three, on demand.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 3</div>
+      <div class="slide-body">
+        <div class="slide-title">The Idea Generation Prompt (Save This)</div>
+        <p><em>"I run [type of business/work] for [audience]. My biggest challenge right now is [challenge]. Give me 10 unconventional ideas to solve this — including at least 2 that seem strange at first but might work."</em></p>
+        <p><strong>The "strange at first" instruction is critical.</strong> It forces AI past the obvious.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 4</div>
+      <div class="slide-body">
+        <div class="slide-title">The Contrarian Lens Prompt</div>
+        <p><em>"What is the opposite of how my industry currently solves [problem]? Build me 5 business ideas based on that opposite approach."</em></p>
+        <p>This is how disruption starts. Every major startup in history solved a problem in a way the industry said was wrong. This prompt finds those angles.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 5</div>
+      <div class="slide-body">
+        <div class="slide-title">The Future-Back Prompt</div>
+        <p><em>"Imagine it's 2030 and [your industry] looks completely different. Describe what changed — then work backwards and tell me what business, built today, would have caused that change."</em></p>
+        <p>This is pure thought leadership thinking — applied to your business. The answers are often surprising and valuable.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slides-row slides-4">
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 6</div>
+      <div class="slide-body">
+        <div class="slide-title">The "Steal from Adjacent Industries" Prompt</div>
+        <p><em>"What has worked brilliantly in [completely different industry] that no one in [your industry] has tried yet? Give me 5 ideas for how to apply those approaches to my business."</em></p>
+        <p>Most innovation is borrowed from elsewhere. AI can see across industries faster than any human could read.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 7</div>
+      <div class="slide-body">
+        <div class="slide-title">How to Use AI Idea Generation Well</div>
+        <p>→ Never take AI ideas as finished products<br>→ Use them to <em>stimulate</em> your thinking, not replace it<br>→ The best ideas often come from combining 2 AI suggestions you'd normally reject<br>→ Do this monthly — regular sessions, not crisis moments</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-blue">Slide 8</div>
+      <div class="slide-body">
+        <div class="slide-title">The Founder's Rule</div>
+        <p>The constraint is never ideas. The constraint is always: <strong>which idea deserves your conviction and your time?</strong></p>
+        <p>AI gives you unlimited raw material. Your judgement is still the filter. The combination of both is unstoppable.</p>
+      </div>
+    </div>
+    <div class="slide-card">
+      <div class="slide-num sn-dark">Slide 9 — Save</div>
+      <div class="slide-body">
+        <div class="slide-title">📌 4 Prompts to Save</div>
+        <p>→ The Core Idea Prompt (Slide 3)<br>→ The Contrarian Lens Prompt (Slide 4)<br>→ The Future-Back Prompt (Slide 5)<br>→ The Adjacent Industry Prompt (Slide 6)</p>
+        <p style="color:var(--brand); font-weight:700; font-size:9pt;">Follow @learnermachine — AI tools for builders.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>The best founders I know don't wait for a good idea. They have a system that generates them reliably.<br><br>
+    Ideas don't arrive from nowhere — they emerge from collision. Your experience + new information + the right questions. AI just made that collision available on demand.<br><br>
+    4 prompts that have changed how I think about idea generation:<br>
+    1. The Core Idea Prompt — forces unconventional solutions<br>
+    2. The Contrarian Lens — finds the opposite of how your industry works<br>
+    3. The Future-Back — works backwards from 2030 to what you should build now<br>
+    4. The Adjacent Industry — borrows breakthroughs from other fields<br><br>
+    <strong>None of these replace your judgement. All of them fuel it.</strong><br><br>
+    Swipe for all 4 prompts — word for word, ready to use.<br><br>
+    📌 Save this. Use it in your next planning session. Let me know what ideas come out of it. 👇</p>
+  </div>
+
+  <div class="hashtag-box">
+    #IdeaGeneration #AIforBusiness #LearnerMachine #StartupIdeas #BusinessStrategy #ChatGPT #FounderMindset #Entrepreneurship #StartupIndia #Innovation #AITools #BusinessGrowth
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">10 AM</div><div class="story-text">Repost + "4 prompts for idea generation. The Contrarian Lens one alone is worth the swipe. 👆"</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Interactive: "Tell me your business/work in one sentence and I'll give you the contrarian lens question to run through AI." — respond to 5 in stories.</div></div>
+    <div class="story-item"><div class="story-time">8 PM</div><div class="story-text">Tease: "Tomorrow — Week 2 close. I'm going to share something personal about why I'm building this community."</div></div>
+  </div>
+</div>
+
+<!-- WEEK 2 — DAY 7 — SUNDAY -->
+<div class="day-wrap">
+  <div class="day-top">
+    <div class="day-badge db-face">
+      <div class="dn">14</div>
+      <div class="dl">SUN</div>
+    </div>
+    <div class="day-meta">
+      <div class="day-type-badge dtb-tl">🎥 Face Reel — Thought Leadership Close | Pillar: The Future I'm Seeing</div>
+      <h2>"Why I'm Building This Community<br>— The Real Reason"</h2>
+      <p class="day-sub">Week 2 closes with something personal and forward-looking. You share the mission behind LearnerMachine — not as a sales pitch, but as a genuine statement of conviction. This is the post that converts followers into believers.</p>
+    </div>
+    <div class="post-time-pill">⏰ 11:00 AM</div>
+  </div>
+
+  <div class="shoot-box">
+    <div class="shoot-lbl">📹 Tone Notes</div>
+    <ul>
+      <li>This is the most personal reel you've shot. Slow down. Let it breathe. No fast cuts.</li>
+      <li>Sit slightly closer to camera than usual — intimate, not broadcast.</li>
+      <li>If you have something genuine to share about why this matters to you personally — say it. Authenticity converts followers into community.</li>
+      <li>50–60 seconds. End with conviction, not a sell.</li>
+    </ul>
+  </div>
+
+  <div class="script-wrap">
+    <div class="script-label">🎥 Full Script</div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-hook">HOOK — 0 to 6 sec</div>
+      <p>"Two weeks ago I started sharing what I'm actually thinking about AI — from inside a company, not a classroom."</p>
+      <p><em>(pause)</em></p>
+      <p>"I want to tell you why. The real reason."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-build">THE MISSION — 6 to 32 sec</div>
+      <p>"I've run companies in India for years. I've seen what happens when a new technology arrives and people don't have access to honest, practical guidance about it. The people who can afford expensive consultants, workshops, and courses adapt quickly. Everyone else figures it out years later — or doesn't."</p>
+      <p>"That gap — between who gets early access to real, practical knowledge and who doesn't — has always bothered me."</p>
+      <p>"AI is the biggest shift of our professional lifetime. And I want the students, the professionals, the small business owners — the people who are brilliant but weren't born into rooms where these conversations happen — I want them to have this."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-insight">THE CONVICTION — 32 to 50 sec</div>
+      <p>"Not a certification. Not a tutorial. A genuine understanding of what's happening — from someone who's in the middle of it — so they can make informed decisions about their career, their business, their future."</p>
+      <p>"That's why LearnerMachine exists. And that's why I'm here every week."</p>
+    </div>
+
+    <div class="script-beat">
+      <div class="beat-tag bt-cta">CLOSE — 50 to 60 sec</div>
+      <p>"If you're in this because you want to understand — truly understand — what AI means for your work and your life, you're exactly who I'm building this for."</p>
+      <p>"Week 3 is coming. We go deeper." <mark>Hold. Nod. End.</mark></p>
+    </div>
+  </div>
+
+  <div class="caption-box">
+    <div class="caption-lbl">Caption</div>
+    <p>Two weeks in. I want to tell you the real reason I'm doing this.<br><br>
+    I've built companies in India for years. I've watched every major technology shift create the same pattern: the people with access to early, honest, practical guidance adapt and advance. Everyone else waits years — or gets left behind.<br><br>
+    The gap between who gets that guidance and who doesn't has always felt wrong to me.<br><br>
+    AI is the biggest shift of our professional lifetime. And I'm not willing to watch it create another gap — where the students, the professionals, the small business owners who are brilliant but weren't in the right rooms miss the window.<br><br>
+    <strong>LearnerMachine exists to close that gap.</strong><br><br>
+    Not courses. Not tutorials. Real conversations about what's actually happening — from inside a company navigating this in real time.<br><br>
+    If that's the kind of learning you've been looking for — you're exactly who I'm building this for. 🙏<br><br>
+    Week 3 coming — drop a comment and tell me: what do you most want me to cover next?</p>
+  </div>
+
+  <div class="hashtag-box">
+    #LearnerMachine #AIEducation #StartupFounder #LearnAI #ThoughtLeadership #IndiaAI #FutureOfWork #AIforEveryone #FounderMission #AIIndia #BuildingInPublic #StartupIndia
+  </div>
+
+  <div class="story-row">
+    <div class="story-item"><div class="story-time">11 AM</div><div class="story-text">Repost reel + "The real reason I'm building this. Watch 👆"</div></div>
+    <div class="story-item"><div class="story-time">2 PM</div><div class="story-text">Week 2 recap: "7 days. Students, professionals, small business owners. Here's what we covered:" — carousel of week highlights</div></div>
+    <div class="story-item"><div class="story-time">7 PM</div><div class="story-text">Question box: "What do you most want covered in Week 3?" — use top answers to inform content planning</div></div>
+  </div>
+</div>
+
+<!-- ==================== WEEK 2 SUMMARY ==================== -->
+<div style="padding:50px 80px; background:var(--dark);">
+  <div style="font-size:9pt;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--brand);margin-bottom:16px;">Week 2 Summary</div>
+  <h2 style="font-family:'Playfair Display',serif;font-size:26pt;color:#faf8f5;margin-bottom:32px;line-height:1.2;">The Unfair Advantage<br>Arc Completed</h2>
+
+  <table>
+    <tr><th>Day</th><th>Format</th><th>Topic</th><th>Audience Target</th><th>Primary Effect</th></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#faf8f5;"><strong>Mon</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">"You won't lose your job to AI — but here's the honest part"</td><td style="color:#a8a29e;">All 3 audiences</td><td style="color:#a8a29e;">Trust + week hook</td></tr>
+    <tr style="background:rgba(3,105,161,.1)"><td style="color:#faf8f5;"><strong>Tue</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">The student AI advantage — 3 years ahead</td><td style="color:#a8a29e;">Students</td><td style="color:#a8a29e;">Massive shares in student groups</td></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#faf8f5;"><strong>Wed</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">"What I tell every professional scared of AI"</td><td style="color:#a8a29e;">Professionals</td><td style="color:#a8a29e;">Saves + DMs from professionals</td></tr>
+    <tr style="background:rgba(3,105,161,.1)"><td style="color:#faf8f5;"><strong>Thu</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">Small business vs big company — AI levels the field</td><td style="color:#a8a29e;">Business Owners</td><td style="color:#a8a29e;">Business WhatsApp shares</td></tr>
+    <tr style="background:rgba(124,58,237,.1)"><td style="color:#faf8f5;"><strong>Fri</strong></td><td style="color:#a78bfa;">Face Reel</td><td style="color:#a8a29e;">5 AI morning tasks — exact founder routine</td><td style="color:#a8a29e;">All 3 audiences</td><td style="color:#a8a29e;">Saves + routine adoption</td></tr>
+    <tr style="background:rgba(3,105,161,.1)"><td style="color:#faf8f5;"><strong>Sat</strong></td><td style="color:#38bdf8;">Carousel</td><td style="color:#a8a29e;">AI idea generation — 4 prompts framework</td><td style="color:#a8a29e;">Business Owners + Professionals</td><td style="color:#a8a29e;">Prompt saves + bookmarks</td></tr>
+    <tr style="background:rgba(6,78,59,.15)"><td style="color:#faf8f5;"><strong>Sun</strong></td><td style="color:#34d399;">Face Reel</td><td style="color:#a8a29e;">Why LearnerMachine — the mission behind it</td><td style="color:#a8a29e;">All 3 audiences</td><td style="color:#a8a29e;">Community + product conversion</td></tr>
+  </table>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;">
+    <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;">
+      <div style="font-size:9pt;color:#78716c;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">The Empowerment Framework (Use Every Week)</div>
+      <p style="font-size:10pt;color:#a8a29e;line-height:1.8;"><strong style="color:#fb923c;">Never say:</strong> "AI replaced..." / "AI took over..." / "Machines are better at..."<br><strong style="color:#34d399;">Always say:</strong> "AI freed..." / "AI gave back..." / "This is where humans can now focus on..."<br><br>Every script should leave the audience feeling capable — not threatened. The goal is empowerment, always.</p>
+    </div>
+    <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;">
+      <div style="font-size:9pt;color:#78716c;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Core Anchor Sentence for the Brand</div>
+      <p style="font-size:10pt;color:#a8a29e;line-height:1.8;"><em style="color:#e7e5e4;">"AI doesn't replace the humans who use it. It replaces the humans who don't — by making the ones who do 10x more capable."</em><br><br>This is the North Star. Every piece of content either builds to this, flows from this, or proves this through story.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;text-align:center;color:#44403c;font-size:9.5pt;">
+    LearnerMachine — learnermachine.com &nbsp;·&nbsp; hello@learnermachine.com<br>
+    <span style="display:block;margin-top:6px;color:#2a2a2a;">Weeks 1 & 2 complete — strategy/thought-leader-content.html</span>
+  </div>
+</div>
+
+</body>
+</html>

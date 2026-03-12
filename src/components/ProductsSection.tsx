@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Check } from 'lucide-react'
 import { Product } from '@/types'
 
@@ -39,15 +40,24 @@ export default function ProductsSection({ products }: { products: Product[] }) {
 
                 {/* Cover */}
                 <div className={`relative h-52 bg-gradient-to-br ${product.cover_gradient} flex items-center justify-center overflow-hidden`}>
-                  <span className="text-7xl drop-shadow-lg">{product.cover_emoji}</span>
+                  {(product as Product & { cover_image_url?: string }).cover_image_url ? (
+                    <Image
+                      src={(product as Product & { cover_image_url?: string }).cover_image_url!}
+                      alt={product.title}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="text-7xl drop-shadow-lg">{product.cover_emoji}</span>
+                  )}
                   {product.badge && (
-                    <span className="absolute top-3 right-3 px-3 py-1 rounded-lg text-white text-xs font-bold"
+                    <span className="absolute top-3 right-3 px-3 py-1 rounded-lg text-white text-xs font-bold z-10"
                       style={{ backgroundColor: 'var(--brand)' }}>
                       {product.badge}
                     </span>
                   )}
                   {discount && (
-                    <span className="absolute top-3 left-3 px-3 py-1 rounded-lg bg-emerald-500 text-white text-xs font-bold">
+                    <span className="absolute top-3 left-3 px-3 py-1 rounded-lg bg-emerald-500 text-white text-xs font-bold z-10">
                       {discount}% OFF
                     </span>
                   )}

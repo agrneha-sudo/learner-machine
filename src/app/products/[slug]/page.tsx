@@ -4,6 +4,8 @@ import { Product } from '@/types'
 import { BookOpen, Video, Zap, Package, Check, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 import BuyButton from '@/components/BuyButton'
+import RichText from '@/components/RichText'
+import Image from 'next/image'
 import type { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
@@ -38,6 +40,14 @@ export default async function ProductPage({ params }: Props) {
   const product = await getProduct(params.slug)
   if (!product) notFound()
 
+  let coverImageUrl: string | null = null
+  if (product.cover_image_path) {
+    const { data: signed } = await db.storage
+      .from('product-files')
+      .createSignedUrl(product.cover_image_path, 3600)
+    coverImageUrl = signed?.signedUrl ?? null
+  }
+
   const Icon = categoryIcon[product.category]
   const discount = product.original_price
     ? Math.round(((product.original_price - product.price) / product.original_price) * 100)
@@ -55,9 +65,13 @@ export default async function ProductPage({ params }: Props) {
           {/* Cover */}
           <div>
             <div className={`relative rounded-2xl h-80 bg-gradient-to-br ${product.cover_gradient} flex items-center justify-center mb-6 overflow-hidden`}>
-              <span className="text-9xl drop-shadow-lg">{product.cover_emoji}</span>
+              {coverImageUrl ? (
+                <Image src={coverImageUrl} alt={product.title} fill className="object-cover rounded-2xl" />
+              ) : (
+                <span className="text-9xl drop-shadow-lg">{product.cover_emoji}</span>
+              )}
               {product.badge && (
-                <div className="absolute top-4 right-4">
+                <div className="absolute top-4 right-4 z-10">
                   <span className="px-3 py-1 rounded-lg bg-brand text-white text-sm font-bold">{product.badge}</span>
                 </div>
               )}
@@ -89,9 +103,7 @@ export default async function ProductPage({ params }: Props) {
               {product.title}
             </h1>
             <p className="text-lg font-medium text-brand mb-4">{product.tagline}</p>
-            <p className="text-base leading-relaxed mb-6" style={{ color: 'var(--text-secondary)' }}>
-              {product.description}
-            </p>
+            <RichText text={product.description} className="text-base leading-relaxed mb-6 space-y-1" style={{ color: 'var(--text-secondary)' }} />
 
             {features.length > 0 && (
               <div className="card p-5 mb-6">

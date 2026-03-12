@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You Won't Lose Your Job to AI — LearnerMachine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Inter',sans-serif; font-size:11pt; line-height:1.8; color:#1c1917; background:#faf8f5; }
+  .page-break { page-break-after:always; break-after:page; }
+
+  /* ── COVER ── */
+  .cover {
+    min-height:100vh; background:linear-gradient(155deg,#0f0a06 0%,#1c1917 45%,#2a120a 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:60px 48px; position:relative; overflow:hidden;
+  }
+  .cover::before { content:''; position:absolute; top:-120px; right:-120px; width:500px; height:500px; border-radius:50%; background:radial-gradient(circle,rgba(194,82,12,.3) 0%,transparent 65%); }
+  .cover::after  { content:''; position:absolute; bottom:-80px; left:-80px; width:360px; height:360px; border-radius:50%; background:radial-gradient(circle,rgba(194,82,12,.18) 0%,transparent 65%); }
+  .cover-logo { font-size:10pt; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#c2520c; margin-bottom:28px; position:relative; z-index:1; }
+  .cover-badge { display:inline-block; background:rgba(194,82,12,.2); border:1px solid rgba(194,82,12,.5); color:#fb923c; font-size:9.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; padding:7px 22px; border-radius:100px; margin-bottom:32px; position:relative; z-index:1; }
+  .cover h1 { font-family:'Playfair Display',serif; font-size:46pt; font-weight:800; color:#faf8f5; line-height:1.1; margin-bottom:10px; position:relative; z-index:1; }
+  .cover h1 .accent { color:#c2520c; }
+  .cover-subtitle { font-size:13pt; color:#a8a29e; font-weight:400; max-width:520px; margin:0 auto 44px; line-height:1.75; position:relative; z-index:1; }
+  .cover-divider { width:56px; height:3px; background:linear-gradient(90deg,#c2520c,#fb923c); border-radius:2px; margin:0 auto 44px; position:relative; z-index:1; }
+  .cover-features { display:grid; grid-template-columns:1fr 1fr; gap:12px; max-width:440px; margin:0 auto 52px; text-align:left; position:relative; z-index:1; }
+  .cover-feature { display:flex; align-items:flex-start; gap:10px; color:#e7e5e4; font-size:10pt; }
+  .cf-dot { width:18px; height:18px; background:#c2520c; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:8pt; font-weight:700; color:white; flex-shrink:0; margin-top:2px; }
+  .cover-price-box { background:rgba(194,82,12,.12); border:2px solid #c2520c; border-radius:16px; padding:22px 52px; position:relative; z-index:1; }
+  .cover-price { font-size:34pt; font-weight:900; color:#fb923c; }
+  .cover-price s { font-size:18pt; color:#78716c; margin-left:10px; font-weight:400; }
+  .cover-price-label { font-size:9.5pt; color:#a8a29e; margin-top:4px; }
+  .cover-footer-text { margin-top:38px; color:#44403c; font-size:9pt; position:relative; z-index:1; }
+
+  /* ── TOC ── */
+  .toc-page { min-height:100vh; padding:70px 80px; background:#faf8f5; }
+  .section-label { font-size:9pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#c2520c; margin-bottom:12px; }
+  .toc-header h2 { font-family:'Playfair Display',serif; font-size:30pt; color:#1c1917; font-weight:700; margin-bottom:48px; }
+  .toc-part { margin-bottom:28px; }
+  .toc-part-title { font-size:8.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#c2520c; padding:8px 16px; background:rgba(194,82,12,.07); border-left:3px solid #c2520c; margin-bottom:10px; border-radius:0 6px 6px 0; }
+  .toc-item { display:flex; align-items:center; justify-content:space-between; padding:9px 16px; border-bottom:1px solid #e8e0d8; }
+  .toc-item-left { display:flex; align-items:center; gap:12px; }
+  .toc-num { font-size:9pt; font-weight:700; color:#c2520c; min-width:22px; }
+  .toc-title { font-size:11pt; color:#1c1917; }
+  .toc-dots { flex:1; border-bottom:2px dotted #e8e0d8; margin:0 12px; }
+  .toc-pg { font-size:10pt; font-weight:600; color:#a8a29e; }
+
+  /* ── PART OPENER ── */
+  .part-opener { min-height:55vh; background:linear-gradient(135deg,#1c1917 0%,#292524 60%,#2d1a08 100%); padding:80px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden; }
+  .part-opener::before { content:''; position:absolute; right:-60px; top:-60px; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle,rgba(194,82,12,.4) 0%,transparent 70%); }
+  .part-opener-label { font-size:10pt; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:#fb923c; margin-bottom:18px; position:relative; z-index:1; }
+  .part-opener h2 { font-family:'Playfair Display',serif; font-size:36pt; font-weight:800; color:#faf8f5; line-height:1.2; margin-bottom:18px; position:relative; z-index:1; }
+  .part-opener p { font-size:12pt; color:#a8a29e; max-width:500px; line-height:1.75; position:relative; z-index:1; }
+  .part-tags { margin-top:28px; display:flex; gap:10px; flex-wrap:wrap; position:relative; z-index:1; }
+  .part-tag { background:rgba(194,82,12,.2); border:1px solid rgba(194,82,12,.4); color:#fb923c; font-size:9pt; font-weight:600; padding:5px 14px; border-radius:100px; }
+
+  /* ── CONTENT ── */
+  .content-page { padding:60px 80px; max-width:860px; margin:0 auto; }
+  .chapter-header { margin-bottom:40px; padding-bottom:24px; border-bottom:2px solid #e8e0d8; }
+  .chapter-num { font-size:9pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#c2520c; margin-bottom:10px; }
+  .chapter-header h2 { font-family:'Playfair Display',serif; font-size:26pt; font-weight:700; color:#1c1917; line-height:1.25; }
+  h3 { font-size:14pt; font-weight:700; color:#1c1917; margin:36px 0 14px; padding-left:14px; border-left:4px solid #c2520c; }
+  h4 { font-size:12pt; font-weight:600; color:#292524; margin:24px 0 10px; }
+  p { margin-bottom:16px; color:#292524; line-height:1.8; }
+  strong { color:#1c1917; }
+
+  /* ── CALLOUTS ── */
+  .callout { border-left:4px solid #c2520c; background:#fff8f5; padding:18px 24px; margin:24px 0; border-radius:0 10px 10px 0; }
+  .callout p { margin:0; color:#7c2d12; font-size:11pt; }
+  .callout-icon { font-size:9pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#c2520c; margin-bottom:8px; }
+  .warning-box { border-left:4px solid #dc2626; background:#fef2f2; padding:18px 24px; margin:24px 0; border-radius:0 10px 10px 0; }
+  .warning-box p { margin:0; color:#991b1b; }
+  .warning-box .callout-icon { color:#dc2626; }
+  .success-box { border-left:4px solid #16a34a; background:#f0fdf4; padding:18px 24px; margin:24px 0; border-radius:0 10px 10px 0; }
+  .success-box p { margin:0; color:#14532d; }
+  .success-box .callout-icon { color:#16a34a; }
+
+  /* ── STAT BOX ── */
+  .stat-row { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:28px 0; }
+  .stat-box { background:#1c1917; border-radius:12px; padding:24px 20px; text-align:center; }
+  .stat-num { font-size:32pt; font-weight:900; color:#fb923c; line-height:1; margin-bottom:6px; }
+  .stat-label { font-size:9.5pt; color:#a8a29e; line-height:1.5; }
+
+  /* ── RISK TABLE ── */
+  .risk-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:24px 0; }
+  .risk-card { border-radius:12px; padding:22px 24px; }
+  .risk-high { background:#fef2f2; border:1px solid #fca5a5; }
+  .risk-low  { background:#f0fdf4; border:1px solid #86efac; }
+  .risk-label { font-size:8.5pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:12px; }
+  .risk-high .risk-label { color:#dc2626; }
+  .risk-low  .risk-label  { color:#16a34a; }
+  .risk-card ul { list-style:none; padding:0; }
+  .risk-card ul li { font-size:10.5pt; color:#292524; padding:5px 0; border-bottom:1px solid rgba(0,0,0,.06); display:flex; gap:10px; align-items:flex-start; }
+  .risk-card ul li:last-child { border-bottom:none; }
+  .risk-high ul li::before { content:'⚠'; font-size:10pt; flex-shrink:0; }
+  .risk-low  ul li::before { content:'✓'; color:#16a34a; font-weight:700; flex-shrink:0; }
+
+  /* ── SKILL CARD ── */
+  .skill-card { background:#fff; border:1px solid #e8e0d8; border-radius:14px; padding:28px 30px; margin:20px 0; display:flex; gap:22px; align-items:flex-start; }
+  .skill-icon { width:54px; height:54px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:24pt; flex-shrink:0; }
+  .skill-body h3 { margin:0 0 8px; padding:0; border:none; font-size:14pt; }
+  .skill-body p { margin:0 0 10px; font-size:10.5pt; }
+  .skill-why { font-size:9.5pt; font-style:italic; color:#78716c; }
+
+  /* ── ACTION PLAN ── */
+  .action-day { background:#fff; border:1px solid #e8e0d8; border-radius:12px; padding:22px 26px; margin:14px 0; display:flex; gap:20px; align-items:flex-start; }
+  .day-badge { background:#c2520c; color:white; font-size:10pt; font-weight:800; min-width:56px; height:56px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; text-align:center; line-height:1.2; }
+  .day-body h4 { margin:0 0 6px; font-size:12pt; }
+  .day-body p { margin:0; font-size:10.5pt; color:#44403c; }
+  .day-body .task-tag { display:inline-block; margin-top:8px; font-size:8.5pt; font-weight:700; padding:3px 10px; border-radius:4px; letter-spacing:.5px; }
+  .tag-student { background:#ecfeff; color:#0e7490; }
+  .tag-pro     { background:#f5f3ff; color:#7c3aed; }
+  .tag-biz     { background:#fff8f5; color:#c2520c; border:1px solid #fed7aa; }
+  .tag-all     { background:#f9fafb; color:#374151; border:1px solid #e5e7eb; }
+
+  /* ── PROMPT BOX ── */
+  .prompt-box { background:#1c1917; border-radius:12px; padding:24px 28px; margin:22px 0; }
+  .prompt-label { font-size:8pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#c2520c; margin-bottom:12px; }
+  .prompt-text { font-family:'Courier New',monospace; font-size:10.5pt; color:#e7e5e4; line-height:1.7; white-space:pre-wrap; }
+  .prompt-result { font-size:9.5pt; color:#78716c; margin-top:12px; font-style:italic; }
+
+  /* ── AUDIENCE SPLIT ── */
+  .audience-split { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:24px 0; }
+  .aud-block { border-radius:12px; padding:22px 20px; }
+  .aud-student { background:#ecfeff; border:1px solid #a5f3fc; }
+  .aud-pro     { background:#f5f3ff; border:1px solid #ddd6fe; }
+  .aud-biz     { background:#fff8f5; border:1px solid #fed7aa; }
+  .aud-label { font-size:8.5pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:10px; }
+  .aud-student .aud-label { color:#0e7490; }
+  .aud-pro     .aud-label { color:#7c3aed; }
+  .aud-biz     .aud-label { color:#c2520c; }
+  .aud-block p { font-size:10pt; line-height:1.65; margin:0; color:#1c1917; }
+
+  /* ── FRAMEWORK BOX ── */
+  .framework { background:#fff; border:2px solid #c2520c; border-radius:16px; padding:32px 36px; margin:28px 0; }
+  .framework-label { font-size:9pt; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#c2520c; margin-bottom:16px; }
+  .framework h3 { margin:0 0 12px; padding:0; border:none; font-size:18pt; color:#1c1917; }
+  .framework-steps { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:18px; }
+  .fstep { background:#fff8f5; border-radius:10px; padding:16px 18px; }
+  .fstep-num { font-size:24pt; font-weight:900; color:#c2520c; line-height:1; margin-bottom:6px; }
+  .fstep h4 { margin:0 0 6px; font-size:11pt; color:#1c1917; }
+  .fstep p { margin:0; font-size:9.5pt; color:#78716c; }
+
+  /* ── QUOTE ── */
+  .pullquote { border-top:3px solid #c2520c; border-bottom:3px solid #c2520c; padding:28px 0; margin:36px 0; text-align:center; }
+  .pullquote p { font-family:'Playfair Display',serif; font-size:17pt; color:#1c1917; font-style:italic; line-height:1.5; margin:0; }
+  .pullquote cite { display:block; margin-top:12px; font-size:9pt; color:#78716c; font-style:normal; letter-spacing:1px; text-transform:uppercase; }
+
+  /* ── BACK COVER ── */
+  .back-cover { min-height:100vh; background:linear-gradient(155deg,#0f0a06 0%,#1c1917 55%,#2a120a 100%); display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:70px 60px; position:relative; overflow:hidden; }
+  .back-cover::before { content:''; position:absolute; top:-100px; right:-100px; width:450px; height:450px; border-radius:50%; background:radial-gradient(circle,rgba(194,82,12,.25) 0%,transparent 65%); }
+  .back-cover h2 { font-family:'Playfair Display',serif; font-size:34pt; color:#faf8f5; font-weight:800; line-height:1.2; margin-bottom:16px; position:relative; z-index:1; }
+  .back-cover h2 span { color:#c2520c; }
+  .back-cover p { font-size:12pt; color:#a8a29e; max-width:500px; line-height:1.75; margin-bottom:36px; position:relative; z-index:1; }
+  .cta-url { display:inline-block; background:#c2520c; color:white; font-size:16pt; font-weight:800; padding:18px 52px; border-radius:14px; text-decoration:none; letter-spacing:1px; position:relative; z-index:1; margin-bottom:24px; }
+  .back-products { display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; max-width:580px; margin:0 auto 40px; position:relative; z-index:1; }
+  .back-product { background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:14px 16px; }
+  .bp-label { font-size:8pt; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:#fb923c; margin-bottom:6px; }
+  .bp-title { font-size:10pt; color:#e7e5e4; font-weight:600; line-height:1.4; }
+  .back-cover-footer { color:#44403c; font-size:9pt; position:relative; z-index:1; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     COVER
+═══════════════════════════════════════════════ -->
+<div class="cover page-break">
+  <div class="cover-logo">LearnerMachine</div>
+  <div class="cover-badge">The Honest Guide · 2025 Edition</div>
+  <h1>You Won't Lose<br>Your <span class="accent">Job</span> to AI.<br><em style="font-style:italic;color:#a8a29e;font-size:38pt;">But Someone Else<br>Will Get Yours.</em></h1>
+  <p class="cover-subtitle">The truth every professional, student, and business owner needs — before it's too late to act.</p>
+  <div class="cover-divider"></div>
+  <div class="cover-features">
+    <div class="cover-feature"><div class="cf-dot">✓</div><span>Which jobs are actually at risk — honestly</span></div>
+    <div class="cover-feature"><div class="cf-dot">✓</div><span>The 3 skills AI cannot replace (ever)</span></div>
+    <div class="cover-feature"><div class="cf-dot">✓</div><span>The 20/80 framework for career-proofing</span></div>
+    <div class="cover-feature"><div class="cf-dot">✓</div><span>Your 7-day action plan by audience</span></div>
+    <div class="cover-feature"><div class="cf-dot">✓</div><span>5 prompts to prove AI fluency immediately</span></div>
+    <div class="cover-feature"><div class="cf-dot">✓</div><span>Specific advice for students, pros & founders</span></div>
+  </div>
+  <div class="cover-price-box">
+    <div class="cover-price">₹299 <s>₹799</s></div>
+    <div class="cover-price-label">One-time · Instant download · Yours forever</div>
+  </div>
+  <p class="cover-footer-text">By Aryaman Rastogi, Founder — LearnerMachine · learnermachine.com</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     TABLE OF CONTENTS
+═══════════════════════════════════════════════ -->
+<div class="toc-page page-break">
+  <div class="section-label">What's Inside</div>
+  <div class="toc-header">
+    <h2>Table of Contents</h2>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-title">Part 1 — The Truth</div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">01</span><span class="toc-title">The Lie They Keep Telling You</span></div><div class="toc-dots"></div><span class="toc-pg">4</span></div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">02</span><span class="toc-title">What AI Is Actually Replacing (It's Not People)</span></div><div class="toc-dots"></div><span class="toc-pg">7</span></div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">03</span><span class="toc-title">The Risk Map — Is Your Job Actually Safe?</span></div><div class="toc-dots"></div><span class="toc-pg">11</span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-title">Part 2 — The Advantage</div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">04</span><span class="toc-title">The 3 Skills AI Will Never Replace</span></div><div class="toc-dots"></div><span class="toc-pg">16</span></div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">05</span><span class="toc-title">The 20/80 Rule — How to Protect Your Career</span></div><div class="toc-dots"></div><span class="toc-pg">21</span></div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">06</span><span class="toc-title">What This Looks Like for YOUR Situation</span></div><div class="toc-dots"></div><span class="toc-pg">26</span></div>
+  </div>
+
+  <div class="toc-part">
+    <div class="toc-part-title">Part 3 — The Action Plan</div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">07</span><span class="toc-title">Your 7-Day Career Protection Plan</span></div><div class="toc-dots"></div><span class="toc-pg">31</span></div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">08</span><span class="toc-title">5 Prompts That Prove AI Fluency — Use Them This Week</span></div><div class="toc-dots"></div><span class="toc-pg">37</span></div>
+    <div class="toc-item"><div class="toc-item-left"><span class="toc-num">09</span><span class="toc-title">What To Do If You Feel Like You're Already Behind</span></div><div class="toc-dots"></div><span class="toc-pg">42</span></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     PART 1 OPENER
+═══════════════════════════════════════════════ -->
+<div class="part-opener page-break">
+  <div class="part-opener-label">Part One</div>
+  <h2>The Truth</h2>
+  <p>Most things being said about AI and jobs are either dishonestly reassuring or uselessly terrifying. This part gives you neither. It gives you the honest version — which turns out to be more useful than both.</p>
+  <div class="part-tags">
+    <span class="part-tag">Chapter 1 — The Lie</span>
+    <span class="part-tag">Chapter 2 — What's Actually At Risk</span>
+    <span class="part-tag">Chapter 3 — The Risk Map</span>
+  </div>
+</div>
+
+<!-- CHAPTER 1 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 01</div>
+    <h2>"AI Won't Replace You."<br>The Most Dangerous<br>Thing You Can Believe.</h2>
+  </div>
+
+  <p>There is a sentence being repeated everywhere right now — in LinkedIn posts, in corporate town halls, in government speeches, by people who should know better.</p>
+
+  <p><strong>"AI won't replace humans. AI will only replace humans who don't use AI."</strong></p>
+
+  <p>It sounds reassuring. It's shared constantly. And it is, at best, only half true — which makes it one of the most dangerous things you can believe right now.</p>
+
+  <div class="warning-box">
+    <div class="callout-icon">⚠ The Real Statement</div>
+    <p>AI is replacing <strong>tasks</strong>, not job titles. But if your job is mostly tasks — that is still a career-defining problem. The people who will be displaced are not the lazy ones. They are the diligent, hard-working people whose diligence was spent on work that AI now does better, faster, and for free.</p>
+  </div>
+
+  <p>I want to be careful here, because this is not meant to scare you. It is meant to orient you correctly — because the people who are safest right now are not the ones who got reassured. They are the ones who got honest.</p>
+
+  <h3>The Reassurance Industry</h3>
+  <p>There is an entire industry of reassurance around AI. Every tech conference, every corporate HR deck, every thought leader post leads with the message: "Don't worry. New technologies always create more jobs than they destroy."</p>
+  <p>And historically, that has often been true. The industrial revolution. The internet. Mobile phones. Each one displaced jobs and created more in return.</p>
+  <p>But there is something different about this moment — something that the reassurance industry is conspicuously quiet about.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-num">80%</div>
+      <div class="stat-label">of knowledge workers have at least 10% of their tasks impacted by AI today</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">19%</div>
+      <div class="stat-label">of all jobs have at least 50% of their tasks directly automatable right now</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">2–3 yrs</div>
+      <div class="stat-label">the window most experts agree professionals have to adapt before the gap becomes uncloseable</div>
+    </div>
+  </div>
+
+  <p>What is different this time is <strong>speed and breadth</strong>. Previous automation waves took decades and targeted specific, manual industries. This one is moving in years and targeting the most expensive, educated, white-collar work first — because that is where the value is, and that is where AI's language and reasoning capabilities shine.</p>
+
+  <h3>The Honest Version</h3>
+  <p>Here is the honest version of what is happening:</p>
+
+  <p>AI is a tool that, when used by a skilled professional, makes that professional significantly more productive. This means companies need fewer people to do the same work — not zero people, but fewer. The people who remain will be the ones who use AI well. The ones who don't will find that their role has been absorbed into someone else's — someone who does the same work, faster, with AI assistance.</p>
+
+  <div class="callout">
+    <div class="callout-icon">💡 The Core Insight</div>
+    <p>You are not competing with AI. You are competing with other humans who use AI better than you do. That is a race you can win — if you start today.</p>
+  </div>
+
+  <p>This is actually the more hopeful framing — because it means the outcome is not determined by some external force you cannot control. It is determined by a decision you can make right now.</p>
+
+  <p>The rest of this guide is about exactly what that decision looks like in practice.</p>
+</div>
+
+<!-- CHAPTER 2 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 02</div>
+    <h2>What AI Is Actually<br>Replacing (It's Not People)</h2>
+  </div>
+
+  <p>To protect your career, you need to understand precisely what AI can and cannot do — not in a technical sense, but in a <em>practical, work-context</em> sense.</p>
+
+  <p>The framing that has helped most of the people I work with is this one:</p>
+
+  <div class="pullquote">
+    <p>"AI replaces tasks, not roles. But some roles are almost entirely tasks. And some tasks are things you do with your best thinking every day."</p>
+    <cite>— The distinction that changes everything</cite>
+  </div>
+
+  <h3>The Two Types of Work</h3>
+  <p>Every professional role contains two types of work. Understanding which type fills your day is the most important self-assessment you can do right now.</p>
+
+  <div class="risk-grid">
+    <div class="risk-card risk-high">
+      <div class="risk-label">⚠ Type A — High AI Overlap</div>
+      <ul>
+        <li>Summarising information from multiple sources</li>
+        <li>Writing first drafts of reports, emails, proposals</li>
+        <li>Researching and compiling data into structured formats</li>
+        <li>Translating, transcribing, and formatting documents</li>
+        <li>Answering standard customer questions</li>
+        <li>Generating code from written specifications</li>
+        <li>Creating social media content, captions, and copy</li>
+        <li>Analysing patterns in structured datasets</li>
+        <li>Scheduling, reminders, and calendar management</li>
+        <li>Generating standard legal, financial, or HR documents</li>
+      </ul>
+    </div>
+    <div class="risk-card risk-low">
+      <div class="risk-label">✓ Type B — Low AI Overlap</div>
+      <ul>
+        <li>Reading a room — sensing trust, tension, and politics</li>
+        <li>Making judgment calls with incomplete, ambiguous information</li>
+        <li>Building genuine long-term relationships with clients</li>
+        <li>Creative problem-solving in genuinely novel situations</li>
+        <li>Leading people through change and uncertainty</li>
+        <li>Ethical reasoning — knowing what <em>should</em> be done</li>
+        <li>Crafting vision and strategy in a new context</li>
+        <li>Physical presence, craft, and manual dexterity</li>
+        <li>Cultural intelligence and contextual social navigation</li>
+        <li>Accountability — taking responsibility for outcomes</li>
+      </ul>
+    </div>
+  </div>
+
+  <p>Look at the Type A column again. These are not trivial tasks. For many professionals, this is the work that fills 60–80% of their working day. These are the tasks that took years to get good at. And increasingly, AI does them faster and more consistently.</p>
+
+  <h3>The Real Question to Ask Yourself</h3>
+  <p>This is the question I ask everyone I work with — and I want you to sit with it honestly:</p>
+
+  <div class="callout">
+    <div class="callout-icon">🔍 Your Self-Assessment</div>
+    <p><strong>If someone removed every Type A task from your day — what would be left?</strong><br><br>
+    If the answer is "not much" — that is not a condemnation. It is a clear signal. And a clear signal is the most valuable thing you can have right now, because it tells you exactly where to invest the next three months.</p>
+  </div>
+
+  <h3>The Hidden Danger: Being Good at the Wrong Things</h3>
+  <p>The most uncomfortable truth about AI displacement is this: the professionals most at risk are not the weak performers. They are the <strong>diligent, efficient, expert performers of Type A work</strong>.</p>
+  <p>The person who can summarise 50-page reports accurately. The person who writes immaculate first drafts. The person who can research and format a competitive analysis in two hours. These are people who are genuinely excellent at their jobs. They have built their careers on those skills.</p>
+  <p>And those are precisely the skills AI is most aggressively targeting — because that is where the economic value is concentrated.</p>
+
+  <div class="success-box">
+    <div class="callout-icon">✓ The Pivot That Works</div>
+    <p>The professionals who are thriving through this are the ones who recognised this early and made a deliberate decision: <strong>stop being the best in the room at Type A work. Start being the most skilled at directing AI to do Type A work — while investing your time in Type B.</strong> That pivot takes 90 days, not 3 years. Chapter 5 shows you exactly how to make it.</p>
+  </div>
+</div>
+
+<!-- CHAPTER 3 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 03</div>
+    <h2>The Risk Map — Is<br>Your Role Actually Safe?</h2>
+  </div>
+
+  <p>Let me give you something concrete. Below is an honest risk assessment by field and role type. This is not based on fear or hype — it is based on the actual capabilities of current AI tools and the trajectory of development.</p>
+
+  <h3>Field-by-Field Honest Assessment</h3>
+
+  <div class="callout">
+    <div class="callout-icon">📌 How to Read This</div>
+    <p><strong>High Overlap</strong> = a significant portion of current role tasks are already automatable.<br>
+    <strong>Moderate Overlap</strong> = specific task categories are at risk; role itself is safe with adaptation.<br>
+    <strong>Low Overlap</strong> = AI enhances but doesn't threaten the core value of the role.</p>
+  </div>
+
+  <table style="width:100%;border-collapse:collapse;margin:24px 0;font-size:10.5pt;">
+    <tr style="background:#1c1917;">
+      <th style="color:#fb923c;padding:11px 16px;text-align:left;font-size:9pt;">Field</th>
+      <th style="color:#fb923c;padding:11px 16px;text-align:left;font-size:9pt;">Tasks At Risk</th>
+      <th style="color:#fb923c;padding:11px 16px;text-align:left;font-size:9pt;">What Remains Safe</th>
+      <th style="color:#fb923c;padding:11px 16px;text-align:center;font-size:9pt;">Risk Level</th>
+    </tr>
+    <tr><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;font-weight:600;">Marketing &amp; Content</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">First draft writing, SEO research, social media copy, email sequences</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Brand strategy, audience insight, creative direction, client relationships</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;text-align:center;"><span style="background:#fef2f2;color:#dc2626;font-weight:700;padding:3px 10px;border-radius:4px;font-size:9pt;">HIGH</span></td></tr>
+    <tr style="background:#faf8f5;"><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;font-weight:600;">Software Development</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Boilerplate code, bug fixing, documentation, test writing</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">System architecture, product decisions, complex debugging, cross-team coordination</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;text-align:center;"><span style="background:#fef9c3;color:#a16207;font-weight:700;padding:3px 10px;border-radius:4px;font-size:9pt;">MOD</span></td></tr>
+    <tr><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;font-weight:600;">Finance &amp; Accounting</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Data entry, report generation, basic analysis, compliance checks</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Interpretation of complex financials, client advisory, regulatory judgment</td><td style="padding:11pt 16px;border-bottom:1px solid #e8e0d8;text-align:center;"><span style="background:#fef2f2;color:#dc2626;font-weight:700;padding:3px 10px;border-radius:4px;font-size:9pt;">HIGH</span></td></tr>
+    <tr style="background:#faf8f5;"><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;font-weight:600;">Law &amp; Legal</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Contract drafting, legal research, document review, standard agreements</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Courtroom advocacy, strategic counsel, novel case judgement, client trust</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;text-align:center;"><span style="background:#fef9c3;color:#a16207;font-weight:700;padding:3px 10px;border-radius:4px;font-size:9pt;">MOD</span></td></tr>
+    <tr><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;font-weight:600;">HR &amp; Recruitment</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">CV screening, JD writing, onboarding docs, policy drafting</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Culture building, nuanced performance conversations, leadership development</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;text-align:center;"><span style="background:#fef2f2;color:#dc2626;font-weight:700;padding:3px 10px;border-radius:4px;font-size:9pt;">HIGH</span></td></tr>
+    <tr style="background:#faf8f5;"><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;font-weight:600;">Education &amp; Training</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Lesson planning, quiz creation, content summarisation, grading</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Mentorship, classroom dynamics, emotional support, real-world context</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;text-align:center;"><span style="background:#fef9c3;color:#a16207;font-weight:700;padding:3px 10px;border-radius:4px;font-size:9pt;">MOD</span></td></tr>
+    <tr><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;font-weight:600;">Healthcare (non-clinical)</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Admin, scheduling, documentation, insurance pre-auth</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Diagnosis, patient relationships, clinical judgment, physical examination</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;text-align:center;"><span style="background:#f0fdf4;color:#16a34a;font-weight:700;padding:3px 10px;border-radius:4px;font-size:9pt;">LOW</span></td></tr>
+    <tr style="background:#faf8f5;"><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;font-weight:600;">Sales</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Lead research, email sequences, proposal writing, CRM updates</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;color:#44403c;">Relationship selling, trust-building, complex negotiation, reading people</td><td style="padding:11px 16px;border-bottom:1px solid #e8e0d8;text-align:center;"><span style="background:#fef9c3;color:#a16207;font-weight:700;padding:3px 10px;border-radius:4px;font-size:9pt;">MOD</span></td></tr>
+  </table>
+
+  <div class="callout">
+    <div class="callout-icon">💡 The Key Takeaway From This Table</div>
+    <p>Notice that in every field — even the high-risk ones — there is a core of work that AI cannot reach. The professionals who thrive are the ones who <strong>let AI own the left column and invest themselves deeply in the right column.</strong> That is the whole strategy. Chapter 5 shows you how to implement it.</p>
+  </div>
+</div>
+
+<!-- PART 2 OPENER -->
+<div class="part-opener page-break">
+  <div class="part-opener-label">Part Two</div>
+  <h2>The Advantage</h2>
+  <p>Now that you know the honest picture, here is the more important half: what AI genuinely cannot do, and how you build your career and business on that foundation.</p>
+  <div class="part-tags">
+    <span class="part-tag">Chapter 4 — The 3 Unbreakable Skills</span>
+    <span class="part-tag">Chapter 5 — The 20/80 Rule</span>
+    <span class="part-tag">Chapter 6 — Your Situation</span>
+  </div>
+</div>
+
+<!-- CHAPTER 4 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 04</div>
+    <h2>The 3 Skills AI Will<br>Never Replace</h2>
+  </div>
+
+  <p>I want to be careful about the word "never" — because AI is developing fast. But there are three categories of human capability where the gap between what AI can do and what a skilled human can do is not closing — it is, in some cases, widening.</p>
+  <p>This is because these capabilities are not about processing information. They are about being human in a specific, deeply contextual way — and that turns out to be extraordinarily difficult to replicate.</p>
+
+  <div class="skill-card">
+    <div class="skill-icon" style="background:#fff0e6;">🧭</div>
+    <div class="skill-body">
+      <h3>Skill 1 — Judgment Under Genuine Uncertainty</h3>
+      <p>AI is exceptional at pattern recognition on known problems — problems where the answer exists somewhere in its training data. What it struggles with is genuinely novel situations where the right path forward requires integrating experience, values, incomplete information, and a sense of consequence that only comes from having lived with outcomes before.</p>
+      <p>The manager who has to decide whether to tell a struggling employee the hard truth or protect them for another quarter. The entrepreneur who has to decide whether to pivot while the company is still alive. The doctor who looks at the numbers, looks at the patient, and makes a call. <strong>These are judgment calls — and they are yours.</strong></p>
+      <p class="skill-why">Why this matters right now: As AI takes over analytical work, the value of judgment increases proportionally. The fewer people in the room who can make a genuine judgment call, the more each of those people is worth.</p>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-icon" style="background:#ecfeff;">🤝</div>
+    <div class="skill-body">
+      <h3>Skill 2 — Trust-Based Human Relationships</h3>
+      <p>People do not trust institutions. People do not trust algorithms. People trust <em>people</em> — specific people who have shown them, over time, that they understand them, care about outcomes, and will tell them the truth when it is uncomfortable.</p>
+      <p>The best client relationships in any professional field are built on a feeling of genuine alignment that no AI can replicate. Not because AI doesn't understand the words — it does. But because trust is built through shared history, vulnerability, and the knowledge that a real person chose to show up for you.</p>
+      <p class="skill-why">Why this matters right now: In a world where AI is generating more and more content, communication, and interaction — genuine human connection becomes rarer and more valuable. The professionals who build deep, trusted relationships are building the most durable career asset that exists.</p>
+    </div>
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-icon" style="background:#f5f3ff;">🎯</div>
+    <div class="skill-body">
+      <h3>Skill 3 — The Ability to Ask the Right Question</h3>
+      <p>This is the most underestimated skill in the AI era. AI can answer questions with extraordinary depth and accuracy. But it cannot tell you <em>which question to ask</em>. It cannot feel the thing that is slightly wrong in a situation. It cannot look at a business and sense — from context, from pattern recognition built over years of being human — that the real problem is three layers below the presenting problem.</p>
+      <p>The ability to ask the right question — to frame the problem correctly before anyone tries to solve it — is a skill that becomes exponentially more valuable as AI becomes more powerful. Because AI's answers are only as good as the question it was given.</p>
+      <p class="skill-why">Why this matters right now: In every organisation, the person who consistently frames problems correctly is the person whose judgment is sought. That is a form of leadership that cannot be automated — and it is available to anyone willing to develop it deliberately.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHAPTER 5 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 05</div>
+    <h2>The 20/80 Rule —<br>How to Actually Protect Your Career</h2>
+  </div>
+
+  <p>Most advice about AI and careers talks about what to learn. This chapter talks about what to <em>do</em> — specifically, a structural change in how you spend your working time that produces a very different career trajectory over the next 24 months.</p>
+
+  <p>I call it the 20/80 Rule. It is simple enough to explain in two sentences. It takes deliberate effort to implement. And for the professionals who do it, the results are significant.</p>
+
+  <div class="framework">
+    <div class="framework-label">The 20/80 Rule</div>
+    <h3>Spend 20% of your time learning to direct AI at your Type A work.<br>Invest the freed-up time into your Type B work.</h3>
+    <p style="margin-top:14px;color:#44403c;font-size:10.5pt;line-height:1.7;">This is not about replacing yourself with AI. It is about reclaiming hours from the work that AI does better than you — and redirecting those hours to the work that only you can do. Over 90 days, this compounds into a career profile that is genuinely difficult to replicate or replace.</p>
+    <div class="framework-steps">
+      <div class="fstep"><div class="fstep-num">01</div><h4>Audit Your Week</h4><p>List every repeating task you do. Mark each as Type A or Type B. Be honest — most professionals find 50–70% of their time in Type A.</p></div>
+      <div class="fstep"><div class="fstep-num">02</div><h4>Pick Your First Target</h4><p>Choose the single Type A task that takes the most time. Not the most complex — the most time-consuming. That is your AI target for Month 1.</p></div>
+      <div class="fstep"><div class="fstep-num">03</div><h4>Build the System</h4><p>Spend 60–90 minutes learning to do that specific task with AI. Create a reusable prompt. Test and refine until it saves you at least 2 hours per week.</p></div>
+      <div class="fstep"><div class="fstep-num">04</div><h4>Invest the Time</h4><p>Take the hours you recover and invest them in Type B: deeper client relationships, bigger strategic thinking, leadership. Don't let them get absorbed by other Type A tasks.</p></div>
+    </div>
+  </div>
+
+  <h3>What This Looks Like After 90 Days</h3>
+  <p>After implementing the 20/80 rule consistently for 90 days, the professionals I have worked with describe a specific shift: they stop feeling like they are "keeping up" and start feeling like they are "ahead." Not because they worked harder — but because they stopped spending their best hours on work that was always going to be replaced anyway.</p>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-num">8–12 hrs</div>
+      <div class="stat-label">average hours recovered per week after 3 automation setups</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">90 days</div>
+      <div class="stat-label">to build a career profile that is noticeably different from your peers</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">3–4x</div>
+      <div class="stat-label">productivity multiplier for professionals who combine AI fluency with Type B depth</div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">💡 The Compounding Effect</div>
+    <p>The professionals who started this in 2023 are now, in 2025, visibly different from their peers. Not because they learned a lot about AI — but because they reclaimed 8–10 hours per week for two years and invested it in the things that build long-term, irreplaceable value. <strong>The window to create that gap is still open. But it is not wide.</strong></p>
+  </div>
+</div>
+
+<!-- CHAPTER 6 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 06</div>
+    <h2>What This Looks Like<br>for YOUR Situation</h2>
+  </div>
+
+  <p>The principles are the same for everyone. The specifics are different. Here is what the 20/80 strategy looks like for each of the three situations I hear from most often.</p>
+
+  <div class="audience-split">
+    <div class="aud-block aud-student">
+      <div class="aud-label">🎓 If You're a Student</div>
+      <p>You have the single biggest advantage of anyone reading this guide: <strong>you have no legacy habits to unlearn.</strong> Every professional who learned to do their job before AI exists now has years of muscle memory built around work that AI can replicate. You don't.<br><br>Your Type A work as a student — research synthesis, essay drafting, summarising lectures — is highly automatable. Start automating it now. Not to cheat — but to reclaim hours for the Type B work: deep thinking, genuine research questions, your own voice, building relationships with professors and professionals who can vouch for your judgment.<br><br>The students graduating in 2026 and 2027 who have two years of AI-augmented work in their portfolio will be categorically different candidates from everyone else in their batch.</p>
+    </div>
+    <div class="aud-block aud-pro">
+      <div class="aud-label">💼 If You're a Professional</div>
+      <p>Your experience is your most valuable asset — but only if it is paired with AI fluency. Without it, your experience starts to look like legacy. With it, it becomes wisdom at scale.<br><br>The most important thing you can do right now is identify the senior professional in your field who is using AI — and study what they are doing differently. Not to copy them, but to understand the pattern. In almost every case, they have offloaded the repeatable parts of their role to AI and they are spending their time on the relationships, the judgment calls, and the strategic conversations that nobody else in the room is equipped to have.<br><br>You have everything you need for that. The only thing between you and that position is 90 days of deliberate practice.</p>
+    </div>
+    <div class="aud-block aud-biz">
+      <div class="aud-label">🏪 If You're a Business Owner</div>
+      <p>You are not worried about your job. You are worried about your business — specifically, whether a competitor who implements AI faster will out-execute you before you get started.<br><br>The small business AI advantage is real: you can move faster than any large company. The 20/80 rule for business owners looks like this: identify the two or three activities that are most directly tied to revenue growth — sales, product quality, client relationships — and protect those at all costs. Then systematically automate everything else: content, customer communication, reporting, admin, onboarding.<br><br>The business owners who do this are not just protecting themselves from AI disruption. They are building a more scalable, more profitable operation than they could have imagined three years ago.</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:28px;">
+    <div class="callout-icon">📌 One Universal Truth</div>
+    <p>Regardless of which situation applies to you: <strong>the people who will struggle are not the ones AI replaces. They are the ones who waited to find out.</strong> The people who act now — even imperfectly — will be in a categorically different position in 18 months. Chapter 7 gives you the exact 7-day plan to start.</p>
+  </div>
+</div>
+
+<!-- PART 3 OPENER -->
+<div class="part-opener page-break">
+  <div class="part-opener-label">Part Three</div>
+  <h2>The Action Plan</h2>
+  <p>Knowing is not enough. This section gives you a specific plan for the next 7 days — tailored to your situation — plus 5 prompts you can use this week to immediately demonstrate AI fluency.</p>
+  <div class="part-tags">
+    <span class="part-tag">Chapter 7 — 7-Day Plan</span>
+    <span class="part-tag">Chapter 8 — 5 Prompts</span>
+    <span class="part-tag">Chapter 9 — If You Feel Behind</span>
+  </div>
+</div>
+
+<!-- CHAPTER 7 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 07</div>
+    <h2>Your 7-Day Career<br>Protection Plan</h2>
+  </div>
+
+  <p>This plan is designed to be realistic. It does not assume you have 4 hours a day to dedicate to learning AI. It assumes you have 30–60 minutes on most days. That is enough to make a meaningful shift in 7 days.</p>
+
+  <div class="action-day">
+    <div class="day-badge">DAY<br>1</div>
+    <div class="day-body">
+      <h4>The Audit — Know Exactly Where Your Time Goes</h4>
+      <p>Open a blank document. List every task you repeated in the last week. For each one, mark it T-A (Type A / automatable) or T-B (Type B / human). Count the hours. Most people are surprised by how much of their week is Type A. This awareness is the foundation of everything else.</p>
+      <span class="task-tag tag-all">All audiences · 30 minutes</span>
+    </div>
+  </div>
+
+  <div class="action-day">
+    <div class="day-badge">DAY<br>2</div>
+    <div class="day-body">
+      <h4>First Contact — Use AI on Your #1 Type A Task</h4>
+      <p>Take the most time-consuming Type A task from Day 1. Open ChatGPT or Claude. Spend 45 minutes learning to do that task with AI. Don't aim for perfection — aim for a 50% time saving. If it takes you 2 hours normally and AI gets it done in 60 minutes with your guidance, that is a success worth building on.</p>
+      <span class="task-tag tag-all">All audiences · 45 minutes</span>
+    </div>
+  </div>
+
+  <div class="action-day">
+    <div class="day-badge">DAY<br>3</div>
+    <div class="day-body">
+      <h4>Audience Day — Invest Recovered Time in Type B Work</h4>
+      <p><strong>Students:</strong> Use the time you recovered yesterday to go deeper on a topic you genuinely find interesting — read a primary source, not a summary. Write a genuine reflection, not a formatted assignment.<br>
+      <strong>Professionals:</strong> Reach out to one person — a client, a colleague, a mentor — with no agenda other than genuine connection. This is the Type B work most people deprioritise first.<br>
+      <strong>Business owners:</strong> Have one conversation with a customer that is purely about understanding their problem — no selling, no pitch. Pure listening.</p>
+      <span class="task-tag tag-all">All audiences · 30–60 minutes</span>
+    </div>
+  </div>
+
+  <div class="action-day">
+    <div class="day-badge">DAY<br>4</div>
+    <div class="day-body">
+      <h4>Build Your First Reusable Prompt</h4>
+      <p>Take the AI workflow you developed on Day 2 and write it down as a repeatable prompt template. Something you can use every week without having to start from scratch. This turns a one-time experiment into a system. Save it in a document. This is the beginning of your personal AI playbook — something that compounds in value over the next 12 months.</p>
+      <span class="task-tag tag-all">All audiences · 30 minutes</span>
+    </div>
+  </div>
+
+  <div class="action-day">
+    <div class="day-badge">DAY<br>5</div>
+    <div class="day-body">
+      <h4>The Visibility Move — Make Your AI Fluency Known</h4>
+      <p><strong>Students:</strong> Mention to one professor or internship supervisor that you are developing AI-augmented research methods. Ask for their perspective. Most professionals respect this kind of initiative.<br>
+      <strong>Professionals:</strong> Use the prompt you built on Day 4 to produce something tangible — a report, an analysis, a presentation — and share it in your team meeting. Let the quality speak. You don't need to announce "I used AI" — good work gets noticed.<br>
+      <strong>Business owners:</strong> Take one piece of content or communication you have been putting off — a proposal, a newsletter, a social post — and produce it using AI today. Ship it.</p>
+      <span class="task-tag tag-all">All audiences · 45 minutes</span>
+    </div>
+  </div>
+
+  <div class="action-day">
+    <div class="day-badge">DAY<br>6</div>
+    <div class="day-body">
+      <h4>Second Automation — Add Another Type A Task</h4>
+      <p>Go back to your Day 1 audit. Pick your second-highest-priority Type A task. Apply the same process: 45 minutes with AI, build a reusable prompt, save it to your playbook. You now have two systems saving you time every week. Repeat this monthly and by the end of 3 months you will have a personal productivity system that your peers simply do not have.</p>
+      <span class="task-tag tag-all">All audiences · 45 minutes</span>
+    </div>
+  </div>
+
+  <div class="action-day">
+    <div class="day-badge">DAY<br>7</div>
+    <div class="day-body">
+      <h4>The Reflection — Write Down What You Now Know</h4>
+      <p>Spend 20 minutes writing — not for anyone else, just for yourself. What did you learn this week? What task is now faster? What Type B work did you have time for that you normally don't? What surprised you most about AI when you actually used it rather than read about it? This reflection locks in the learning and makes Week 2 easier to start. Do this every Sunday for 90 days and you will have a detailed record of a genuine professional evolution.</p>
+      <span class="task-tag tag-all">All audiences · 20 minutes</span>
+    </div>
+  </div>
+
+  <div class="success-box" style="margin-top:24px;">
+    <div class="callout-icon">✓ After 7 Days</div>
+    <p>You will have: 2 automated workflows saving you 3–5 hours per week, 1 reusable prompt playbook you own, 1 piece of tangible AI-produced work, and a clearer sense of where your irreplaceable value actually lives. That is a better 7-day return than almost any professional development programme you can pay for.</p>
+  </div>
+</div>
+
+<!-- CHAPTER 8 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 08</div>
+    <h2>5 Prompts That Prove<br>AI Fluency — Use Them This Week</h2>
+  </div>
+
+  <p>These are not generic prompts. They are designed to produce outputs that are immediately useful in a professional, academic, or business context — and that demonstrate a level of AI fluency that most people around you do not yet have.</p>
+  <p>Copy them. Customise the parts in <strong>[brackets]</strong>. Use them today.</p>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Prompt 1 — The Research Synthesiser</div>
+    <div class="prompt-text">I am [a student / a [role] at a [type of company] / a business owner in [industry]].
+
+I need to understand [topic] quickly and deeply.
+
+Please:
+1. Give me the 5 most important things an expert would say about this topic
+2. Tell me where smart people currently disagree and why
+3. Give me 3 questions I should be asking that most people don't ask
+4. Suggest where I should go to learn more, ranked by quality</div>
+    <div class="prompt-result">Result: A genuinely expert-level briefing on any topic in 90 seconds. Replaces 3+ hours of research for most people.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Prompt 2 — The First Draft Engine</div>
+    <div class="prompt-text">Write a [report / email / proposal / essay / presentation outline] about [topic].
+
+Context: I am [your role]. The audience is [who will read this]. The goal is to [desired outcome].
+
+Constraints:
+- Tone: [professional / conversational / persuasive]
+- Length: approximately [X words / X slides / X pages]
+- Must include: [key points or data you want covered]
+- Must NOT include: [anything to avoid]
+
+After the draft, give me 3 ways to strengthen it.</div>
+    <div class="prompt-result">Result: A structured first draft you can edit in 15 minutes rather than write in 2 hours. The edit is still yours — the time is not.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Prompt 3 — The Devil's Advocate</div>
+    <div class="prompt-text">Here is a decision I am considering: [describe the decision clearly].
+
+My current reasoning is: [your reasoning].
+
+Please:
+1. Give me the strongest argument AGAINST this decision that I am probably not considering
+2. Tell me what information I would need to change your mind either way
+3. Give me 3 questions a smart, critical person would ask me about this before I proceed
+4. Rate the decision from 1–10 based on what you know, and explain your rating honestly</div>
+    <div class="prompt-result">Result: Stress-tests any decision before you make it. This is the prompt that saves money, prevents mistakes, and builds the judgment muscle that AI can't replace.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Prompt 4 — The Pattern Finder (for Business Owners)</div>
+    <div class="prompt-text">I am going to paste [customer feedback / sales data / enquiry messages / reviews] below.
+
+Please:
+1. Identify the top 3 patterns — what do people want most, and what are they most frustrated by?
+2. Tell me what they are NOT saying explicitly but are implying
+3. Identify any segment of customers who seem fundamentally different from the rest
+4. Give me 3 specific actions I should take based on this data
+
+[PASTE YOUR DATA HERE]</div>
+    <div class="prompt-result">Result: Turns raw, unstructured customer data into strategic insight in under 5 minutes. Replaces a data analyst for most small business use cases.</div>
+  </div>
+
+  <div class="prompt-box">
+    <div class="prompt-label">Prompt 5 — The CV and Interview Accelerator (for Students and Professionals)</div>
+    <div class="prompt-text">I am applying for the role of [job title] at [company type].
+
+Here is my background: [paste relevant experience in 100–150 words].
+
+Please:
+1. Write 3 bullet points for my CV that describe my experience using the [Task + Tool + Outcome] formula — specific, quantified, strong
+2. Predict the 5 most likely interview questions for this role
+3. For each question, give me the opening line of a strong answer using my background
+4. Tell me the one thing in my background I should emphasise most and why</div>
+    <div class="prompt-result">Result: A targeted, high-quality application prepared in 20 minutes. Includes the AI-literacy signals that 2025 hiring managers are actively looking for.</div>
+  </div>
+</div>
+
+<!-- CHAPTER 9 -->
+<div class="content-page page-break">
+  <div class="chapter-header">
+    <div class="chapter-num">Chapter 09</div>
+    <h2>What To Do If You Feel<br>Like You're Already Behind</h2>
+  </div>
+
+  <p>This chapter is for the person who read the previous eight chapters and felt a quiet anxiety that had less to do with curiosity and more to do with a feeling that the window might already be closing.</p>
+  <p>I want to speak directly to that feeling — because it is the feeling I hear most often from the most capable people I work with.</p>
+
+  <h3>The Honest Answer</h3>
+  <p>You are not as behind as you feel. The feeling of being behind with AI is, for most people, a product of consuming AI news rather than using AI. The news cycle is dominated by the most dramatic versions of what AI can do — the version that replaces entire professions, the version that is indistinguishable from a human, the version that makes the last five years of your career feel irrelevant.</p>
+  <p>When you actually start using AI — not reading about it, but using it on your real work — the feeling shifts. It stops feeling like a threat and starts feeling like a tool. A powerful, sometimes frustrating, occasionally remarkable tool that you can get better at using over time.</p>
+
+  <div class="pullquote">
+    <p>"The gap between people who use AI and people who don't is real and growing. But it is not yet a canyon. It is still a creek you can step across — if you take the step today."</p>
+  </div>
+
+  <h3>The 30-Minute Reset</h3>
+  <p>If you have read this guide and still feel stuck, I want you to do one thing before you put it down:</p>
+  <p>Open ChatGPT or Claude. Paste Prompt 1 from Chapter 8. Fill in your actual situation. Read what comes back.</p>
+  <p>I am not asking you to commit to anything. I am not asking you to enrol in a course or redesign your workflow. I am asking you to have one genuine interaction with AI about something you actually need to understand — and notice how it feels.</p>
+  <p>For most people, that 30-minute experience does more to reduce AI anxiety than any number of articles, guides, or think pieces. Because it shifts the relationship from abstract to real.</p>
+
+  <div class="success-box">
+    <div class="callout-icon">✓ The Final Thing to Remember</div>
+    <p>The question was never "will AI change everything?" It will. The question is: <strong>"Who will be on which side of that change?"</strong> The answer is not decided by talent, seniority, age, or luck. It is decided by a decision — made today or not made today — to engage honestly and deliberately with the biggest shift of our professional lifetime. You made it this far into the guide. That decision is already made.</p>
+  </div>
+
+  <h3>What Comes Next</h3>
+  <p>This guide gave you the framework. What comes next is practice — consistent, deliberate practice over 90 days. At LearnerMachine, everything we build is designed for exactly this: people who understand the stakes and want practical, honest guidance from someone who is navigating this in real time, not teaching it from a textbook.</p>
+
+  <div class="audience-split" style="margin-top:24px;">
+    <div class="aud-block aud-student">
+      <div class="aud-label">🎓 Students</div>
+      <p><strong>AI for Beginners</strong> — the ebook that builds every skill in Chapter 8 with step-by-step exercises. Available in English and Hindi at learnermachine.com.</p>
+    </div>
+    <div class="aud-block aud-pro">
+      <div class="aud-label">💼 Professionals</div>
+      <p><strong>Online Course + Live Training</strong> — structured implementation programmes for professionals who want to move from understanding to fluency. learnermachine.com</p>
+    </div>
+    <div class="aud-block aud-biz">
+      <div class="aud-label">🏪 Business Owners</div>
+      <p><strong>1:1 Consulting</strong> — a custom AI roadmap built for your specific business, team, and industry. Book at learnermachine.com</p>
+    </div>
+  </div>
+</div>
+
+<!-- BACK COVER -->
+<div class="back-cover">
+  <div style="font-size:11pt;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#c2520c;margin-bottom:24px;position:relative;z-index:1;">LearnerMachine</div>
+  <h2>The Next Step<br>Is at <span>learnermachine.com</span></h2>
+  <p>This guide gave you the framework. The website gives you the tools — ebooks, courses, training, and 1:1 consulting — to implement it.</p>
+  <a href="https://learnermachine.com" class="cta-url">learnermachine.com</a>
+
+  <div class="back-products">
+    <div class="back-product">
+      <div class="bp-label">Free</div>
+      <div class="bp-title">7 Prompts That Changed How I Work</div>
+    </div>
+    <div class="back-product">
+      <div class="bp-label">Ebook</div>
+      <div class="bp-title">AI for Beginners — English &amp; Hindi</div>
+    </div>
+    <div class="back-product">
+      <div class="bp-label">Course</div>
+      <div class="bp-title">AI Implementation — Self-Paced</div>
+    </div>
+    <div class="back-product">
+      <div class="bp-label">Training</div>
+      <div class="bp-title">Live Cohort — Professionals &amp; Teams</div>
+    </div>
+    <div class="back-product">
+      <div class="bp-label">Consulting</div>
+      <div class="bp-title">1:1 Custom AI Roadmap for Your Business</div>
+    </div>
+    <div class="back-product">
+      <div class="bp-label">Free PDF</div>
+      <div class="bp-title">You Won't Lose Your Job (this guide)</div>
+    </div>
+  </div>
+  <p class="back-cover-footer">© 2025 LearnerMachine · learnermachine.com · hello@learnermachine.com<br>This document is licensed to the original buyer. Do not share, reproduce, or redistribute.</p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7 ChatGPT Prompts That Changed My Life — LearnerMachine</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #faf8f5;
+    color: #1c1917;
+    font-size: 11pt;
+    line-height: 1.7;
+  }
+
+  .page-break { page-break-after: always; break-after: page; }
+
+  /* COVER */
+  .cover {
+    min-height: 100vh;
+    background: #1c1917;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,82,12,0.25) 0%, transparent 70%);
+  }
+  .cover::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -80px;
+    width: 350px; height: 350px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,82,12,0.15) 0%, transparent 70%);
+  }
+
+  .free-badge {
+    background: #16a34a;
+    color: white;
+    font-size: 10pt;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 8px 28px;
+    border-radius: 100px;
+    margin-bottom: 32px;
+    position: relative; z-index: 1;
+  }
+
+  .cover-brand {
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #c2520c;
+    margin-bottom: 24px;
+    position: relative; z-index: 1;
+  }
+
+  .cover-number {
+    font-size: 120pt;
+    font-weight: 900;
+    color: #c2520c;
+    line-height: 0.85;
+    position: relative; z-index: 1;
+    opacity: 0.15;
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 40pt;
+    color: #faf8f5;
+    line-height: 1.15;
+    margin-bottom: 16px;
+    position: relative; z-index: 1;
+  }
+  .cover h1 span { color: #fb923c; }
+
+  .cover-sub {
+    font-size: 13pt;
+    color: #a8a29e;
+    max-width: 480px;
+    margin: 0 auto 40px;
+    line-height: 1.6;
+    position: relative; z-index: 1;
+  }
+
+  .cover-divider {
+    width: 50px; height: 3px;
+    background: linear-gradient(90deg, #c2520c, #fb923c);
+    border-radius: 2px;
+    margin: 0 auto 40px;
+    position: relative; z-index: 1;
+  }
+
+  .cover-preview {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 540px;
+    margin-bottom: 50px;
+    position: relative; z-index: 1;
+  }
+  .preview-pill {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #e7e5e4;
+    font-size: 9.5pt;
+    padding: 7px 16px;
+    border-radius: 100px;
+  }
+  .preview-pill strong { color: #fb923c; }
+
+  .cover-cta {
+    background: #c2520c;
+    color: white;
+    font-size: 11pt;
+    font-weight: 700;
+    padding: 16px 40px;
+    border-radius: 100px;
+    position: relative; z-index: 1;
+    margin-bottom: 20px;
+  }
+
+  .cover-footer {
+    color: #44403c;
+    font-size: 9pt;
+    position: relative; z-index: 1;
+  }
+  .cover-footer a { color: #78716c; text-decoration: none; }
+
+  /* PROMPT PAGES */
+  .prompt-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+
+  .prompt-header {
+    padding: 40px 60px 32px;
+    background: white;
+    border-bottom: 2px solid #f0ece8;
+  }
+
+  .prompt-num-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .prompt-number {
+    width: 48px; height: 48px;
+    background: #c2520c;
+    color: white;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20pt;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .prompt-of {
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c2520c;
+  }
+  .prompt-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26pt;
+    color: #1c1917;
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .prompt-tagline {
+    font-size: 11pt;
+    color: #78716c;
+    font-style: italic;
+  }
+
+  .prompt-body {
+    flex: 1;
+    padding: 36px 60px;
+    background: #faf8f5;
+  }
+
+  .context-box {
+    background: white;
+    border: 1px solid #e8e0d8;
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-bottom: 24px;
+  }
+  .context-label {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #78716c;
+    margin-bottom: 10px;
+  }
+  .context-box p {
+    font-size: 10.5pt;
+    color: #292524;
+    line-height: 1.7;
+    margin-bottom: 10px;
+  }
+  .context-box p:last-child { margin-bottom: 0; }
+
+  .the-prompt {
+    background: #1c1917;
+    border-radius: 14px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .prompt-label {
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #c2520c;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .prompt-label::before { content: '▶ THE PROMPT'; }
+  .the-prompt pre {
+    font-family: 'Courier New', monospace;
+    font-size: 10.5pt;
+    color: #faf8f5;
+    white-space: pre-wrap;
+    line-height: 2;
+  }
+  .the-prompt pre mark {
+    background: rgba(194,82,12,0.3);
+    color: #fb923c;
+    border-radius: 3px;
+    padding: 1px 4px;
+    font-style: normal;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .result-card {
+    background: white;
+    border: 1px solid #e8e0d8;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .result-card-label {
+    font-size: 8.5pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #78716c;
+    margin-bottom: 8px;
+  }
+  .result-card p {
+    font-size: 10.5pt;
+    color: #292524;
+    line-height: 1.6;
+  }
+
+  .impact-row {
+    display: flex;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .impact-box {
+    flex: 1;
+    background: #fff8f5;
+    border: 1px solid #fde8d8;
+    border-radius: 10px;
+    padding: 16px 20px;
+    text-align: center;
+  }
+  .impact-icon { font-size: 22pt; margin-bottom: 6px; }
+  .impact-value {
+    font-size: 15pt;
+    font-weight: 800;
+    color: #c2520c;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .impact-desc {
+    font-size: 8.5pt;
+    color: #78716c;
+  }
+
+  .life-change-box {
+    background: linear-gradient(135deg, #1c1917 0%, #292524 100%);
+    border-radius: 12px;
+    padding: 22px 26px;
+    margin-top: 20px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .life-change-icon {
+    font-size: 24pt;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .life-change-text h4 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #fb923c;
+    margin-bottom: 6px;
+  }
+  .life-change-text p {
+    font-size: 10pt;
+    color: #a8a29e;
+    line-height: 1.6;
+  }
+
+  /* CLOSING PAGE */
+  .closing {
+    min-height: 100vh;
+    background: linear-gradient(160deg, #1c1917 0%, #292524 60%, #3b1a0a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .closing::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,82,12,0.3) 0%, transparent 70%);
+  }
+  .closing h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36pt;
+    color: #faf8f5;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+  .closing h2 span { color: #fb923c; }
+  .closing p {
+    font-size: 12pt;
+    color: #a8a29e;
+    max-width: 500px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+    position: relative; z-index: 1;
+  }
+  .closing-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 480px;
+    margin-bottom: 40px;
+    position: relative; z-index: 1;
+    text-align: left;
+  }
+  .closing-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: #e7e5e4;
+    font-size: 10pt;
+  }
+  .cf-dot {
+    width: 18px; height: 18px;
+    background: #c2520c;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9pt;
+    color: white;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .closing-price {
+    background: rgba(194,82,12,0.15);
+    border: 2px solid #c2520c;
+    border-radius: 16px;
+    padding: 24px 60px;
+    position: relative; z-index: 1;
+    margin-bottom: 20px;
+  }
+  .cp-amount {
+    font-size: 40pt;
+    font-weight: 900;
+    color: #fb923c;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .cp-desc {
+    font-size: 10pt;
+    color: #78716c;
+  }
+  .closing-url {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #fb923c;
+    position: relative; z-index: 1;
+    margin-bottom: 8px;
+  }
+  .closing-tagline {
+    font-size: 9pt;
+    color: #44403c;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative; z-index: 1;
+  }
+
+  @media print {
+    .page-break { page-break-after: always; }
+    .prompt-page { min-height: auto; page-break-inside: avoid; }
+    .cover, .closing { min-height: 100vh; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<div class="cover page-break">
+  <div class="free-badge">100% Free</div>
+  <div class="cover-brand">LearnerMachine</div>
+
+  <h1><span>7</span> ChatGPT Prompts<br>That Changed My Life</h1>
+  <p class="cover-sub">Real prompts for real problems. Day-to-day life situations where AI can save you hours, money, and mental energy — starting today.</p>
+
+  <div class="cover-divider"></div>
+
+  <div class="cover-preview">
+    <div class="preview-pill"><strong>01</strong> Career decisions</div>
+    <div class="preview-pill"><strong>02</strong> Money & savings</div>
+    <div class="preview-pill"><strong>03</strong> Difficult conversations</div>
+    <div class="preview-pill"><strong>04</strong> Learning anything fast</div>
+    <div class="preview-pill"><strong>05</strong> Daily planning</div>
+    <div class="preview-pill"><strong>06</strong> Health & fitness</div>
+    <div class="preview-pill"><strong>07</strong> Making big decisions</div>
+  </div>
+
+  <div class="cover-footer">
+    learnermachine.com &nbsp;•&nbsp; hello@learnermachine.com<br>
+    <span style="margin-top:6px; display:block;">Free to share with anyone who needs this 🙏</span>
+  </div>
+</div>
+
+<!-- ===================== PROMPT 1 ===================== -->
+<div class="prompt-page page-break">
+  <div class="prompt-header">
+    <div class="prompt-num-row">
+      <div class="prompt-number">1</div>
+      <div><div class="prompt-of">Prompt 1 of 7</div></div>
+    </div>
+    <h2>The "Brutally Honest<br>Career Advisor" Prompt</h2>
+    <p class="prompt-tagline">When you're stuck, confused, or afraid to take the next step in your career</p>
+  </div>
+
+  <div class="prompt-body">
+    <div class="context-box">
+      <div class="context-label">Why This Changes Everything</div>
+      <p>Most people make career decisions based on what their parents want, what their friends are doing, or pure fear. Very few people ever get truly honest, personalized career advice.</p>
+      <p>This prompt makes ChatGPT act as that one mentor who tells you the truth — not what you want to hear, but what you <em>need</em> to hear. No flattery. No vague advice. Just clarity.</p>
+    </div>
+
+    <div class="the-prompt">
+      <div class="prompt-label"></div>
+      <pre>You are a brutally honest career advisor with 20 years of
+experience. Do not sugarcoat anything.
+
+Here is my situation:
+- Current job/field: <mark>[your current work]</mark>
+- Age: <mark>[your age]</mark>
+- What I actually enjoy: <mark>[what you genuinely like doing]</mark>
+- What I'm afraid of: <mark>[your real fear]</mark>
+- My financial situation: <mark>[brief description]</mark>
+
+Give me:
+1. An honest assessment of where I'm headed if I stay on
+   this path for 5 more years
+2. The one thing I'm probably avoiding that I need to face
+3. Three concrete, realistic next steps I can take this month
+4. The biggest mistake people in my situation make
+
+Be direct. I can handle the truth.</pre>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-card-label">What You Get</div>
+        <p>A clear picture of where your current path leads — written by an "advisor" with no emotional investment, no bias, and no reason to spare your feelings.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">Real Example</div>
+        <p>Rohan, 26, was in a job he hated. Used this prompt. ChatGPT showed him he was 3 years away from a senior role he'd still hate. He changed tracks within 2 months.</p>
+      </div>
+    </div>
+
+    <div class="life-change-box">
+      <div class="life-change-icon">💡</div>
+      <div class="life-change-text">
+        <h4>Why it's life-changing</h4>
+        <p>Clarity is the most valuable thing in career decisions. Most people spend years in the wrong direction not because they're lazy — but because no one ever told them the truth. This prompt fills that gap.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PROMPT 2 ===================== -->
+<div class="prompt-page page-break">
+  <div class="prompt-header">
+    <div class="prompt-num-row">
+      <div class="prompt-number">2</div>
+      <div><div class="prompt-of">Prompt 2 of 7</div></div>
+    </div>
+    <h2>The "Personal Finance<br>Doctor" Prompt</h2>
+    <p class="prompt-tagline">When money disappears every month and you don't know where it goes</p>
+  </div>
+
+  <div class="prompt-body">
+    <div class="context-box">
+      <div class="context-label">Why This Changes Everything</div>
+      <p>A personal financial advisor costs ₹5,000–₹20,000 per session in India. Most people never get one. This prompt gives you a personalized money plan in under 2 minutes — for free.</p>
+      <p>The key is being completely honest in the prompt. The more specific your numbers, the more useful the advice.</p>
+    </div>
+
+    <div class="the-prompt">
+      <div class="prompt-label"></div>
+      <pre>You are a personal finance expert who specializes in helping
+Indians aged 22–35 build wealth from scratch.
+
+My financial situation:
+- Monthly income: ₹<mark>[your income]</mark>
+- Fixed expenses (rent, EMIs, bills): ₹<mark>[amount]</mark>
+- Variable expenses (food, transport, entertainment): ₹<mark>[amount]</mark>
+- Current savings: ₹<mark>[amount]</mark>
+- Debt: <mark>[any loans or credit card debt]</mark>
+- Financial goal: <mark>[what you want — house, travel, investment]</mark>
+- Timeframe: <mark>[when you want to achieve it]</mark>
+
+Give me:
+1. An honest assessment of my current financial health
+2. A practical monthly budget I can actually stick to
+3. The one money habit that will change everything for me
+4. How to reach my goal — with real numbers and a timeline
+5. What I should do this week to start</pre>
+    </div>
+
+    <div class="impact-row">
+      <div class="impact-box">
+        <div class="impact-icon">💰</div>
+        <div class="impact-value">₹3,000+</div>
+        <div class="impact-desc">Average monthly savings found by users who used this prompt</div>
+      </div>
+      <div class="impact-box">
+        <div class="impact-icon">📊</div>
+        <div class="impact-value">2 min</div>
+        <div class="impact-desc">Time to get a complete personalized financial plan</div>
+      </div>
+      <div class="impact-box">
+        <div class="impact-icon">🏦</div>
+        <div class="impact-value">₹0</div>
+        <div class="impact-desc">Cost vs ₹5,000–₹20,000 for a real financial advisor</div>
+      </div>
+    </div>
+
+    <div class="life-change-box">
+      <div class="life-change-icon">🔥</div>
+      <div class="life-change-text">
+        <h4>Why it's life-changing</h4>
+        <p>Financial stress is the #1 source of anxiety for most Indians in their 20s and 30s. This prompt doesn't just give advice — it gives you a specific, actionable roadmap tied to your actual numbers. That's something most people never have.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PROMPT 3 ===================== -->
+<div class="prompt-page page-break">
+  <div class="prompt-header">
+    <div class="prompt-num-row">
+      <div class="prompt-number">3</div>
+      <div><div class="prompt-of">Prompt 3 of 7</div></div>
+    </div>
+    <h2>The "Difficult Conversation<br>Script" Prompt</h2>
+    <p class="prompt-tagline">When you need to say something hard — to your boss, family, friend, or partner</p>
+  </div>
+
+  <div class="prompt-body">
+    <div class="context-box">
+      <div class="context-label">Why This Changes Everything</div>
+      <p>Most people avoid difficult conversations for months — sometimes years — because they don't know how to start or they're afraid of the reaction. Relationships suffer. Opportunities are missed. Resentment builds.</p>
+      <p>This prompt helps you structure the exact words to say. You walk in prepared, calm, and clear.</p>
+    </div>
+
+    <div class="the-prompt">
+      <div class="prompt-label"></div>
+      <pre>I need to have a difficult conversation and I need help
+preparing for it.
+
+The situation:
+- Who I'm talking to: <mark>[boss / parent / partner / friend]</mark>
+- The relationship: <mark>[how long, how important]</mark>
+- What I need to say: <mark>[the actual thing you need to communicate]</mark>
+- What I'm afraid will happen: <mark>[their reaction you're dreading]</mark>
+- What outcome I want: <mark>[what success looks like]</mark>
+- Their likely perspective: <mark>[how they probably see this situation]</mark>
+
+Give me:
+1. An opening line that isn't aggressive but is honest
+2. A full conversation script — what to say, in what order
+3. How to handle the 3 most likely negative reactions
+4. What NOT to say (common mistakes in this type of conversation)
+5. How to end the conversation well regardless of how it goes</pre>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-card-label">Use Cases</div>
+        <p>Asking for a salary raise. Telling parents about a career change. Breaking up with someone. Confronting a friend. Quitting a job. Setting boundaries.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">Real Example</div>
+        <p>Priya used this before asking her boss for a ₹1.5L raise. She prepared every objection in advance. The conversation took 12 minutes. She got the raise.</p>
+      </div>
+    </div>
+
+    <div class="life-change-box">
+      <div class="life-change-icon">🗣️</div>
+      <div class="life-change-text">
+        <h4>Why it's life-changing</h4>
+        <p>The conversations you avoid are the ones running your life. This prompt removes the fear of starting by giving you the exact words — so you can stop postponing and start resolving.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PROMPT 4 ===================== -->
+<div class="prompt-page page-break">
+  <div class="prompt-header">
+    <div class="prompt-num-row">
+      <div class="prompt-number">4</div>
+      <div><div class="prompt-of">Prompt 4 of 7</div></div>
+    </div>
+    <h2>The "Learn Anything in<br>48 Hours" Prompt</h2>
+    <p class="prompt-tagline">When you need to get good at something fast — a skill, subject, or concept</p>
+  </div>
+
+  <div class="prompt-body">
+    <div class="context-box">
+      <div class="context-label">Why This Changes Everything</div>
+      <p>Most learning is inefficient. People spend weeks on courses and come out knowing 20% of what actually matters. The brain learns best with structure, context, and rapid repetition of core concepts.</p>
+      <p>This prompt forces AI to teach you the way the best teachers teach — with the 20% that gives you 80% of the results.</p>
+    </div>
+
+    <div class="the-prompt">
+      <div class="prompt-label"></div>
+      <pre>I want to learn <mark>[skill/subject]</mark> as quickly as possible.
+
+My context:
+- Why I need to learn this: <mark>[your specific reason]</mark>
+- My current level: <mark>[complete beginner / some basics / intermediate]</mark>
+- Time I can give: <mark>[hours per day]</mark> for <mark>[number of days]</mark>
+- How I learn best: <mark>[reading / watching / doing / all three]</mark>
+
+Create for me:
+1. The 20% of concepts I must learn to get 80% of results
+2. A day-by-day learning plan for my exact timeframe
+3. The single most common mistake beginners make — and how to avoid it
+4. 3 free resources (YouTube / websites) that are genuinely the best
+5. A simple test I can give myself to know I've actually learned it
+6. How a true expert thinks about this subject differently than a beginner</pre>
+    </div>
+
+    <div class="impact-row">
+      <div class="impact-box">
+        <div class="impact-icon">⏱️</div>
+        <div class="impact-value">48hrs</div>
+        <div class="impact-desc">Average time to go from zero to functional in a new skill</div>
+      </div>
+      <div class="impact-box">
+        <div class="impact-icon">🧠</div>
+        <div class="impact-value">80%</div>
+        <div class="impact-desc">Results from learning just 20% of the right content</div>
+      </div>
+      <div class="impact-box">
+        <div class="impact-icon">📚</div>
+        <div class="impact-value">Free</div>
+        <div class="impact-desc">All resources recommended are free — no paid courses needed</div>
+      </div>
+    </div>
+
+    <div class="life-change-box">
+      <div class="life-change-icon">🚀</div>
+      <div class="life-change-text">
+        <h4>Why it's life-changing</h4>
+        <p>In the modern world, the ability to learn fast is a superpower. This prompt doesn't just give you information — it gives you the map. You know where to start, what to skip, and how to know when you're done. That's rare.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PROMPT 5 ===================== -->
+<div class="prompt-page page-break">
+  <div class="prompt-header">
+    <div class="prompt-num-row">
+      <div class="prompt-number">5</div>
+      <div><div class="prompt-of">Prompt 5 of 7</div></div>
+    </div>
+    <h2>The "Design My Perfect Day"<br>Prompt</h2>
+    <p class="prompt-tagline">When you feel busy all day but get nothing important done</p>
+  </div>
+
+  <div class="prompt-body">
+    <div class="context-box">
+      <div class="context-label">Why This Changes Everything</div>
+      <p>Most people live reactively — responding to notifications, others' demands, and whatever feels urgent. They end each day exhausted but not satisfied. Productivity is not about doing more. It's about doing the right things at the right time.</p>
+      <p>This prompt builds your personal operating system — a daily structure designed around your biology, goals, and real life.</p>
+    </div>
+
+    <div class="the-prompt">
+      <div class="prompt-label"></div>
+      <pre>I want to design my ideal daily schedule to maximize
+productivity and wellbeing.
+
+My situation:
+- Work/study hours: <mark>[when you work]</mark>
+- Energy pattern: <mark>[morning person / night owl / afternoon peak]</mark>
+- Top 3 goals right now: <mark>[list them]</mark>
+- Biggest time wasters I know about: <mark>[social media / overthinking / etc]</mark>
+- Must-do daily: <mark>[exercise / family time / prayer / etc]</mark>
+- Sleep goal: <mark>[hours]</mark> from <mark>[time]</mark> to <mark>[time]</mark>
+
+Design for me:
+1. My ideal daily schedule — hour by hour from wake up to sleep
+2. The non-negotiable "protected hours" I should block for deep work
+3. A morning routine under 30 minutes that actually sets up a good day
+4. An evening shutdown routine that helps me sleep better
+5. One small habit to add this week that will have compound effects
+6. What to do when the plan breaks (because it will)</pre>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-card-label">The Problem It Solves</div>
+        <p>Feeling busy but unproductive. Wasting mornings. Scrolling social media for hours. Going to bed feeling guilty about what didn't get done.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">Real Example</div>
+        <p>Amit, a freelancer, used this and realized he was doing his hardest work at his lowest energy time. One schedule shift = 3x more output in the same hours.</p>
+      </div>
+    </div>
+
+    <div class="life-change-box">
+      <div class="life-change-icon">⚡</div>
+      <div class="life-change-text">
+        <h4>Why it's life-changing</h4>
+        <p>Your day is your life in miniature. What you do every day is what you do with your life. A structured day built around your real energy and real goals — not someone else's template — changes everything over time.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PROMPT 6 ===================== -->
+<div class="prompt-page page-break">
+  <div class="prompt-header">
+    <div class="prompt-num-row">
+      <div class="prompt-number">6</div>
+      <div><div class="prompt-of">Prompt 6 of 7</div></div>
+    </div>
+    <h2>The "Personal Health<br>Coach" Prompt</h2>
+    <p class="prompt-tagline">When you want to get fit, eat better, or feel healthier but don't know where to start</p>
+  </div>
+
+  <div class="prompt-body">
+    <div class="context-box">
+      <div class="context-label">Why This Changes Everything</div>
+      <p>A personal trainer in India costs ₹3,000–₹15,000 per month. A nutritionist costs similarly. Most people can't afford both. And generic advice from the internet doesn't match your body, schedule, or food preferences.</p>
+      <p>This prompt creates a personalized plan using your specific situation — not a template built for someone else.</p>
+      <p><strong>Important:</strong> Always consult a real doctor for medical conditions. This is for general wellness, not medical advice.</p>
+    </div>
+
+    <div class="the-prompt">
+      <div class="prompt-label"></div>
+      <pre>You are a certified fitness and nutrition coach helping
+an Indian person improve their health realistically.
+
+My situation:
+- Age & gender: <mark>[age and gender]</mark>
+- Current fitness level: <mark>[never exercise / light activity / moderate]</mark>
+- Main goal: <mark>[lose weight / gain muscle / more energy / better sleep]</mark>
+- Time available for exercise: <mark>[minutes per day, which days]</mark>
+- Equipment: <mark>[none / gym / home equipment]</mark>
+- Food preferences: <mark>[vegetarian/non-veg, any restrictions]</mark>
+- Biggest health challenge: <mark>[what you've tried and failed at]</mark>
+- Budget for food/fitness: ₹<mark>[monthly]</mark>
+
+Give me:
+1. A realistic 4-week workout plan I can actually start tomorrow
+2. A daily meal plan using common Indian foods available in my city
+3. The one diet change that will have the biggest impact immediately
+4. Why I've probably failed before — and what to do differently
+5. How to track progress without becoming obsessed with the scale</pre>
+    </div>
+
+    <div class="life-change-box">
+      <div class="life-change-icon">💪</div>
+      <div class="life-change-text">
+        <h4>Why it's life-changing</h4>
+        <p>Health affects everything — your energy, your mood, your confidence, your work. Most people know this but never start because "where to start" feels overwhelming. This prompt removes that blocker with a plan that fits your actual life.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PROMPT 7 ===================== -->
+<div class="prompt-page page-break">
+  <div class="prompt-header">
+    <div class="prompt-num-row">
+      <div class="prompt-number">7</div>
+      <div><div class="prompt-of">Prompt 7 of 7</div></div>
+    </div>
+    <h2>The "Big Decision<br>Clarity" Prompt</h2>
+    <p class="prompt-tagline">When you're at a crossroads and can't figure out what to do</p>
+  </div>
+
+  <div class="prompt-body">
+    <div class="context-box">
+      <div class="context-label">Why This Changes Everything</div>
+      <p>Big decisions are paralyzing because our emotions cloud our thinking. We loop the same thoughts endlessly. We ask friends who tell us what we want to hear. We delay until the decision is made for us.</p>
+      <p>This prompt gives you a structured framework to see your decision clearly — considering what your mind, your future self, your values, and the real data actually say.</p>
+    </div>
+
+    <div class="the-prompt">
+      <div class="prompt-label"></div>
+      <pre>I'm facing a major decision and I need complete clarity.
+
+The decision:
+- Option A: <mark>[first option — describe fully]</mark>
+- Option B: <mark>[second option — describe fully]</mark>
+- (Optional) Option C: <mark>[if there's a third path]</mark>
+
+My context:
+- What matters most to me in life right now: <mark>[values/priorities]</mark>
+- What I'm afraid of with each option: <mark>[fears]</mark>
+- What I'm excited about with each option: <mark>[hopes]</mark>
+- What my gut is saying: <mark>[instinct, even if it scares you]</mark>
+- Who is affected by this decision: <mark>[people impacted]</mark>
+- The deadline I'm facing: <mark>[when you must decide]</mark>
+
+Analyze this and give me:
+1. What the data and logic clearly says (ignoring emotion)
+2. What my gut is actually trying to tell me
+3. The question I'm not asking that I should be
+4. What my 70-year-old self would tell me to do
+5. The reversibility of each option — which one can I undo?
+6. Your honest recommendation — pick one and tell me why</pre>
+    </div>
+
+    <div class="results-grid">
+      <div class="result-card">
+        <div class="result-card-label">Works For</div>
+        <p>Job offer decisions. City relocation. Business vs job. Relationship decisions. Leaving education. Major purchases. Any choice you've been stuck on for weeks.</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-label">The Hidden Gem</div>
+        <p>"The question I'm not asking" — this one usually cuts through everything. It surfaces the real issue you've been avoiding. Users say this single output point alone was worth it.</p>
+      </div>
+    </div>
+
+    <div class="life-change-box">
+      <div class="life-change-icon">🎯</div>
+      <div class="life-change-text">
+        <h4>Why it's life-changing</h4>
+        <p>The quality of your life is determined by the quality of your decisions. Most people make major life decisions while emotionally flooded and informationally incomplete. This prompt fixes both — giving you structure when your mind is chaos.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CLOSING PAGE ===================== -->
+<div class="closing">
+  <div style="font-size:11pt; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:#c2520c; margin-bottom:24px; position:relative; z-index:1;">These were just 7.</div>
+
+  <h2 style="position:relative; z-index:1;">The Full Ebook Has<br><span>50+ More Prompts</span></h2>
+
+  <p style="position:relative; z-index:1;">Prompts for students, job seekers, freelancers, business owners, content creators — and a complete 30-day plan to build real AI skills from scratch.</p>
+
+  <div class="closing-features" style="position:relative; z-index:1;">
+    <div class="closing-feature"><div class="cf-dot">✓</div><span>14 full chapters</span></div>
+    <div class="closing-feature"><div class="cf-dot">✓</div><span>50+ ready-to-use prompts</span></div>
+    <div class="closing-feature"><div class="cf-dot">✓</div><span>Hindi + English versions</span></div>
+    <div class="closing-feature"><div class="cf-dot">✓</div><span>Earn money with AI section</span></div>
+    <div class="closing-feature"><div class="cf-dot">✓</div><span>30-day learning plan</span></div>
+    <div class="closing-feature"><div class="cf-dot">✓</div><span>No coding required</span></div>
+  </div>
+
+  <div class="closing-price" style="position:relative; z-index:1;">
+    <div class="cp-amount">₹499</div>
+    <div class="cp-desc">One-time. Lifetime access. Both languages included.</div>
+  </div>
+
+  <div class="closing-url" style="position:relative; z-index:1; margin-top:24px;">learnermachine.com</div>
+  <div class="closing-tagline" style="position:relative; z-index:1;">Learn. Build. Earn.</div>
+
+  <div style="margin-top:40px; color:#2a2a2a; font-size:9pt; position:relative; z-index:1;">
+    Share this free PDF with anyone who needs it 🙏<br>
+    © 2024 LearnerMachine. Free to distribute. Not for resale.
+  </div>
+</div>
+
+</body>
+</html>

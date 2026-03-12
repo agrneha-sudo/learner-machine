@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { Plus, X, Upload, Loader2, Check, ImageIcon, FileText } from 'lucide-react'
+import { Plus, X, Upload, Loader2, Check, ImageIcon, FileText, Bold, List, Highlighter } from 'lucide-react'
 import { Product, ProductCategory } from '@/types'
 
 type FormData = {
@@ -70,6 +70,46 @@ export default function ProductForm({ initial, mode }: Props) {
   const router = useRouter()
   const fileInputRef = useRef<HTMLInputElement>(null)
   const imageInputRef = useRef<HTMLInputElement>(null)
+  const descRef = useRef<HTMLTextAreaElement>(null)
+
+  const applyDescFormat = useCallback((type: 'bold' | 'highlight' | 'bullet') => {
+    const el = descRef.current
+    if (!el) return
+    const start = el.selectionStart
+    const end = el.selectionEnd
+    const value = el.value
+    let newValue = value
+    let newStart = start
+    let newEnd = end
+
+    if (type === 'bullet') {
+      // Insert bullet at beginning of current line
+      const lineStart = value.lastIndexOf('\n', start - 1) + 1
+      newValue = value.slice(0, lineStart) + '• ' + value.slice(lineStart)
+      newStart = start + 2
+      newEnd = end + 2
+    } else {
+      const selected = value.slice(start, end)
+      const wrap = type === 'bold' ? '**' : '=='
+      if (selected) {
+        const replacement = `${wrap}${selected}${wrap}`
+        newValue = value.slice(0, start) + replacement + value.slice(end)
+        newStart = start
+        newEnd = start + replacement.length
+      } else {
+        newValue = value.slice(0, start) + `${wrap}${wrap}` + value.slice(end)
+        newStart = start + wrap.length
+        newEnd = newStart
+      }
+    }
+
+    set('description', newValue)
+    // Restore focus + selection after React re-render
+    requestAnimationFrame(() => {
+      el.focus()
+      el.setSelectionRange(newStart, newEnd)
+    })
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   const [form, setForm] = useState<FormData>(() => {
     if (initial) {
@@ -120,7 +160,7 @@ export default function ProductForm({ initial, mode }: Props) {
 
   const addFeature = () => {
     if (!newFeature.trim()) return
-    set('features', [...(form.features ?? []), newFeature.trim()])
+    setForm((prev) => ({ ...prev, features: [...(prev.features ?? []), newFeature.trim()] }))
     setNewFeature('')
   }
 
@@ -246,7 +286,29 @@ export default function ProductForm({ initial, mode }: Props) {
           </div>
           <div className="sm:col-span-2">
             <label className={labelClass} style={labelStyle}>Description *</label>
-            <textarea className={`${inputClass} resize-none`} style={inputStyle} value={form.description ?? ''} onChange={(e) => set('description', e.target.value)} placeholder="Full product description..." rows={4} required />
+            <div className="rounded-xl overflow-hidden border" style={{ borderColor: 'var(--border)' }}>
+              <div className="flex gap-1 p-2 border-b" style={{ background: 'var(--bg-secondary)', borderColor: 'var(--border)' }}>
+                <button type="button" title="Bold (select text first)" onClick={() => applyDescFormat('bold')} className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium hover:bg-black/10 transition-colors" style={{ color: 'var(--text-secondary)' }}>
+                  <Bold size={13} /> Bold
+                </button>
+                <button type="button" title="Highlight (select text first)" onClick={() => applyDescFormat('highlight')} className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium hover:bg-black/10 transition-colors" style={{ color: 'var(--text-secondary)' }}>
+                  <Highlighter size={13} /> Highlight
+                </button>
+                <button type="button" title="Add bullet point" onClick={() => applyDescFormat('bullet')} className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium hover:bg-black/10 transition-colors" style={{ color: 'var(--text-secondary)' }}>
+                  <List size={13} /> Bullet
+                </button>
+              </div>
+              <textarea
+                ref={descRef}
+                className={`${inputClass} resize-none rounded-none border-0`}
+                style={{ ...inputStyle, border: 'none' }}
+                value={form.description ?? ''}
+                onChange={(e) => set('description', e.target.value)}
+                placeholder="Full product description... Use toolbar for bold, highlight, or bullet points."
+                rows={5}
+                required
+              />
+            </div>
           </div>
         </div>
       </div>

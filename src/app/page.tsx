@@ -12,6 +12,11 @@ import { Product } from '@/types'
 
 export const dynamic = 'force-dynamic'
 
+async function getHeroSettings(): Promise<Record<string, string>> {
+  const { data } = await db.from('site_settings').select('key, value')
+  return Object.fromEntries((data ?? []).map(r => [r.key, r.value ?? '']))
+}
+
 async function getProducts(): Promise<Product[]> {
   const { data } = await db
     .from('products')
@@ -19,7 +24,18 @@ async function getProducts(): Promise<Product[]> {
     .eq('published', true)
     .order('featured', { ascending: false })
     .order('created_at', { ascending: false })
-  return (data as Product[]) ?? []
+
+  const products = (data as Product[]) ?? []
+
+  return await Promise.all(
+    products.map(async (p) => {
+      if (!p.cover_image_path) return p
+      const { data: signed } = await db.storage
+        .from('product-files')
+        .createSignedUrl(p.cover_image_path, 3600)
+      return { ...p, cover_image_url: signed?.signedUrl ?? null }
+    })
+  )
 }
 
 async function getContentBlocks() {
@@ -59,15 +75,16 @@ async function getHeroVideoUrl(): Promise<string | null> {
 }
 
 export default async function HomePage() {
-  const [products, heroVideoUrl, contentBlocks] = await Promise.all([
+  const [products, heroVideoUrl, contentBlocks, heroSettings] = await Promise.all([
     getProducts(),
     getHeroVideoUrl(),
     getContentBlocks(),
+    getHeroSettings(),
   ])
 
   return (
     <>
-      <Hero videoUrl={heroVideoUrl} />
+      <Hero videoUrl={heroVideoUrl} settings={heroSettings} />
       <ProductsSection products={products} />
       <Topics />
       <WhyUs />
