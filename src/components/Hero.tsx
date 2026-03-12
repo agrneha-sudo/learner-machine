@@ -35,6 +35,23 @@ export default function Hero({ videoUrl, settings = {} }: HeroProps) {
   const cardSubtitle = settings.hero_card_subtitle || 'Join 10,000+ learners across India'
   const hasMedia     = !!(videoUrl || heroImageUrl)
 
+  const courses = [
+    {
+      icon:  settings.hero_course_1_icon  || '🤖',
+      title: settings.hero_course_1_title || '200 ChatGPT Prompts for Business',
+      tag:   settings.hero_course_1_tag   || 'Bestseller',
+      desc:  settings.hero_course_1_desc  || 'Copy-paste AI prompts to grow your business and earn faster',
+      price: settings.hero_course_1_price || '₹1,499',
+    },
+    {
+      icon:  settings.hero_course_2_icon  || '🚀',
+      title: settings.hero_course_2_title || 'AI Side Hustle Blueprint',
+      tag:   settings.hero_course_2_tag   || 'New',
+      desc:  settings.hero_course_2_desc  || 'Step-by-step system to start earning with AI in 30 days',
+      price: settings.hero_course_2_price || '₹999',
+    },
+  ]
+
   const stats = [
     { value: settings.hero_stat_1_value || '10K+', label: settings.hero_stat_1_label || 'Students' },
     { value: settings.hero_stat_2_value || '50+',  label: settings.hero_stat_2_label || 'Resources' },
@@ -152,19 +169,24 @@ export default function Hero({ videoUrl, settings = {} }: HeroProps) {
               </p>
 
               <div className="space-y-4">
-                {[
-                  { icon: '🚀', title: 'Start Earning in 30 Days', sub: 'Step-by-step prompts to launch your side hustle fast' },
-                  { icon: '🤖', title: '200+ Ready-to-Use AI Prompts', sub: 'Copy-paste prompts for business, content & growth' },
-                  { icon: '🇮🇳', title: 'Made for India', sub: 'Hindi + English — built for the Indian market' },
-                  { icon: '⚡', title: 'Instant Download', sub: 'PDF delivered to your inbox the moment you pay' },
-                ].map((h, i) => (
-                  <div key={i} className="flex items-start gap-4 p-5 rounded-2xl"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                    <span className="text-3xl shrink-0">{h.icon}</span>
-                    <div>
-                      <div className="font-bold text-base text-white mb-1">{h.title}</div>
-                      <div className="text-sm leading-relaxed" style={{ color: '#78716c' }}>{h.sub}</div>
+                {courses.map((c, i) => (
+                  <div key={i} className="p-5 rounded-2xl"
+                    style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.09)' }}>
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl shrink-0">{c.icon}</span>
+                        <div>
+                          <div className="font-bold text-base text-white leading-snug">{c.title}</div>
+                          <span className="inline-block mt-1.5 text-xs font-bold px-2.5 py-0.5 rounded-full"
+                            style={{ background: 'rgba(212,160,23,0.2)', color: '#d4a017' }}>{c.tag}</span>
+                        </div>
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <div className="font-bold text-lg leading-none" style={{ color: '#d4a017' }}>{c.price}</div>
+                        <div className="text-xs mt-1" style={{ color: '#57534e' }}>one-time</div>
+                      </div>
                     </div>
+                    <div className="text-sm leading-relaxed" style={{ color: '#78716c' }}>{c.desc}</div>
                   </div>
                 ))}
               </div>

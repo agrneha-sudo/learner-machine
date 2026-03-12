@@ -5,16 +5,11 @@ export const dynamic = 'force-dynamic'
 
 export default async function AdminHeroPage() {
   const { data } = await db.from('site_settings').select('key, value')
-  const settings = Object.fromEntries((data ?? []).map(r => [r.key, r.value])) as Partial<HeroSettings> & { hero_video_path?: string; hero_image_path?: string }
+  const settings = Object.fromEntries((data ?? []).map(r => [r.key, r.value])) as Partial<HeroSettings> & { hero_video_path?: string }
 
-  const [currentVideoUrl, currentImageUrl] = await Promise.all([
-    settings.hero_video_path
-      ? db.storage.from('product-files').createSignedUrl(settings.hero_video_path, 3600).then(r => r.data?.signedUrl ?? null)
-      : Promise.resolve(null),
-    settings.hero_image_path
-      ? db.storage.from('product-files').createSignedUrl(settings.hero_image_path, 3600).then(r => r.data?.signedUrl ?? null)
-      : Promise.resolve(null),
-  ])
+  const currentVideoUrl = settings.hero_video_path
+    ? (await db.storage.from('product-files').createSignedUrl(settings.hero_video_path, 3600)).data?.signedUrl ?? null
+    : null
 
   return (
     <div className="p-6 max-w-3xl">
@@ -23,10 +18,10 @@ export default async function AdminHeroPage() {
           Hero Section
         </h1>
         <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          Edit the homepage hero — headline, description, stats, video and more
+          Edit the homepage hero — headline, description, stats, course cards, and background video
         </p>
       </div>
-      <HeroSettingsForm initial={settings} currentVideoUrl={currentVideoUrl} currentImageUrl={currentImageUrl} />
+      <HeroSettingsForm initial={settings} currentVideoUrl={currentVideoUrl} />
     </div>
   )
 }
