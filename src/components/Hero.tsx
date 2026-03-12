@@ -135,7 +135,7 @@ export default function Hero({ videoUrl, settings = {} }: HeroProps) {
 
         {/* Right panel — always shown on desktop */}
         <div className="hidden lg:flex flex-1 items-center justify-end">
-          <div className="relative w-full max-w-md rounded-3xl overflow-hidden p-8"
+          <div className="relative w-full max-w-xl rounded-3xl overflow-hidden p-10"
             style={{
               background: 'radial-gradient(ellipse at 60% 30%, rgba(212,160,23,0.25) 0%, rgba(194,82,12,0.15) 40%, rgba(0,0,0,0) 70%)',
               border: '1px solid rgba(212,160,23,0.2)',
@@ -158,12 +158,12 @@ export default function Hero({ videoUrl, settings = {} }: HeroProps) {
                   { icon: '🇮🇳', title: 'Made for India', sub: 'Hindi + English — built for the Indian market' },
                   { icon: '⚡', title: 'Instant Download', sub: 'PDF delivered to your inbox the moment you pay' },
                 ].map((h, i) => (
-                  <div key={i} className="flex items-start gap-4 p-4 rounded-2xl"
+                  <div key={i} className="flex items-start gap-4 p-5 rounded-2xl"
                     style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-                    <span className="text-2xl shrink-0">{h.icon}</span>
+                    <span className="text-3xl shrink-0">{h.icon}</span>
                     <div>
-                      <div className="font-bold text-sm text-white mb-0.5">{h.title}</div>
-                      <div className="text-xs leading-relaxed" style={{ color: '#78716c' }}>{h.sub}</div>
+                      <div className="font-bold text-base text-white mb-1">{h.title}</div>
+                      <div className="text-sm leading-relaxed" style={{ color: '#78716c' }}>{h.sub}</div>
                     </div>
                   </div>
                 ))}
